@@ -3,12 +3,12 @@ Window initialise steps:
 python -m venv venv
 2. Activate Virtual Environment:
 .\venv\Scripts\activate
-3. Install Dependencies
+3. Install Dependencies:
 pip install -r requirements.txt
-4. Run the Development Server
+4. Run the Development Server:
 python manage.py migrate
 python manage.py runserver
-5. Check in your browser
+5. Check in your browser:
 http://127.0.0.1:8000/api/hello/
 
 Don't touch "seng3011" it's the global settings!
