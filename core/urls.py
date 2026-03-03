@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import hello_world
+from . import views
 
 urlpatterns = [
-    path('hello/', hello_world),
+    path('hello/', views.hello_world),
+    path('search-def/', views.simple_scrapy_test, name='search_def'),
 ]
+
