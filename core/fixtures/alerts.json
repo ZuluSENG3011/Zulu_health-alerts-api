@@ -1,0 +1,110 @@
+[
+  {
+    "model": "core.alert",
+    "pk": 1,
+    "fields": {
+      "external_id": "8731272",
+      "date": "2026-03-05",
+      "title": "MEASLES - USA (55): (TEXAS, NEW MEXICO) ICE DETENTION CENTERS, MORE CASES",
+      "diseases": ["Measles"],
+      "species": ["Humans"],
+      "regions": ["North America"],
+      "locations": [
+        ["United States", "Texas", "El Paso"],
+        ["United States", "New Mexico", "Las Cruces"]
+      ]
+    }
+  },
+  {
+    "model": "core.alert",
+    "pk": 2,
+    "fields": {
+      "external_id": "8731269",
+      "date": "2026-03-05",
+      "title": "AVIAN INFLUENZA - ARGENTINA (02): (CORDOBA) HPAI H5, COMMERCIAL POULTRY",
+      "diseases": ["Avian Influenza"],
+      "species": ["Poultry (domestic)"],
+      "regions": ["South America"],
+      "locations": [
+        ["Argentina", "Cordoba Province", "Cordoba"]
+      ]
+    }
+  },
+  {
+    "model": "core.alert",
+    "pk": 3,
+    "fields": {
+      "external_id": "8731256",
+      "date": "2026-03-05",
+      "title": "MYIASIS - MEXICO: NEW WORLD SCREWWORM (COCHLIOMYIA HOMINIVORAX) HUMAN",
+      "diseases": ["Myiasis"],
+      "species": ["Humans"],
+      "regions": ["North America"],
+      "locations": [
+        ["Mexico", "Mexico City", "Mexico City"]
+      ]
+    }
+  },
+  {
+    "model": "core.alert",
+    "pk": 4,
+    "fields": {
+      "external_id": "8731241",
+      "date": "2026-03-04",
+      "title": "LEPTOSPIROSIS - INDIA (02): (PUNJAB) WATER-BORNE DISEASE OUTBREAK, HEPATITIS E SUSPECTED, FATAL",
+      "diseases": ["Hepatitis E", "Leptospirosis"],
+      "species": ["Humans"],
+      "regions": ["Asia"],
+      "locations": [
+        ["India", "Punjab", "Chandigarh"]
+      ]
+    }
+  },
+  {
+    "model": "core.alert",
+    "pk": 5,
+    "fields": {
+      "external_id": "8731230",
+      "date": "2026-03-03",
+      "title": "MEASLES - COLOMBIA: ex MEXICO",
+      "diseases": ["Measles"],
+      "species": ["Humans"],
+      "regions": ["South America", "North America"],
+      "locations": [
+        ["Colombia", "Cundinamarca", "Bogotá"],
+        ["Mexico", "Mexico City", "Mexico City"]
+      ]
+    }
+  },
+  {
+    "model": "core.alert",
+    "pk": 6,
+    "fields": {
+      "external_id": "8730623",
+      "date": "2026-02-06",
+      "title": "SHIGELLOSIS, SALMONELLOSIS - UK: ex CAPE VERDE",
+      "diseases": ["Salmonella", "Shigellosis"],
+      "species": ["Humans"],
+      "regions": ["Africa", "Europe"],
+      "locations": [
+        ["Cape Verde", "Santiago", "Praia"],
+        ["United Kingdom", "England", "London"]
+      ]
+    }
+  },
+  {
+    "model": "core.alert",
+    "pk": 7,
+    "fields": {
+      "external_id": "8730620",
+      "date": "2026-02-06",
+      "title": "BACILLUS CEREUS - UK: INFANT FORMULA, CEREULIDE, CASES, RECALL, ALERT",
+      "diseases": ["Food-related toxin"],
+      "species": ["Humans"],
+      "regions": ["Europe"],
+      "locations": [
+        ["United Kingdom"]
+      ]
+    }
+  }
+]

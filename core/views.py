@@ -5,6 +5,8 @@ import os
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from rest_framework import status
+from .models import Alert
 
 @api_view(['GET'])
 def hello_world(request):
@@ -15,58 +17,38 @@ def hello_world(request):
 
 @api_view(["GET"])
 def get_alerts(request):
-    # for now this returns dummy data
-    # replace with actual scraper output
-    data = {
-        "alerts": [
-            {
-            "id": "8731269",
-            "date": "2026-03-05",
-            "title": "AVIAN INFLUENZA - ARGENTINA (02): (CORDOBA) HPAI H5, COMMERCIAL POULTRY",
-            "disease": ["Avian Influenza"],
-            "species": ["Poultry (domestic)"],
-            "region": ["South America"],
-            "locations": [
-                ["Argentina", "Cordoba Province", "Cordoba"]
-            ]
-            },
-            {
-            "id": "8731256",
-            "date": "2026-03-05",
-            "title": "MYIASIS - MEXICO: NEW WORLD SCREWWORM (COCHLIOMYIA HOMINIVORAX) HUMAN",
-            "disease": ["Myiasis"],
-            "species": ["Humans"],
-            "region": ["North America"],
-            "locations": [
-                ["Mexico", "Mexico City", "Mexico City"]
-            ]
-            },
-            {
-            "id": "8730623",
-            "date": "2026-02-06",
-            "title": "SHIGELLOSIS, SALMONELLOSIS - UK: ex CAPE VERDE",
-            "disease": ["Salmonella", "Shigellosis"],
-            "species": ["Humans"],
-            "region": ["Africa", "Europe"],
-            "locations": [
-                ["Cape Verde", "Santiago", "Praia"],
-                ["United Kingdom", "England", "London"]
-            ]
-            },
-            {
-            "id": "8730620",
-            "date": "2026-02-06",
-            "title": "BACILLUS CEREUS - UK: INFANT FORMULA, CEREULIDE, CASES, RECALL, ALERT",
-            "disease": ["Food-related toxin"],
-            "species": ["Humans"],
-            "region": ["Europe"],
-            "locations": [
-                ["United Kingdom"]
-            ]
-            }
-        ]
-    }
-    return Response(data)
+    # filtering logic
+    # id: if provided -> returns only that one (or empty)
+    # from/to: filter by date within range
+    # disease/species/region: match if alert has ANY of the requested values
+    # location: match if ANY requested location term appears in ANY location path
+
+    # read the params (optional for users)
+
+    alert_id = request.query_params.get("id")
+    from_date = request.query_params.get("from")
+    to_date = request.query_params.get("to")
+    diseases = request.query_params.getlist("disease")
+    species = request.query_params.getlist("species")
+    regions = request.query_params.getlist("region")
+    locations = request.query_params.getlist("location")
+
+    # retrieves all alerts from database
+    query_set = Alert.objects.all().order_by("-date")
+
+    def serialise(alert):
+        return {
+            "id": alert.external_id,
+            "date": alert.date.isoformat(),
+            "title": alert.title,
+            "disease": alert.diseases,
+            "species": alert.species,
+            "region": alert.regions,
+            "location": alert.locations
+        }
+
+    alerts_out = [serialise(alert) for alert in query_set]
+    return Response({"alerts": alerts_out}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def simple_scrapy_test(request):
