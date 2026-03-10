@@ -32,5 +32,8 @@ jobs:
       - name: Type check
         run: mypy .
 
+      - name: Django check
+        run: python manage.py check
+
       - name: Run tests with coverage
-        run: pytest --cov=. --cov-report=term-missing
+        run: python manage.py test
