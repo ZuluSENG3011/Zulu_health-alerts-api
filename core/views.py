@@ -15,16 +15,14 @@ def hello_world(request):
 
 @api_view(['GET'])
 def simple_scrapy_test(request):
-    # locate the scraper directory
     scraper_path = os.path.join(os.getcwd(), 'scraper')
 
     try:
-        # run Scrapy spider and capture output
         output = subprocess.check_output(
             [
-                'scrapy', 'crawl', 'test', # run the 'promed' name spider
-                '--nolog',           # close the log output
-                '-o', '-:json'       # output to stdout in JSON format
+                'scrapy', 'crawl', 'example', 
+                '--nolog',
+                '-o', '-:json'
             ],
             cwd=scraper_path,
             stderr=subprocess.STDOUT
