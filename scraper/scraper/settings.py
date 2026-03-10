@@ -11,6 +11,9 @@ BOT_NAME = "scraper"
 
 SPIDER_MODULES = ["scraper.spiders"]
 NEWSPIDER_MODULE = "scraper.spiders"
+DOWNLOADER_MIDDLEWARES = {
+    "scraper.middlewares.PromedprojectDownloaderMiddleware": 543,
+}
 
 ADDONS = {}
 

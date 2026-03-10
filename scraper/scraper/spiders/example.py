@@ -2,6 +2,7 @@ import scrapy
 import json
 from pathlib import Path
 from datetime import datetime, timezone
+from scraper.middlewares import PromedKeyManager
 
 def clean_text(value):
     if value is None:
@@ -120,17 +121,7 @@ class PromedSpider(scrapy.Spider):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        key_path = Path("promed_key.txt")
-        if not key_path.exists():
-            raise FileNotFoundError(
-                "promed_key.txt not found. Run get_key.py first."
-            )
-
-        self.api_key = key_path.read_text(encoding="utf-8").strip()
-        if not self.api_key:
-            raise ValueError("promed_key.txt is empty.")
-
+        self.api_key = PromedKeyManager.get_key()
         self.pk_counter = 1
 
     def start_requests(self):
