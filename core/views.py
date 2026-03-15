@@ -26,14 +26,24 @@ def filter_alerts(params, default_days=365):
 
     today = date.today()
 
+    raw_from = params.get("from")
+    raw_to = params.get("to")
+
+    from_date = parse_date(raw_from) if raw_from else None
+    to_date = parse_date(raw_to) if raw_to else None
+
     if not from_date and not to_date:
+        # default window
         from_date = today - timedelta(days=default_days)
         to_date = today
-    else:
-        if from_date:
-            from_date = parse_date(from_date)
-        if to_date:
-            to_date = parse_date(to_date)
+
+    elif from_date and not to_date:
+        # user provided from only
+        to_date = today
+
+    elif to_date and not from_date:
+        # user provided to only
+        from_date = to_date - timedelta(days=default_days)
 
     query_set = Alert.objects.all().order_by("-date")
 
@@ -100,6 +110,35 @@ def stats_regions(request):
             "from": from_date.isoformat() if from_date else None,
             "to": to_date.isoformat() if to_date else None,
             "by_region": by_region,
+        },
+        status=status.HTTP_200_OK,
+    )
+
+
+@api_view(["GET"])
+def stats_diseases(request):
+    query_set, from_date, to_date = filter_alerts(request.query_params, default_days=30)
+
+    disease_counter = Counter()
+
+    for alert in query_set:
+        for disease in alert.diseases or []:
+            if disease:
+                disease_counter[disease] += 1
+
+    by_disease = [
+        {"disease": disease, "count": count}
+        for disease, count in sorted(
+            disease_counter.items(),
+            key=lambda x: (-x[1], x[0]),
+        )
+    ]
+
+    return Response(
+        {
+            "from": from_date.isoformat() if from_date else None,
+            "to": to_date.isoformat() if to_date else None,
+            "by_disease": by_disease,
         },
         status=status.HTTP_200_OK,
     )
