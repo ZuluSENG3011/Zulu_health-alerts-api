@@ -124,6 +124,7 @@ def get_alerts(request):
     )
 
 
+@api_view(["GET"])
 def stats_timeseries(request):
     interval = request.query_params.get("interval", "day")
 
