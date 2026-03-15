@@ -1,13 +1,14 @@
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import os
+
 
 conn = psycopg2.connect(
     host="team-auth-db.cdak644ym5fe.ap-southeast-2.rds.amazonaws.com",
     database="postgres",
     user="ZULU",
     password="SENG2011zulu",
-    cursor_factory=RealDictCursor
+    cursor_factory=RealDictCursor,
 )
 
 cur = conn.cursor()
