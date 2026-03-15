@@ -3,10 +3,12 @@ import json
 import os
 
 from collections import Counter
+from django.db.models import Count
 from datetime import date, timedelta
 
 from django.db.models import Q
 from django.utils.dateparse import parse_date
+from django.db.models.functions import TruncDay, TruncWeek, TruncMonth
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -26,14 +28,15 @@ def filter_alerts(params, default_days=365):
 
     today = date.today()
 
-    if not from_date and not to_date:
-        from_date = today - timedelta(days=default_days)
-        to_date = today
+    if from_date:
+        from_date = parse_date(from_date)
     else:
-        if from_date:
-            from_date = parse_date(from_date)
-        if to_date:
-            to_date = parse_date(to_date)
+        from_date = today - timedelta(days=90)
+
+    if to_date:
+        to_date = parse_date(to_date)
+    else:
+        to_date = today
 
     query_set = Alert.objects.all().order_by("-date")
 
@@ -106,11 +109,6 @@ def stats_regions(request):
 
 
 @api_view(["GET"])
-def hello_world(request):
-    return Response({"message": "Hello World!", "status": "success"})
-
-
-@api_view(["GET"])
 def get_alerts(request):
     query_set, from_date, to_date = filter_alerts(request.query_params)
 
@@ -123,6 +121,55 @@ def get_alerts(request):
             "to": to_date.isoformat() if to_date else None,
         },
         status=status.HTTP_200_OK,
+    )
+
+
+def stats_timeseries(request):
+    interval = request.query_params.get("interval", "day")
+
+    trunc_map = {
+        "day": TruncDay,
+        "week": TruncWeek,
+        "month": TruncMonth,
+    }
+
+    if interval not in trunc_map:
+        return Response(
+            {"error": "Invalid interval"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    queryset, from_date, to_date = filter_alerts(
+        request.query_params,
+        default_days=90
+    )
+
+    trunc_func = trunc_map[interval]
+
+    series = (
+        queryset
+        .annotate(period=trunc_func("date"))
+        .values("period")
+        .annotate(count=Count("id"))
+        .order_by("period")
+    )
+
+    results = [
+        {
+            "period": row["period"].isoformat(),
+            "count": row["count"]
+        }
+        for row in series
+    ]
+
+    return Response(
+        {
+            "interval": interval,
+            "from": from_date.isoformat() if from_date else None,
+            "to": to_date.isoformat() if to_date else None,
+            "results": results,
+        },
+        status=status.HTTP_200_OK
     )
 
 
