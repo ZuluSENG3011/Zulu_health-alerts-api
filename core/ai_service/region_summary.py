@@ -51,7 +51,9 @@ def sort_database(database: list):
     return sorted(database, key=lambda a: a["fields"]["date"], reverse=True)
 
 
-def find_by_every_location(database: list, location_str: str | None) -> list:
+def find_by_every_location(
+        database: list, 
+        location_str: str | None) -> list:
     chains = []
 
     if not location_str:
