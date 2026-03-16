@@ -11,7 +11,7 @@ DISEASE_INFO_JSON = BASE_DIR / "disease_info.json"
 
 BASE_DIR2 = Path(__file__).resolve().parents[2]
 
-# $env:GEMINI_API_KEY="AIzaSyCa6LB5tin7aK604YEsL9M3wQedlLptmE8"
+
 
 def filter_start_date(window:str, today:date|None = None) -> date:
     if today is None:
@@ -51,17 +51,26 @@ def sort_database(database:list):
     return sorted(database, key=lambda a:a["fields"]["date"], reverse=True)
 
 
-def find_by_last_location(database:list, last_location:str) -> list:
-    chains=[]
+def find_by_every_location(database: list, location_str: str) -> list:
+    chains = []
+
     for alert in database:
         location = alert["fields"]["locations"]
-        # print(location)
+
         for L in location:
-            if L[-1].lower() == last_location.lower():
+            matched = False
+
+            for part in L:
+                if part.lower() == location_str.lower():
+                    matched = True
+                    break
+
+            if matched:
                 chains.append(L)
 
-    unique=set()
-    result=[]
+    unique = set()
+    result = []
+
     for l in chains:
         chain = ">".join(l)
         if chain not in unique:
@@ -162,7 +171,7 @@ def filter_entry(end_date: date | None = None, window: str | None = None, start_
     database = filter_date(start_date, end_date, database)
 
     if location_chain is None:
-        chains = find_by_last_location(database, location_str)
+        chains = find_by_every_location(database, location_str)
         if not chains:
             return [], None
         location_chain = chains[0]
@@ -213,7 +222,6 @@ def generate_summary_entry(database: list, end_date: date | None = None, window:
     result, location_chain = filter_entry(end_date=end_date,window=window, start_date=start_date, location_chain=location_chain, location_str=location_str,  database=database)
     diseases = extract_disease_name_from_result(result)
 
-    # API_KEY = "AIzaSyCa6LB5tin7aK604YEsL9M3wQedlLptmE8"
     API_KEY = os.getenv("GEMINI_API_KEY")
 
     AI = region_summary_api.GeminiSummary(API_KEY, model_id="gemini-3-flash-preview")
@@ -236,7 +244,7 @@ if __name__ == "__main__":
 #     #     start_date = filter_start_date("3month")
 #     #     print(start_date)
 #     #     database = filter_date(start_date, end_date=None, database=database)
-#     #     location_chain = find_by_last_location(database, "Hong Kong")
+#     #     location_chain = find_by_every_location(database, "Hong Kong")
 #     #     print(location_chain)
 #     #     exact_match = find_by_exact_location(database, location_chain[0])
 #     #     print(exact_match)
@@ -256,7 +264,7 @@ if __name__ == "__main__":
 #     # API_KEY = "AIzaSyCa6LB5tin7aK604YEsL9M3wQedlLptmE8"
 
 #     # AI = region_summary_api.GeminiSummary(API_KEY, model_id="gemini-3-flash-preview")
-#     # location_chain = find_by_last_location(database, "Hong Kong")
+#     # location_chain = find_by_every_location(database, "Hong Kong")
 #     # response = AI.region_summary(result, location_chain, {} )
 #     # # print(response)
     generate_summary_entry(window="3month",location_str="New South Wales", database=database)

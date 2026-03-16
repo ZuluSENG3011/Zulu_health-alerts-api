@@ -9,7 +9,6 @@ from google.genai import types
 # os.environ['http_proxy'] = f"http://127.0.0.1:{PROXY_PORT}"
 # os.environ['https_proxy'] = f"http://127.0.0.1:{PROXY_PORT}"
 
-API_KEY = "AIzaSyCa6LB5tin7aK604YEsL9M3wQedlLptmE8"
 
 
 
