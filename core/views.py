@@ -230,6 +230,8 @@ def region_summary_view(request):
     query_set = Alert.objects.all().order_by("-date")
     database = [serialise_alert_for_ai(alert) for alert in query_set]
 
+    
+
     try:
         result = generate_summary_entry(
             database=database,
