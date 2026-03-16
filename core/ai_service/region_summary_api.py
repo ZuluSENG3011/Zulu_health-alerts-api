@@ -1,4 +1,3 @@
-import json
 from google import genai
 from google.genai import types
 from datetime import date
@@ -79,8 +78,10 @@ class GeminiSummary:
             },
             "major_threats": {
                 "type": "object",
-                "description": ("Current main threats for the requested "
-                                "location in the travel context."),
+                "description": (
+                    "Current main threats for the requested "
+                    "location in the travel context."
+                ),
                 "additionalProperties": False,
                 "properties": {
                     "high_exposure": {
@@ -96,8 +97,9 @@ class GeminiSummary:
             },
             "potential_threats": {
                 "type": "object",
-                "description": ("Relevant but less central threats "
-                                "for the requested location."),
+                "description": (
+                    "Relevant but less central threats " "for the requested location."
+                ),
                 "additionalProperties": False,
                 "properties": {
                     "high_exposure": {
@@ -121,8 +123,10 @@ class GeminiSummary:
             },
             "ignored_alerts": {
                 "type": "array",
-                "description": ("Alerts ignored only because they are "
-                                "clearly outside the requested location context."),
+                "description": (
+                    "Alerts ignored only because they are "
+                    "clearly outside the requested location context."
+                ),
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
@@ -171,38 +175,38 @@ class GeminiSummary:
     ):
 
         prompt = f"""
-            You are assessing infectious disease risk for an 
+            You are assessing infectious disease risk for an
             airport-oriented travel
-            safety service for short- and medium-term visitors, 
-            You assessments must base on alert and diseases 
+            safety service for short- and medium-term visitors,
+            You assessments must base on alert and diseases
             information provided below as list.
 
-            Summarize base on the provided outbreak alerts 
-            and the provided disease 
+            Summarize base on the provided outbreak alerts
+            and the provided disease
             metadata, DO NOT RESEARCH.
-            Do not use web search, external sources, tools, 
+            Do not use web search, external sources, tools,
             or unstated medical facts.
-            You can mention if the provided 
+            You can mention if the provided
             data is insufficient for a conclusion.
 
-            Assume customers are likely to move through airports, public 
-            transport, hotels, tourist sites and other shared public 
+            Assume customers are likely to move through airports, public
+            transport, hotels, tourist sites and other shared public
             infrastructure that can be moderately crowded or crowded.
-            Do not Assume visitors stay at home most of the time. 
+            Do not Assume visitors stay at home most of the time.
             Do not assume they remain only in major urban areas.
-            Do not assume unusual occupational, agricultural,  
+            Do not assume unusual occupational, agricultural,
             or long term community exposure.
 
-            Pay attention to the publish date of alerts. 
+            Pay attention to the publish date of alerts.
             Today is {date.today()}.
             The location is {location_chain}, carefully ignore alerts
-            only when they obviously unrelated to this location. 
+            only when they obviously unrelated to this location.
             List all the ignored alerts follow the schema.
             Repeated alerts for the same disease or area may indicate
-             a stronger signal, but do not overstate certainty 
+             a stronger signal, but do not overstate certainty
              beyond the provided evidence.
 
-            Your task is to create a concise, objective summary for 
+            Your task is to create a concise, objective summary for
             travel-risk interpretation by:
             1. outbreak evidence from the provided filtered alerts
             2. disease-level context from the provided disease metadata

@@ -27,7 +27,7 @@ class GeminiService:
                 "severity_reason": {
                     "type": "string",
                     "description": (
-                        "A very brief reason for the " "severity score, under 20 words."
+                        "A very brief reason for the " "severity score, under 10 words."
                     ),
                 },
                 "risk_of_exposure": {
@@ -44,7 +44,7 @@ class GeminiService:
                     "type": "string",
                     "description": (
                         "A very brief reason for the risk_of_exposure "
-                        "score, under 20 words."
+                        "score, under 10 words."
                     ),
                 },
                 "confidence": {
