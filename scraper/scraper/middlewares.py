@@ -6,7 +6,35 @@
 from scrapy import signals
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
+
+import sys
+from pathlib import Path
+import subprocess
+
+
+class PromedKeyManager:
+    KEY_FILE = Path("promed_key.txt")
+
+    @classmethod
+    def get_key(cls):
+        if not cls.KEY_FILE.exists():
+            return cls.refresh_key()
+
+        key = cls.KEY_FILE.read_text(encoding="utf-8").strip()
+        if not key:
+            return cls.refresh_key()
+
+        return key
+
+    @classmethod
+    def refresh_key(cls):
+        script_path = Path(__file__).resolve().parent / "get_key.py"
+        subprocess.run([sys.executable, str(script_path)], check=True)
+
+        key = cls.KEY_FILE.read_text(encoding="utf-8").strip()
+        if not key:
+            raise ValueError("promed_key.txt is empty after refresh.")
+        return key
 
 import sys
 from pathlib import Path
@@ -92,6 +120,7 @@ class PromedprojectDownloaderMiddleware:
 
     def process_response(self, request, response, spider):
         if response.status in (401, 403):
+<<<<<<< HEAD
             spider.logger.warning(
                 f"Request got {response.status}. API key may have expired. Refreshing key..."
             )
@@ -99,6 +128,16 @@ class PromedprojectDownloaderMiddleware:
             retry_count = request.meta.get("auth_retry_count", 0)
             if retry_count >= 3:
                 spider.logger.error("Maximum auth retries reached. Giving up on request.")
+=======
+            spider.logger.warning(f"Request got {
+                response.status}. API key may have expired. Refreshing key...")
+
+            retry_count = request.meta.get("auth_retry_count", 0)
+            if retry_count >= 3:
+                spider.logger.error(
+                    "Maximum auth retries reached. Giving up on request."
+                )
+>>>>>>> ec2007daf0584618473d559f5e60159c4a3e4803
                 return response
 
             try:
@@ -112,7 +151,12 @@ class PromedprojectDownloaderMiddleware:
             new_request = request.replace(url=new_url, dont_filter=True)
             new_request.meta["auth_retry_count"] = retry_count + 1
 
+<<<<<<< HEAD
             spider.logger.info(f"Retrying request with refreshed API key (attempt {retry_count + 1})")
+=======
+            spider.logger.info(f"Retrying request with refreshed API key (attempt {
+                retry_count + 1})")
+>>>>>>> ec2007daf0584618473d559f5e60159c4a3e4803
             return new_request
 
         return response
