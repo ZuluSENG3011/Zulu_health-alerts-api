@@ -210,19 +210,10 @@ class TestsGetAlerts(APITestCase):
         returned_ids = {alert["id"] for alert in response.data["alerts"]}
         self.assertEqual(
             returned_ids,
-            {
-                "8721537",
-                "8720687",
-                "8720621",
-                "8720357",
-                "8720318",
-                "8720063",
-                "8720061",
-                "8719909",
-                "8719386",
-                "8719727",
-                "8716456",
-            },
+            {"8721537", "8720687", "8720621",
+             "8720357", "8720318", "8720063",
+             "8720061", "8719909", "8719386",
+             "8719727", "8716456"},
         )
 
     def test_get_alerts_filters_by_date_range(self):
@@ -245,7 +236,7 @@ class TestsGetAlerts(APITestCase):
             },
         )
 
-    def test_get_alerts_filters_by_multiple_regions_and_logic(self):
+    def test_get_alerts_filters_by_multiple_regions_or_logic(self):
         response = self.client.get(
             self.url,
             {"from": "2023-01-01", "to": "2026-12-31", "region": ["Asia", "Africa"]},
@@ -255,7 +246,23 @@ class TestsGetAlerts(APITestCase):
 
         returned_ids = {alert["id"] for alert in response.data["alerts"]}
 
-        self.assertEqual(returned_ids, set())
+        self.assertEqual(
+            returned_ids,
+            {
+                "8731241",
+                "8730623",
+                "8727393",
+                "8720621",
+                "8720357",
+                "8720318",
+                "8720063",
+                "8720061",
+                "8719909",
+                "8719386",
+                "8713622",
+                "8712590",
+            },
+        )
 
     def test_get_alerts_returns_empty_when_no_match(self):
         response = self.client.get(
