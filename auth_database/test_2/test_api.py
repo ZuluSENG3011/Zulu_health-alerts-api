@@ -8,8 +8,8 @@ BASE_URL = "http://127.0.0.1:8000"
 # 1 Signup
 # ---------------------------
 signup_data = {
-    "email": "l4liem@example.com",
-    "password": "l4miem'spassword123",
+    "email": "marcushu@example.com",
+    "password": "marcuspassword123",
     "subscribed": True,
 }
 
