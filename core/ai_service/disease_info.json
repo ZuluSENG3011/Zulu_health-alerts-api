@@ -17,7 +17,7 @@
     "severity": "medium",
     "severity_reason": "May cause kidney failure, meningitis, or liver damage.",
     "risk_of_exposure": "low",
-    "exposure_reason": "Skin contact with water contaminated by animal urine.",
+    "exposure_reason": "Skin contact  with water contaminated by animal urine.",
     "confidence": "high"
   },
   "Measles": {
