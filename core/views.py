@@ -3,10 +3,12 @@ import json
 import os
 
 from collections import Counter
+from django.db.models import Count
 from datetime import date, timedelta
 
 from django.db.models import Q
 from django.utils.dateparse import parse_date
+from django.db.models.functions import TruncDay, TruncWeek, TruncMonth
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -26,14 +28,15 @@ def filter_alerts(params, default_days=365):
 
     today = date.today()
 
-    if not from_date and not to_date:
-        from_date = today - timedelta(days=default_days)
-        to_date = today
+    if to_date:
+        to_date = parse_date(to_date)
     else:
-        if from_date:
-            from_date = parse_date(from_date)
-        if to_date:
-            to_date = parse_date(to_date)
+        to_date = today
+
+    if from_date:
+        from_date = parse_date(from_date)
+    else:
+        from_date = to_date - timedelta(days=default_days)
 
     query_set = Alert.objects.all().order_by("-date")
 
@@ -47,16 +50,22 @@ def filter_alerts(params, default_days=365):
         query_set = query_set.filter(date__lte=to_date)
 
     if diseases:
+        disease_query = Q()
         for d in diseases:
-            query_set = query_set.filter(diseases__icontains=d)
+            disease_query |= Q(diseases__icontains=d)
+        query_set = query_set.filter(disease_query)
 
     if species:
+        species_query = Q()
         for s in species:
-            query_set = query_set.filter(species__icontains=s)
+            species_query |= Q(species__icontains=s)
+        query_set = query_set.filter(species_query)
 
     if regions:
+        region_query = Q()
         for r in regions:
-            query_set = query_set.filter(regions__icontains=r)
+            region_query |= Q(regions__icontains=r)
+        query_set = query_set.filter(region_query)
 
     if locations:
         location_query = Q()
@@ -81,18 +90,33 @@ def serialise_alert(alert):
 
 @api_view(["GET"])
 def stats_regions(request):
-    query_set, from_date, to_date = filter_alerts(request.query_params, default_days=30)
+    query_set, from_date, to_date = filter_alerts(
+        request.query_params,
+        default_days=30,
+    )
+
+    requested_regions = request.query_params.getlist("region")
+    requested_regions_lower = {r.lower() for r in requested_regions if r}
 
     region_counter = Counter()
 
     for alert in query_set:
         for region in alert.regions or []:
-            if region:
+            if not region:
+                continue
+
+            if requested_regions_lower:
+                if region.lower() in requested_regions_lower:
+                    region_counter[region] += 1
+            else:
                 region_counter[region] += 1
 
     by_region = [
         {"region": region, "count": count}
-        for region, count in sorted(region_counter.items(), key=lambda x: (-x[1], x[0]))
+        for region, count in sorted(
+            region_counter.items(),
+            key=lambda x: (-x[1], x[0]),
+        )
     ]
 
     return Response(
@@ -100,6 +124,47 @@ def stats_regions(request):
             "from": from_date.isoformat() if from_date else None,
             "to": to_date.isoformat() if to_date else None,
             "by_region": by_region,
+        },
+        status=status.HTTP_200_OK,
+    )
+
+
+@api_view(["GET"])
+def stats_diseases(request):
+    query_set, from_date, to_date = filter_alerts(
+        request.query_params,
+        default_days=30,
+    )
+
+    requested_diseases = request.query_params.getlist("disease")
+    requested_diseases_lower = {d.lower() for d in requested_diseases if d}
+
+    disease_counter = Counter()
+
+    for alert in query_set:
+        for disease in alert.diseases or []:
+            if not disease:
+                continue
+
+            if requested_diseases_lower:
+                if disease.lower() in requested_diseases_lower:
+                    disease_counter[disease] += 1
+            else:
+                disease_counter[disease] += 1
+
+    by_disease = [
+        {"disease": disease, "count": count}
+        for disease, count in sorted(
+            disease_counter.items(),
+            key=lambda x: (-x[1], x[0]),
+        )
+    ]
+
+    return Response(
+        {
+            "from": from_date.isoformat() if from_date else None,
+            "to": to_date.isoformat() if to_date else None,
+            "by_disease": by_disease,
         },
         status=status.HTTP_200_OK,
     )
@@ -118,11 +183,61 @@ def get_alerts(request):
 
     return Response(
         {
-            "alerts": alerts_out,
             "from": from_date.isoformat() if from_date else None,
             "to": to_date.isoformat() if to_date else None,
+            "alerts": alerts_out,
         },
         status=status.HTTP_200_OK,
+    )
+
+
+@api_view(["GET"])
+def stats_timeseries(request):
+    interval = request.query_params.get("interval", "day")
+
+    trunc_map = {
+        "day": TruncDay,
+        "week": TruncWeek,
+        "month": TruncMonth,
+    }
+
+    if interval not in trunc_map:
+        return Response(
+            {"error": "Invalid interval"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    queryset, from_date, to_date = filter_alerts(
+        request.query_params,
+        default_days=90
+    )
+
+    trunc_func = trunc_map[interval]
+
+    series = (
+        queryset
+        .annotate(period=trunc_func("date"))
+        .values("period")
+        .annotate(count=Count("id"))
+        .order_by("period")
+    )
+
+    results = [
+        {
+            "period": row["period"].isoformat(),
+            "count": row["count"]
+        }
+        for row in series
+    ]
+
+    return Response(
+        {
+            "interval": interval,
+            "from": from_date.isoformat() if from_date else None,
+            "to": to_date.isoformat() if to_date else None,
+            "results": results,
+        },
+        status=status.HTTP_200_OK
     )
 
 
