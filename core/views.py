@@ -234,11 +234,6 @@ def stats_diseases(request):
     )
 
 
-@api_view(["GET"])
-def hello_world(request):
-    return Response({"message": "Hello World!", "status": "success"})
-
-
 @swagger_auto_schema(
     operation_description="Retrieve outbreak alerts with optional filters.",
     tags=["alerts"],
@@ -329,23 +324,3 @@ def stats_timeseries(request):
         },
         status=status.HTTP_200_OK
     )
-
-
-@api_view(['GET'])
-def simple_scrapy_test(request):
-    scraper_path = os.path.join(os.getcwd(), "scraper")
-
-    try:
-        output = subprocess.check_output(
-            ["scrapy", "crawl", "example", "--nolog", "-o", "-:json"],
-            cwd=scraper_path,
-            stderr=subprocess.STDOUT,
-        )
-
-        data = json.loads(output)
-        return Response(data)
-
-    except subprocess.CalledProcessError as e:
-        return Response(
-            {"error": "Scrapy failed", "detail": e.output.decode()}, status=500
-        )
