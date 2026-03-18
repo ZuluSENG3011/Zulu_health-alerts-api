@@ -11,12 +11,59 @@ from django.utils.dateparse import parse_date
 from django.db.models.functions import TruncDay, TruncWeek, TruncMonth
 from django.http import JsonResponse
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 from core.models import Alert
 
+common_filter_parameters = [
+    openapi.Parameter(
+        "id",
+        openapi.IN_QUERY,
+        description="Filter by external alert identifier",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "from",
+        openapi.IN_QUERY,
+        description="Start date in YYYY-MM-DD format",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "to",
+        openapi.IN_QUERY,
+        description="End date in YYYY-MM-DD format",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "disease",
+        openapi.IN_QUERY,
+        description="Filter by disease name. Can be supplied multiple times.",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "species",
+        openapi.IN_QUERY,
+        description="Filter by affected species. Can be supplied multiple times.",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "region",
+        openapi.IN_QUERY,
+        description="Filter by geographic region. Can be supplied multiple times.",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "location",
+        openapi.IN_QUERY,
+        description="Filter by location text. Can be supplied multiple times.",
+        type=openapi.TYPE_STRING,
+    ),
+]
 
 def filter_alerts(params, default_days=365):
     alert_id = params.get("id")
@@ -93,6 +140,12 @@ def home(request):
     return JsonResponse({"message": "Zulu API is running"})
 
 
+@swagger_auto_schema(
+    operation_description="Return outbreak alert counts grouped by region using the same filters as the alerts endpoint.",
+    tags=["stats"],
+    manual_parameters=common_filter_parameters,
+    responses={200: "Region summary returned successfully."},
+)
 @api_view(["GET"])
 def stats_regions(request):
     query_set, from_date, to_date = filter_alerts(
@@ -134,6 +187,12 @@ def stats_regions(request):
     )
 
 
+@swagger_auto_schema(
+    operation_description="Return the most frequently reported diseases using the same filters as the alerts endpoint.",
+    tags=["stats"],
+    manual_parameters=common_filter_parameters,
+    responses={200: "Disease summary returned successfully."},
+)
 @api_view(["GET"])
 def stats_diseases(request):
     query_set, from_date, to_date = filter_alerts(
@@ -180,6 +239,12 @@ def hello_world(request):
     return Response({"message": "Hello World!", "status": "success"})
 
 
+@swagger_auto_schema(
+    operation_description="Retrieve outbreak alerts with optional filters.",
+    tags=["alerts"],
+    manual_parameters=common_filter_parameters,
+    responses={200: "List of matching alerts returned successfully."},
+)
 @api_view(["GET"])
 def get_alerts(request):
     query_set, from_date, to_date = filter_alerts(request.query_params)
@@ -196,6 +261,26 @@ def get_alerts(request):
     )
 
 
+timeseries_parameters = [
+    openapi.Parameter(
+        "interval",
+        openapi.IN_QUERY,
+        description="Aggregation interval: day, week, or month",
+        type=openapi.TYPE_STRING,
+        enum=["day", "week", "month"],
+    ),
+    *common_filter_parameters,
+]
+
+@swagger_auto_schema(
+    operation_description="Return alert counts aggregated over time using the same filters as the alerts endpoint.",
+    tags=["stats"],
+    manual_parameters=timeseries_parameters,
+    responses={
+        200: "Timeseries summary returned successfully.",
+        400: "Invalid interval. Must be day, week, or month.",
+    }
+)
 @api_view(["GET"])
 def stats_timeseries(request):
     interval = request.query_params.get("interval", "day")
