@@ -61,15 +61,10 @@ def find_by_every_location(database: list, location_str: str | None) -> list:
         location = alert["fields"]["locations"]
 
         for L in location:
-            matched = False
-
-            for part in L:
+            for index, part in enumerate(L):
                 if part.lower() == location_str.lower():
-                    matched = True
+                    chains.append(L[: index + 1])
                     break
-
-            if matched:
-                chains.append(L)
 
     unique = set()
     result = []
@@ -81,7 +76,6 @@ def find_by_every_location(database: list, location_str: str | None) -> list:
             result.append(a)
 
     return result
-
 
 def find_by_exact_location(database: list, location_chain: list) -> list:
     results = []
