@@ -1,5 +1,3 @@
-import subprocess
-import json
 import os
 
 from collections import Counter
@@ -64,6 +62,7 @@ common_filter_parameters = [
         type=openapi.TYPE_STRING,
     ),
 ]
+
 
 def filter_alerts(params, default_days=365):
     alert_id = params.get("id")
@@ -142,7 +141,8 @@ def home(request):
 
 @swagger_auto_schema(
     method="get",
-    operation_description="Return outbreak alert counts grouped by region using the same filters as the alerts endpoint.",
+    operation_description="Return outbreak alert counts grouped by region"
+    "using the same filters as the alerts endpoint.",
     tags=["stats"],
     manual_parameters=common_filter_parameters,
     responses={200: "Region summary returned successfully."},
@@ -201,14 +201,16 @@ def stats_regions(request):
         openapi.Parameter(
             "include_ai",
             openapi.IN_QUERY,
-            description="Set to true to include AI-generated disease severity enrichment.",
+            description="Set to true to include AI-generated"
+            "disease severity enrichment.",
             type=openapi.TYPE_STRING,
             enum=["true", "false"],
         ),
         openapi.Parameter(
             "ai_limit",
             openapi.IN_QUERY,
-            description="Maximum number of diseases to send to AI when include_ai=true.",
+            description="Maximum number of diseases to send"
+            "to AI when include_ai=true.",
             type=openapi.TYPE_INTEGER,
         ),
     ],
@@ -333,9 +335,11 @@ timeseries_parameters = [
     *common_filter_parameters,
 ]
 
+
 @swagger_auto_schema(
     method="get",
-    operation_description="Return alert counts aggregated over time using the same filters as the alerts endpoint.",
+    operation_description="Return alert counts aggregated over time"
+    "using the same filters as the alerts endpoint.",
     tags=["stats"],
     manual_parameters=timeseries_parameters,
     responses={

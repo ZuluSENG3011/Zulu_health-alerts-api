@@ -9,6 +9,7 @@ import os
 
 os.getenv("GEMINI_API_KEY")
 
+
 class GeminiSummary:
     response_schema = {
         "type": "object",
@@ -240,7 +241,9 @@ class GeminiSummary:
 
 
 if __name__ == "__main__":
-    AI = GeminiSummary(API_KEY, model_id="gemini-3-flash-preview")
+    api_key = os.getenv("GEMINI_API_KEY")
+
+    AI = GeminiSummary(api_key, model_id="gemini-3-flash-preview")
     # # AI = GeminiService(API_KEY, model_id="gemini-3.1-pro-preview")
     # while True:
     #     user_input = input("\ninput diseases:")
