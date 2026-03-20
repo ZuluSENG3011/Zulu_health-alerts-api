@@ -1,13 +1,13 @@
 from google import genai
 from google.genai import types
 from datetime import date
+import os
 
 # PORT = "7800"
 # os.environ['http_proxy'] = f"http://127.0.0.1:{PROXY_PORT}"
 # os.environ['https_proxy'] = f"http://127.0.0.1:{PROXY_PORT}"
 
-API_KEY = "AIzaSyCa6LB5tin7aK604YEsL9M3wQedlLptmE8"
-
+os.getenv("GEMINI_API_KEY")
 
 class GeminiSummary:
     response_schema = {
