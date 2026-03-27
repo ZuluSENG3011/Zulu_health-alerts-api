@@ -1,0 +1,49 @@
+.page {
+  padding: 24px;
+  min-height: 100vh;
+  background-color: #f5f6fa;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  color: #666;
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  gap: 24px;
+  height: calc(100vh - 140px);
+}
+
+.leftPanel {
+  width: 360px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.rightPanel {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.notFound {
+  padding: 24px;
+}
