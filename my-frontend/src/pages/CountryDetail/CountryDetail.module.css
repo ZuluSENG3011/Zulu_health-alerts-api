@@ -1,9 +1,20 @@
 .page {
-  padding: 16px 24px;
   height: 100vh;
   overflow: hidden;
   background-color: #f5f6fa;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 24px auto 40px;
+  padding: 0 16px;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -25,11 +36,12 @@
 .layout {
   display: flex;
   gap: 16px;
-  height: calc(100vh - 80px);
+  flex: 1;
+  overflow: hidden;
 }
 
 .leftPanel {
-  width: 460px;
+  width: 380px;
   flex-shrink: 0;
   background: #fff;
   border-radius: 12px;
@@ -40,6 +52,8 @@
 
 .rightPanel {
   flex: 1;
+  min-width: 0;
+  width: 100%;
   background: #fff;
   border-radius: 12px;
   border: 1px solid #e0e0e0;
@@ -105,41 +119,41 @@
 }
 
 .alertIdLabel {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: #aaa;
   margin: 0;
 }
 
 .detailTitle {
-  font-size: 1.1rem;
+  font-size: 1.7rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.4;
 }
 
 .detailSection {
-  margin-top: 12px;
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 
 .sectionHeading {
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   font-weight: 700;
   margin: 0 0 4px 0;
   border-bottom: 1px solid #eee;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
 }
 
 .detailField {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .fieldLabel {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #888;
   font-weight: 500;
 }
@@ -147,14 +161,14 @@
 .tagRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .diseaseTag {
   background: #fff3e0;
   color: #e65100;
-  font-size: 0.78rem;
-  padding: 3px 10px;
+  font-size: 1rem;
+  padding: 6px 16px;
   border-radius: 20px;
   font-weight: 600;
 }
@@ -162,24 +176,24 @@
 .speciesTag {
   background: #f5f5f5;
   color: #555;
-  font-size: 0.78rem;
-  padding: 3px 10px;
+  font-size: 1rem;
+  padding: 6px 16px;
   border-radius: 20px;
 }
 
 .regionTag {
   background: #e8f5e9;
   color: #2e7d32;
-  font-size: 0.78rem;
-  padding: 3px 10px;
+  font-size: 1rem;
+  padding: 6px 16px;
   border-radius: 20px;
 }
 
 .locationTag {
   background: #f0f4ff;
   color: #4466cc;
-  font-size: 0.78rem;
-  padding: 3px 10px;
+  font-size: 1rem;
+  padding: 6px 16px;
   border-radius: 20px;
 }
 

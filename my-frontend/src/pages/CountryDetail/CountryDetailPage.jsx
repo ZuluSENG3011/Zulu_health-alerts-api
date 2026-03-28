@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Navigation from "../../components/Navigation";
 import styles from "./CountryDetail.module.css";
 
 const CountryDetailPage = ({ title, data }) => {
@@ -8,6 +9,8 @@ const CountryDetailPage = ({ title, data }) => {
 
   return (
     <div className={styles.page}>
+      <Navigation />
+      <main className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.subtitle}>
@@ -95,6 +98,7 @@ const CountryDetailPage = ({ title, data }) => {
           )}
         </div>
       </div>
+      </main>
     </div>
   );
 };
