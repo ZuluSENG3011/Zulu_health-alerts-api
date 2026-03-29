@@ -4,11 +4,11 @@ import json
 import os
 from pathlib import Path
 
-# from . import region_summary
-# from . import region_summary_api
+from . import region_summary
+from . import region_summary_api
 
-import region_summary
-import region_summary_api
+# import region_summary
+# import region_summary_api
 
 BASE_DIR = Path(__file__).resolve().parent
 DISEASE_INFO_JSON = BASE_DIR / "disease_info.json"
@@ -51,6 +51,8 @@ def generate_region_summary_entry(
 
     exact_match = find_by_region(database, region)
 
+    # print(exact_match)
+
     diseases = region_summary.extract_disease_name_from_result(exact_match)
 
     API_KEY = os.getenv("GEMINI_API_KEY")
@@ -67,12 +69,12 @@ def generate_region_summary_entry(
 
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    file = BASE_DIR2 / "scraper" / "scraper" / "alerts.json"
-    with open(file, "r", encoding="utf-8") as f:
-        database = json.load(f)
+#     file = BASE_DIR2 / "scraper" / "scraper" / "alerts.json"
+#     with open(file, "r", encoding="utf-8") as f:
+#         database = json.load(f)
 
-    generate_region_summary_entry(
-        window="3month", region="Asia", database=database
-    )
+#     generate_region_summary_entry(
+#         window="3month", region="Asia", database=database
+#     )
