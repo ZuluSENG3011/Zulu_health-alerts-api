@@ -73,7 +73,7 @@ const Navigation = () => {
 
                 <button
                   onClick={() => {
-                    navigate("/register");
+                    navigate("/signup");
                     setDropdownOpen(false);
                   }}
                   className={styles.dropdownItem}

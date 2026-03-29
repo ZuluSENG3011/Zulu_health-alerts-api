@@ -1,0 +1,134 @@
+.page {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #f7f9fc 0%, #eef3fb 100%);
+  box-sizing: border-box;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border: 1px solid #dbe2ee;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(37, 90, 212, 0.08);
+  padding: 32px 28px;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1c2b4a;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #6f7c96;
+  line-height: 1.5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2a3653;
+}
+
+.input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #d2d8e2;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 14px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: #9aa4b5;
+}
+
+.input:focus {
+  border-color: #255ad4;
+  box-shadow: 0 0 0 3px rgba(37, 90, 212, 0.12);
+}
+
+.primaryButton {
+  width: 100%;
+  height: 46px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #889aeb 0%, #255ad4 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(37, 90, 212, 0.22);
+}
+
+.primaryButton:active {
+  transform: translateY(0);
+}
+
+.footerText {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: #6f7c96;
+}
+
+.link {
+  color: #255ad4;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 24px 14px;
+  }
+
+  .card {
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+}

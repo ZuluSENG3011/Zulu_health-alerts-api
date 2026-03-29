@@ -4,8 +4,8 @@
 }
 
 .searchBar {
-  width: 500px;              /* total length */
-  height: 44px;              /* total height */
+  width: 500px;            
+  height: 44px;              
   background: #ffffff;
   border-radius: 6px;
   border: 1px solid #d0d6e2; 
