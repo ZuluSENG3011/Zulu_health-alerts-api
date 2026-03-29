@@ -4,8 +4,8 @@ from dateutil.relativedelta import relativedelta
 from pathlib import Path
 import os
 
-import region_summary_api
-# from . import region_summary_api
+# import region_summary_api
+from . import region_summary_api
 
 BASE_DIR = Path(__file__).resolve().parent
 DISEASE_INFO_JSON = BASE_DIR / "disease_info.json"
