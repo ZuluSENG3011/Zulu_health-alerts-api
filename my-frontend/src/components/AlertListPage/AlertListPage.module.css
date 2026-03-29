@@ -176,6 +176,15 @@
   font-weight: 600;
 }
 
+.clickable {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.clickable:hover {
+  opacity: 0.75;
+}
+
 .speciesTag {
   background: #f5f5f5;
   color: #555;

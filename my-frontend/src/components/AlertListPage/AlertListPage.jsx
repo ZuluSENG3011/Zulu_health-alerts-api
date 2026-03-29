@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "../Navigation";
 import styles from "./AlertListPage.module.css";
 
 const AlertListPage = ({ title, data }) => {
   const [selectedAlert, setSelectedAlert] = useState(null);
+  const navigate = useNavigate();
 
   const alerts = data.alerts;
 
@@ -56,11 +58,17 @@ const AlertListPage = ({ title, data }) => {
                     <span className={styles.fieldLabel}>Issue Date:</span> {selectedAlert.date}
                   </p>
 
-                  {/* disease tag */}
+                  {/* disease tags - click to view disease page */}
                   <div className={styles.detailField}>
                     <div className={styles.tagRow}>
                       {selectedAlert.disease.map((d, i) => (
-                        <span key={i} className={styles.diseaseTag}>{d}</span>
+                        <span
+                          key={i}
+                          className={`${styles.diseaseTag} ${styles.clickable}`}
+                          onClick={() => navigate(`/disease/${encodeURIComponent(d)}`)}
+                        >
+                          {d}
+                        </span>
                       ))}
                     </div>
                   </div>
