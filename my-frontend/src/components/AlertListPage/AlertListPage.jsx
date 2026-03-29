@@ -16,7 +16,7 @@ const AlertListPage = ({ title, data }) => {
         <div className={styles.header}>
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.subtitle}>
-            A snapshot of global health events from the past year ({alerts.length} alerts)
+            Search Results ({alerts.length})
           </p>
         </div>
 
