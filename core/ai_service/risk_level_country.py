@@ -3,8 +3,15 @@ from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 from pathlib import Path
 import os
-from . import date_tools
+
 import random
+
+# from . import date_tools
+# from . import region_summary
+
+import date_tools
+# import region_summary
+
 
 BASE_DIR = Path(__file__).resolve().parent
 DISEASE_INFO_JSON = BASE_DIR / "disease_info.json"
@@ -83,12 +90,18 @@ def extract_all_countries(database:list[dict]) -> dict:
     }
     COUNTRY_ALIASES = {
         "Democratic Republic of the Congo": "DR Congo",
+        "Congo, Democratic Republic of the Congo": "DR Congo",
         "Bahamas": "The Bahamas",
         "Cote d'Ivoire": "Ivory Coast",
         "Timor-Leste": "Timor Leste",
         "Türkiye": "Turkey",
         "Turkiye": "Turkey",
         "Czechia": "Czech Republic",
+        "Palestinian Territory": "Palestine",
+        "Macedonia": "North Macedonia",
+        "Republic of Macedonia (FYROM)": "North Macedonia",
+        "St. Lucia": "Saint Lucia",
+        "The Gambia": "Gambia",
     }
     for alert in database:
         location = alert.get("fields", {}).get("locations", [])
@@ -160,6 +173,49 @@ def get_new_alerts(database:list[dict], start_date:date) -> list:
         new_alerts.append(alert)
 
     return new_alerts
+
+
+def update_risk_level_after_fetch(database:list[dict]) -> dict:
+    risk_level = load_json(RISK_LEVEL_JSON)
+    start_date = risk_level.get("meta", {}).get("last_processed_date", "")
+    try:
+        start_date = date.fromisoformat(start_date)
+    except ValueError:
+        return {"error_msg":"invalid last_processed_date"}
+    
+    new_alerts = get_new_alerts(database, start_date)
+
+    countries_need_update = extract_all_countries(new_alerts)
+
+    for country, info in countries_need_update.items():
+        last_alert_date = info.get("last_alert_at", "")
+        if not isinstance(country, str):
+            continue
+        relevant_alerts, location_chain = region_summary.filter_entry(
+            window="3month", location_str=country, database=database
+        )
+        
+    return {}
+
+
+
+
+
+if __name__ == "__main__":
+
+    file = BASE_DIR2 / "scraper" / "scraper" / "alerts.json"
+    with open(file, "r", encoding="utf-8") as f:
+        database = json.load(f)
+
+    countries = extract_all_countries(database)
+    print(countries)
+
+    
+
+
+
+
+
 
 
 
