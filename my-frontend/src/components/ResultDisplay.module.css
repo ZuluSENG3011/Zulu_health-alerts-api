@@ -1,26 +1,6 @@
-.page {
-  height: 100vh;
-  overflow: hidden;
-  background-color: #f5f6fa;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.container {
-  max-width: 1120px;
-  margin: 24px auto 0;
-  padding: 0 16px;
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .header {
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .title {
@@ -39,28 +19,34 @@
   display: flex;
   gap: 16px;
   flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
 .leftPanel {
   width: 320px;
   flex-shrink: 0;
+  min-height: 0;
   background: #fff;
   border-radius: 12px;
   border: 1px solid #e0e0e0;
   overflow-y: auto;
+  overflow-x: hidden; 
   padding: 16px;
+  box-sizing: border-box;
 }
 
 .rightPanel {
   flex: 1;
   min-width: 0;
-  width: 100%;
+  min-height: 0;
   background: #fff;
   border-radius: 12px;
   border: 1px solid #e0e0e0;
   padding: 16px 20px;
   overflow-y: auto;
+  overflow-x: hidden; 
+  box-sizing: border-box;
 }
 
 .panelTitle {
@@ -70,11 +56,10 @@
   margin: 0 0 12px 0;
 }
 
-/* left panel rows */
 .alertRow {
   display: flex;
   gap: 12px;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.15s;
@@ -95,6 +80,7 @@
   white-space: nowrap;
   padding-top: 2px;
   min-width: 85px;
+  flex-shrink: 0;
 }
 
 .rowTitle {
@@ -102,9 +88,9 @@
   font-weight: 500;
   color: #222;
   line-height: 1.4;
+  min-width: 0;
 }
 
-/* right panel detail */
 .emptyState {
   height: 100%;
   width: 100%;
@@ -119,6 +105,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 .alertIdLabel {
@@ -132,6 +119,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 .detailSection {
@@ -139,6 +127,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 .sectionHeading {
@@ -153,6 +142,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 .fieldLabel {
@@ -174,6 +164,15 @@
   padding: 6px 16px;
   border-radius: 20px;
   font-weight: 600;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.clickable:hover {
+  opacity: 0.75;
 }
 
 .speciesTag {
@@ -200,6 +199,19 @@
   border-radius: 20px;
 }
 
-.notFound {
-  padding: 24px;
+@media (max-width: 1024px) {
+  .layout {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .leftPanel {
+    width: 100%;
+    min-height: 280px;
+    max-height: 400px;
+  }
+
+  .rightPanel {
+    min-height: 400px;
+  }
 }

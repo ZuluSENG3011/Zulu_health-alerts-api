@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import WorldMap from "react-svg-worldmap";
-import { countryData } from "../data/mockData";
+import { countryData } from "../data/mockData.js";
 import styles from "./WorldMap.module.css";
 
 function WorldMapComponent() {

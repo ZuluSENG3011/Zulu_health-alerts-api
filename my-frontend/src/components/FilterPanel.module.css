@@ -6,13 +6,13 @@
   border-right: 1px solid #d9d9d9;
   box-sizing: border-box;
   padding: 16px 10px 24px 12px;
-  overflow-y: auto;
+  overflow: hidden;
   position: relative;
 }
 
 .collapsedPanel {
-  width: 78px;
-  min-width: 78px;
+  width: 60px;
+  min-width: 60px;
   height: 100vh;
   background: transparent;
   border-right: 1px solid #d9d9d9;

@@ -1,0 +1,48 @@
+.page {
+  height: 100vh;
+  background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.contentArea {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.container {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: 16px 30px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.notFound {
+  padding: 24px;
+}
+
+@media (max-width: 1024px) {
+  .page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .contentArea {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .container {
+    overflow: visible;
+    min-height: auto;
+  }
+}

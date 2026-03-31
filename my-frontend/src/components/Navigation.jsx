@@ -37,7 +37,7 @@ const Navigation = () => {
           <SearchBar />
         </div>
 
-        {/* 右 */}
+        {/* right */}
         <div className={styles.rightSection}>
           <button
             className={styles.navButton}
