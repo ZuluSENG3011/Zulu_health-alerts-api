@@ -1,12 +1,10 @@
 import os
-
 from collections import Counter
-from django.db.models import Count
 from datetime import date, timedelta
 
-from django.db.models import Q
-from django.utils.dateparse import parse_date
+from django.db.models import Count, Q
 from django.db.models.functions import TruncDay, TruncWeek, TruncMonth
+from django.utils.dateparse import parse_date
 from django.http import JsonResponse
 
 from drf_yasg.utils import swagger_auto_schema
@@ -14,21 +12,52 @@ from drf_yasg import openapi
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
+from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
 
 from core.models import Alert
+from .serializers import RegisterSerializer
+# UserSerializer imported only if needed elsewhere
 
+# ------------------------
+# Signup
+# ------------------------
+
+
+class RegisterView(generics.CreateAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]  # public access
+
+
+# ------------------------
+# Signin
+# ------------------------
+class LoginView(APIView):
+    permission_classes = [AllowAny]  # public access
+
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        user = authenticate(username=username, password=password)
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key})
+        return Response(
+            {"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+
+# ------------------------
+# Swagger query parameters
+# ------------------------
 common_filter_parameters = [
     openapi.Parameter(
         "id",
         openapi.IN_QUERY,
         description="Filter by external alert identifier",
-        type=openapi.TYPE_STRING,
-    ),
-    openapi.Parameter(
-        "from",
-        openapi.IN_QUERY,
-        description="Start date in YYYY-MM-DD format",
         type=openapi.TYPE_STRING,
     ),
     openapi.Parameter(
