@@ -64,9 +64,9 @@ def generate_region_summary_entry(
     if not exact_match:
         return {"error": "relevant region not found in dataset"}
 
-    region = [region]
-    response = AI.region_summary(exact_match, region, diseases)
-    return {"summary": response, "region": region}
+    region_list = [region]
+    response = AI.region_summary(exact_match, region_list, diseases)
+    return {"summary": response, "region": region_list}
 
 
 # if __name__ == "__main__":

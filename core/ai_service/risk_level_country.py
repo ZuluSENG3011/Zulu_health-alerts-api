@@ -38,7 +38,7 @@ def save_json(path: Path, data: dict) -> None:
 
 
 def extract_all_countries(database: list[dict]) -> dict:
-    countries = {}
+    countries: dict[str, dict] = {}
     # Exclude non-country entries and alternative names
     # that should be normalized to another country name.
     NOT_INCLUDE = {
