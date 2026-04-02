@@ -355,6 +355,38 @@ def update_entry_risk_level(database: list[dict]) -> dict:
     return risk_level
 
 
+def get_country_risk_level_info(country_names: list[str]) -> dict:
+    risk_level = load_json(RISK_LEVEL_JSON, None)
+    if not risk_level:
+        return {"error_msg": "error in reading RISK LEVEL JSON"}
+
+    regions = risk_level.get("regions", {})
+    if not isinstance(regions, dict):
+        return {"error_msg": "invalid regions in risk level json"}
+
+    if not isinstance(country_names, list):
+        return {"error_msg": "country_names must be a list"}
+
+    if not country_names:
+        return regions
+
+    country_info = {}
+    for country in country_names:
+        if not isinstance(country, str):
+            continue
+
+        country = country.strip()
+        if not country:
+            continue
+
+        if country not in regions:
+            continue
+
+        country_info[country] = regions[country]
+
+    return country_info
+
+
 if __name__ == "__main__":
 
     file = BASE_DIR2 / "scraper" / "scraper" / "alerts.json"
