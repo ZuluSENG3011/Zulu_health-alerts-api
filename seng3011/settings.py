@@ -8,7 +8,8 @@ SECRET_KEY = os.environ.get(
     "dev-only-secret",
 )
 
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "production")
 
 ALLOWED_HOSTS = ["*"]
 

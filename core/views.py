@@ -135,8 +135,12 @@ def serialise_alert(alert):
     }
 
 
-def home(request):
-    return JsonResponse({"message": "Zulu API is running"})
+@api_view(["GET"])
+def health(request):
+    return Response({
+        "status": "ok",
+        "environment": os.getenv("ENVIRONMENT")
+    })
 
 
 @swagger_auto_schema(
