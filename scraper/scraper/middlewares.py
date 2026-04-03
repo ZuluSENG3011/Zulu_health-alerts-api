@@ -93,8 +93,10 @@ class PromedprojectDownloaderMiddleware:
 
     def process_response(self, request, response, spider):
         if response.status in (401, 403):
-            spider.logger.warning(f"Request got {
-                response.status}. API key may have expired. Refreshing key...")
+            spider.logger.warning(
+                f"Request got {response.status}. "
+                "API key may have expired. Refreshing key..."
+            )
 
             retry_count = request.meta.get("auth_retry_count", 0)
             if retry_count >= 3:
@@ -114,8 +116,8 @@ class PromedprojectDownloaderMiddleware:
             new_request = request.replace(url=new_url, dont_filter=True)
             new_request.meta["auth_retry_count"] = retry_count + 1
 
-            spider.logger.info(f"Retrying request with refreshed API key (attempt {
-                retry_count + 1})")
+            spider.logger.info(
+                f"Retrying request with refreshed API key (attempt {retry_count + 1})")
             return new_request
 
         return response
