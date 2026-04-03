@@ -4,7 +4,7 @@ from .views import get_alerts, stats_regions, stats_timeseries
 from .views import RegisterView, LoginView
 
 urlpatterns = [
-    path("", views.home, name="home"),
+    path("health/", views.health, name="health"),
     path("alerts/", get_alerts, name="alerts"),
     path("stats/timeseries/", stats_timeseries, name="stats_timeseries"),
     path("stats/regions/", stats_regions, name="stats_regions"),
