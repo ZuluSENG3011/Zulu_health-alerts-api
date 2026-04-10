@@ -1,14 +1,31 @@
 import { useState } from "react";
+import { getTimeseriesStats } from "../api/alerts";
 import styles from "./DiseaseGraph.module.css";
 
 function DiseaseGraph() {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [disease, setDisease] = useState("");
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // gotta fetch here
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await getTimeseriesStats({ from, to, disease });
+      console.log(result.results);
+      setData(result.results || []);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch data");
+    } finally {
+      setLoading(false);
+    }
+
   };
 
   return (
@@ -42,6 +59,9 @@ function DiseaseGraph() {
           </button>
         </div>
       </form>
+
+      {loading && <p>Loading...</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }
