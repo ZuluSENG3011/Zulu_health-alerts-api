@@ -30,9 +30,7 @@ class Command(BaseCommand):
         created = 0
         skipped = 0
 
-        existing_ids = set(
-            Alert.objects.values_list("external_id", flat=True)
-        )
+        existing_ids = set(Alert.objects.values_list("external_id", flat=True))
 
         for item in data:
             fields = item.get("fields", {})

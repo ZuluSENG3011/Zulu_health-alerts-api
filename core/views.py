@@ -15,6 +15,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from core.models import Alert
+from core.ai_service.risk_level_country import get_country_risk_level_info
+from core.ai_service.region_summary import generate_summary_entry
+from core.ai_service.true_region_summary import generate_region_summary_entry
 
 common_filter_parameters = [
     openapi.Parameter(
@@ -285,9 +288,7 @@ def stats_diseases(request):
 
             response_data["ai_limit"] = ai_limit
             response_data["new_disease"] = update_result.get("new_disease", [])
-            response_data["updated_disease"] = update_result.get(
-                "updated_disease", []
-            )
+            response_data["updated_disease"] = update_result.get("updated_disease", [])
 
             if update_result.get("errors"):
                 response_data["severity_update_errors"] = update_result["errors"]
@@ -342,7 +343,7 @@ timeseries_parameters = [
     responses={
         200: "Timeseries summary returned successfully.",
         400: "Invalid interval. Must be day, week, or month.",
-    }
+    },
 )
 @api_view(["GET"])
 def stats_timeseries(request):
@@ -434,8 +435,7 @@ def serialise_alert_for_ai(alert):
     responses={200: "Summary generated successfully."},
 )
 @api_view(["GET"])
-def region_summary_view(request):
-    from core.ai_service.region_summary import generate_summary_entry
+def region_summary_by_location_view(request):
 
     location = request.query_params.get("location")
     window = request.query_params.get("window")
@@ -444,7 +444,7 @@ def region_summary_view(request):
     limit = int(request.query_params.get("limit", 200))
 
     if not location:
-        return Response(
+        return JsonResponse(
             {"error": "location_chain or location_str is required"},
             status=status.HTTP_400_BAD_REQUEST,
         )
@@ -453,13 +453,13 @@ def region_summary_view(request):
     end_date = parse_date(raw_to) if raw_to else None
 
     if raw_from and start_date is None:
-        return Response(
+        return JsonResponse(
             {"error": "invalid from date, expected YYYY-MM-DD"},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
     if raw_to and end_date is None:
-        return Response(
+        return JsonResponse(
             {"error": "invalid to date, expected YYYY-MM-DD"},
             status=status.HTTP_400_BAD_REQUEST,
         )
@@ -475,15 +475,145 @@ def region_summary_view(request):
             start_date=start_date,
             end_date=end_date,
         )
-        return Response(result, status=status.HTTP_200_OK)
+        return JsonResponse(result, status=status.HTTP_200_OK)
 
     except ValueError as e:
-        return Response(
+        return JsonResponse(
             {"error": str(e)},
             status=status.HTTP_400_BAD_REQUEST,
         )
     except RuntimeError as e:
-        return Response(
+        return JsonResponse(
+            {"error": "AI summary generation failed", "detail": str(e)},
+            status=status.HTTP_502_BAD_GATEWAY,
+        )
+
+
+risk_level_parameters = [
+    openapi.Parameter(
+        "country",
+        openapi.IN_QUERY,
+        description=(
+            "Country name. Can be supplied multiple times. "
+            "If omitted, return all country risk level info."
+        ),
+        type=openapi.TYPE_STRING,
+    ),
+]
+
+
+@swagger_auto_schema(
+    method="get",
+    operation_description="Return stored country risk level info from risk level json.",
+    tags=["risk level"],
+    manual_parameters=risk_level_parameters,
+    responses={200: "Country risk level info returned successfully."},
+)
+@api_view(["GET"])
+def get_country_risk_levels(request):
+    country_names = request.query_params.getlist("country")
+
+    result = get_country_risk_level_info(country_names)
+    # print("result =", result)
+
+    if "error_msg" in result:
+        return JsonResponse(
+            {"error": result["error_msg"]},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+    return JsonResponse(
+        {"countries": result},
+        status=status.HTTP_200_OK,
+    )
+
+
+region_summary_region_parameters = [
+    openapi.Parameter(
+        "region",
+        openapi.IN_QUERY,
+        description="Region string to summarise",
+        type=openapi.TYPE_STRING,
+        required=True,
+    ),
+    openapi.Parameter(
+        "window",
+        openapi.IN_QUERY,
+        description="Optional time window (7day, 1month, 3month, 6month)",
+        type=openapi.TYPE_STRING,
+        enum=["7day", "1month", "3month", "6month"],
+    ),
+    openapi.Parameter(
+        "from",
+        openapi.IN_QUERY,
+        description="Start date in YYYY-MM-DD format",
+        type=openapi.TYPE_STRING,
+    ),
+    openapi.Parameter(
+        "to",
+        openapi.IN_QUERY,
+        description="End date in YYYY-MM-DD format",
+        type=openapi.TYPE_STRING,
+    ),
+]
+
+
+@swagger_auto_schema(
+    method="get",
+    operation_description="Generate an AI summary for a region.",
+    tags=["summary"],
+    manual_parameters=region_summary_region_parameters,
+    responses={200: "Region summary generated successfully."},
+)
+@api_view(["GET"])
+def region_summary_by_region_view(request):
+    region = request.query_params.get("region")
+    window = request.query_params.get("window")
+    raw_from = request.query_params.get("from")
+    raw_to = request.query_params.get("to")
+
+    if not region:
+        return JsonResponse(
+            {"error": "region is required"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    start_date = parse_date(raw_from) if raw_from else None
+    end_date = parse_date(raw_to) if raw_to else None
+
+    if raw_from and start_date is None:
+        return JsonResponse(
+            {"error": "invalid from date, expected YYYY-MM-DD"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if raw_to and end_date is None:
+        return JsonResponse(
+            {"error": "invalid to date, expected YYYY-MM-DD"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    # query_set = Alert.objects.all().order_by("-date")[:limit]
+    alerts = Alert.objects.all().order_by("-date")
+    database = [serialise_alert_for_ai(alert) for alert in alerts]
+
+    try:
+        result = generate_region_summary_entry(
+            region=region,
+            database=database,
+            window=window,
+            start_date=start_date,
+            end_date=end_date,
+        )
+        return JsonResponse(result, status=status.HTTP_200_OK)
+
+    except ValueError as e:
+        return JsonResponse(
+            {"error": str(e)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    except RuntimeError as e:
+        return JsonResponse(
             {"error": "AI summary generation failed", "detail": str(e)},
             status=status.HTTP_502_BAD_GATEWAY,
         )
