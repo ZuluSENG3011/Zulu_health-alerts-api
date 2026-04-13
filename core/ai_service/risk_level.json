@@ -1,0 +1,1944 @@
+{
+  "meta": {
+    "date_to_refresh": 14,
+    "last_processed_date": "2026-03-15"
+  },
+  "regions": {
+    "United States": {
+      "risk_level": "high",
+      "reason": "The United States is experiencing a widespread and significant Measles outbreak, with over 60 alerts reported in early 2026 across dozens of states. Measles is highly contagious and carries a high risk of severe complications such as pneumonia and encephalitis. Recent alerts specifically highlight large indoor exposures in major tourist destinations like Las Vegas and documented exposures at airports and on international flights. The risk is further compounded by recent reports of Mpox Clade I in New York City and multiple clusters of Legionnaires' disease associated with hotels and cruise lines, which are highly relevant to travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731503",
+        "8731499",
+        "8731462",
+        "8731251",
+        "8731204"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-15",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Canada": {
+      "risk_level": "high",
+      "reason": "Canada is experiencing a widespread and active measles outbreak with multiple recent alerts across several provinces, including documented exposures at airports and large public events. Measles is classified as high severity and highly contagious in crowded areas. Additionally, a recent report of Mpox Clade 1b in Toronto and various foodborne illness alerts at resorts and convention centers further contribute to the risk for travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731431",
+        "8731347",
+        "8731136",
+        "8730323",
+        "8731459"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-15",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Vietnam": {
+      "risk_level": "medium",
+      "reason": "Multiple recent reports of foodborne illnesses, including Salmonellosis and various marine toxins, have been documented across several regions including Ho Chi Minh City and Hanoi. These incidents are linked to common food items like banh mi and seafood, posing a moderate risk to travelers using public dining facilities.",
+      "supporting_alert_ids": [
+        "8731502",
+        "8731383",
+        "8731052",
+        "8730954",
+        "8730781"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-14",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "India": {
+      "risk_level": "high",
+      "reason": "India is currently experiencing multiple significant infectious disease outbreaks across various regions. Recent alerts include a high-severity Measles case in Bangalore, fatal waterborne outbreaks of Leptospirosis and Hepatitis E in Punjab, and a cluster of Nipah virus cases in West Bengal. The high frequency of fatal foodborne and waterborne illness reports across multiple states indicates a widespread risk for travelers using shared public infrastructure.",
+      "supporting_alert_ids": [
+        "8731500",
+        "8731241",
+        "8731200",
+        "8730160",
+        "8730977"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-14",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "South Africa": {
+      "risk_level": "medium",
+      "reason": "Recent alerts from March 2026 indicate active transmission of Diphtheria and Rubella within South Africa. Additionally, a Norovirus outbreak was reported on a cruise ship in February 2026. While these signals are recent and involve multiple diseases, the evidence does not currently suggest a single high-severity or widespread epidemic that would justify a high risk level for all travelers.",
+      "supporting_alert_ids": [
+        "8731487",
+        "8731297",
+        "8730524"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-14",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Kyrgyzstan": {
+      "risk_level": "medium",
+      "reason": "Kyrgyzstan has experienced recent alerts for both Measles and recurring Foodborne Illness within the last three months. Measles is identified as a high-severity and highly contagious disease, particularly in crowded public settings, while the multiple foodborne illness reports in Bishkek indicate an ongoing localized risk. The combination of these factors justifies a medium risk level for travelers.",
+      "supporting_alert_ids": [
+        "8731477",
+        "8730913",
+        "8730143"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-14",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Vanuatu": {
+      "risk_level": "medium",
+      "reason": "Vanuatu has experienced multiple recent health alerts, including a cluster of Ciguatera fish poisoning cases in March 2026 and a pertussis (whooping cough) alert in January 2026, particularly affecting the Shefa Province and Port Vila. These represent active foodborne and respiratory risks for travelers using public infrastructure and local services.",
+      "supporting_alert_ids": [
+        "8731471",
+        "8731254",
+        "8730194"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-14",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "France": {
+      "risk_level": "medium",
+      "reason": "France has recently reported a fatal listeriosis outbreak linked to deli meats and a measles outbreak in a ski resort. While measles is categorized as high severity and highly contagious in crowded areas, the current evidence is localized or linked to specific food products. The presence of these diseases in tourist-heavy and public settings justifies a medium risk level for travelers.",
+      "supporting_alert_ids": [
+        "8731457",
+        "8730624"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-13",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Brazil": {
+      "risk_level": "medium",
+      "reason": "Brazil has reported multiple recent and diverse infectious disease outbreaks across several states within the last three months. These include Chikungunya in Mato Grosso do Sul, Hepatitis A outbreaks in Minas Gerais and Sao Paulo, and repeated alerts for waterborne gastroenteritis at beaches in Santa Catarina. Additionally, foodborne Chagas disease and a fatal Hantavirus case have been noted. The variety and frequency of these signals, particularly those involving waterborne and foodborne transmission in public or tourist-frequented areas, indicate a moderate risk for travelers.",
+      "supporting_alert_ids": [
+        "8731438",
+        "8731101",
+        "8730687",
+        "8730313",
+        "8730162"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-12",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Honduras": {
+      "risk_level": "low",
+      "reason": "A single recent alert reports a fatal human case of Myiasis (New World Screwworm) in Tegucigalpa. However, disease metadata indicates that Myiasis generally has low severity and a low risk of exposure for typical travelers, as transmission typically requires contact with larvae in soil or clothing.",
+      "supporting_alert_ids": [
+        "8731436"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-12",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Peru": {
+      "risk_level": "low",
+      "reason": "Recent reports of Leptospirosis in Piura and Anthrax in Ica are linked to specific environmental flooding or occupational slaughterhouse contexts that pose minimal risk to typical travelers. Other reported outbreaks in Ica and Arequipa involve animal-specific diseases, such as Newcastle Disease and Brucellosis, which do not present a direct threat to human visitors using standard public infrastructure.",
+      "supporting_alert_ids": [
+        "8731220",
+        "8731432",
+        "8730979",
+        "8730238"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Sri Lanka": {
+      "risk_level": "low",
+      "reason": "Evidence is limited to a single recent alert for Leptospirosis in Colombo. While the disease is of medium severity, the risk of exposure for typical travelers is low as it requires contact with contaminated water, and the sparse evidence does not provide a meaningful current signal for this group.",
+      "supporting_alert_ids": [
+        "8731427"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "China": {
+      "risk_level": "medium",
+      "reason": "China, particularly Hong Kong and Guangdong, has reported multiple recent outbreaks of foodborne and respiratory illnesses. Significant signals include repeated Norovirus clusters linked to raw seafood and a cruise ship, widespread Rhinovirus transmission in the south, and reports of Influenza and Meningococcal disease. While Avian Influenza is noted as high severity, the risk of exposure for typical travelers is low as it requires direct contact with poultry. The frequency of these alerts in major travel hubs justifies a medium risk level for visitors using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731209",
+        "8730742",
+        "8730558",
+        "8730907",
+        "8730730"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "New Zealand": {
+      "risk_level": "high",
+      "reason": "Recent reports from February and March 2026 indicate multiple measles exposure events in high-traffic traveler environments, including airports, flights, trains, and public venues. Measles is identified as a high-severity and highly contagious disease, posing a significant risk in the shared public infrastructure typically used by visitors.",
+      "supporting_alert_ids": [
+        "8731425",
+        "8731084"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Nepal": {
+      "risk_level": "high",
+      "reason": "Recent reports from early 2026 indicate multiple outbreaks of Measles across different provinces (Gandaki and Madhesh) and a large cluster of suspected Influenza in Karnali. Measles is identified as a high-severity disease with a high risk of exposure in crowded public settings, which are common for travelers using shared infrastructure.",
+      "supporting_alert_ids": [
+        "8731420",
+        "8731191",
+        "8730403"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Argentina": {
+      "risk_level": "medium",
+      "reason": "Argentina is experiencing multiple concurrent infectious disease signals, including a high frequency of Hantavirus alerts across several provinces (Salta, Chubut, Buenos Aires) and an expanding Hepatitis A outbreak in Salta. Additionally, recent reports of Chikungunya and increased Leptospirosis cases indicate a broad range of active environmental and vector-borne risks that warrant caution for travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731414",
+        "8731305",
+        "8730208",
+        "8730039",
+        "8731249"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Colombia": {
+      "risk_level": "high",
+      "reason": "Colombia has reported a sustained and significant outbreak of Yellow Fever throughout early 2026, with multiple human cases and fatalities documented in Tolima, Huila, and the capital city of Bogotá. The frequency of these reports indicates an ongoing transmission risk. Additionally, a recent case of Measles was identified in Bogotá; according to provided metadata, Measles is highly contagious in crowded public areas and carries a high severity risk. The combination of a persistent, fatal Yellow Fever outbreak and the presence of a highly transmissible respiratory disease in a major travel hub justifies a high risk assessment for visitors.",
+      "supporting_alert_ids": [
+        "8731238",
+        "8731230",
+        "8730693",
+        "8730514",
+        "8730370"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Costa Rica": {
+      "risk_level": "medium",
+      "reason": "A recent alert for measles in San José indicates a risk of exposure to a highly contagious and severe disease in public areas. While other recent reports include E. coli and hospital-related infections, these are largely confined to institutional settings like prisons and hospitals, posing less direct risk to typical travelers. The presence of chikungunya also contributes to a moderate risk profile.",
+      "supporting_alert_ids": [
+        "8731408",
+        "8730488",
+        "8730873",
+        "8730521"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-11",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Ireland": {
+      "risk_level": "low",
+      "reason": "Recent alerts for Ireland are limited to a localized norovirus outbreak within a hospital setting and an older preemptive product recall for infant formula. These events do not indicate a widespread or significant infectious disease risk for typical travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731406",
+        "8729962"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-10",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Mozambique": {
+      "risk_level": "medium",
+      "reason": "A recent alert from March 2026 indicates a measles case count in Maputo, a major urban and travel hub. While measles is highly contagious in crowded public settings and has high severity, the evidence is currently limited to a single recent report, justifying a medium risk level rather than high.",
+      "supporting_alert_ids": [
+        "8731407"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-10",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Ivory Coast": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Ivory Coast, resulting in a low risk assessment due to the absence of evidence indicating current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-10",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "DR Congo": {
+      "risk_level": "medium",
+      "reason": "Two recent alerts from March 2026 report suspected cases of Ebola in North Kivu and the Kasai/Kinshasa regions. While these are currently suspected cases and requests for information rather than confirmed outbreaks, the potential presence of a high-severity disease in multiple areas indicates a meaningful signal for travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731397",
+        "8731394"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-10",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "United Kingdom": {
+      "risk_level": "high",
+      "reason": "The United Kingdom has multiple recent and repeated alerts for Measles across England, Scotland, and London as of March 2026. Measles is identified in metadata as a high-severity and highly contagious disease, particularly in crowded areas like airports and public transport. Additionally, recent reports of a Legionnaires' cluster in London and fatal infections linked to contaminated wipes (Burkholderia stabilis) contribute to an elevated risk profile for travelers using shared public infrastructure.",
+      "supporting_alert_ids": [
+        "8731344",
+        "8731180",
+        "8731128",
+        "8731372",
+        "8731368"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-10",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Chile": {
+      "risk_level": "medium",
+      "reason": "Chile has reported a significant number of Hantavirus cases across multiple regions, including Maule, Ñuble, Valparaíso, and Bío Bío, with several fatalities recorded between January and March 2026. While Hantavirus transmission is typically associated with specific environmental factors rather than general public infrastructure, the high frequency and geographic spread of recent alerts indicate an active and widespread signal. Additionally, a fatal case of Streptococcus Group A meningitis and H5N1 avian influenza in wild birds have been reported, though these present lower direct risks to typical travelers.",
+      "supporting_alert_ids": [
+        "8731375",
+        "8731331",
+        "8731147",
+        "8731085",
+        "8731031"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-09",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Australia": {
+      "risk_level": "high",
+      "reason": "Australia has recorded multiple recent and frequent alerts for Measles, a high-severity and highly contagious respiratory disease, with specific exposures identified in airports and major urban areas like Sydney as recently as March 2026. The presence of other active signals, including increasing Leptospirosis prevalence and regional outbreaks of Melioidosis and Cryptosporidiosis, further contributes to an elevated risk profile for travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731384",
+        "8731176",
+        "8729897",
+        "8730886",
+        "8730847"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-09",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Malaysia": {
+      "risk_level": "medium",
+      "reason": "Recent alerts indicate the presence of several infectious diseases in Malaysia, including a travel-related case of Measles, which is highly contagious in crowded environments like airports. Other recent reports include Chikungunya in Kedah and localized outbreaks of Tuberculosis and foodborne illness in school settings. While these signals are present, the evidence is not yet strong enough to justify a high risk level for all typical travelers.",
+      "supporting_alert_ids": [
+        "8731378",
+        "8730947",
+        "8730643",
+        "8730520"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-09",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Uruguay": {
+      "risk_level": "medium",
+      "reason": "Recent reports from early 2026 indicate human cases of Hantavirus in the Montevideo and Canelones regions. Additionally, Avian Influenza H5N1 was detected in wild birds in February 2026. While these diseases typically require specific environmental or animal contact rather than casual contact in public infrastructure, the presence of multiple recent zoonotic alerts in areas frequented by travelers justifies a medium risk level.",
+      "supporting_alert_ids": [
+        "8731359",
+        "8729849",
+        "8731073"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-08",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Slovakia": {
+      "risk_level": "low",
+      "reason": "The only provided alert concerns a case of iatrogenic botulism linked to a specific medical procedure (hyperhidrosis treatment) in Bratislava. This is a localized clinical incident rather than a community-acquired outbreak, and it does not indicate an increased risk for typical travelers using public transport, hotels, or tourist sites.",
+      "supporting_alert_ids": [
+        "8731357"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-08",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Mexico": {
+      "risk_level": "high",
+      "reason": "Mexico is currently experiencing multiple significant infectious disease outbreaks. Measles, which is classified with high severity and high exposure risk in crowded areas, has seen recent fatal cases and international transmission originating from major hubs like Mexico City. Additionally, there is a strong recent signal of fatal human cases of Rocky Mountain Spotted Fever across several states, and a human case of New World Screwworm (Myiasis) was recently reported in the capital. The frequency and severity of these human health alerts, particularly for highly contagious diseases in transit-heavy areas, justify a high risk level for travelers.",
+      "supporting_alert_ids": [
+        "8731230",
+        "8730757",
+        "8730433",
+        "8731345",
+        "8731234"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-08",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Spain": {
+      "risk_level": "medium",
+      "reason": "Spain has recently reported several distinct infectious disease incidents, including a case of H1N1v influenza in Catalonia and a gastroenteritis outbreak in Galicia. Earlier reports from early 2026 also identified drug-resistant meningococcal disease in Madrid, Mpox, and an increase in pediatric Hepatitis A cases in Andalusia. While many of these events are localized or involve specific populations, the variety of recent signals across multiple regions suggests a moderate risk level for travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731338",
+        "8731179",
+        "8730626",
+        "8730479",
+        "8730045"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-07",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Japan": {
+      "risk_level": "medium",
+      "reason": "Japan has recently reported an increase in measles cases in Tokyo, which is a highly contagious disease with high severity in crowded environments. Additionally, multiple recent norovirus outbreaks in hotel and restaurant settings, along with a case of meningococcal disease in a tourist, indicate a moderate infectious disease risk for travelers using public infrastructure and dining facilities.",
+      "supporting_alert_ids": [
+        "8731105",
+        "8731077",
+        "8730931",
+        "8730835",
+        "8731329"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-07",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Indonesia": {
+      "risk_level": "high",
+      "reason": "A recent report from March 2026 indicates an active measles outbreak in Jakarta involving spread and fatalities. Measles is a high-severity, highly contagious disease transmitted via respiratory droplets, posing a significant risk in crowded travel environments such as airports and public transport. Additionally, a foodborne illness incident was reported in Central Java in February 2026.",
+      "supporting_alert_ids": [
+        "8731327",
+        "8730654"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-07",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Greece": {
+      "risk_level": "low",
+      "reason": "Current evidence for Greece includes a recent report of human myiasis and older alerts from January 2026 concerning tuberculosis in schools and prisons and seasonal influenza. These reports are either dated, localized to specific environments, or involve low-frequency parasitic incidents, and do not present a significant current signal for general travelers.",
+      "supporting_alert_ids": [
+        "8731322",
+        "8730451",
+        "8730359",
+        "8729895"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-07",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Ecuador": {
+      "risk_level": "low",
+      "reason": "The only recent alert identifies a localized outbreak of Serratia marcescens specifically within a neonatal intensive care unit in Guayaquil. This healthcare-associated event does not indicate a broader community risk or a threat to typical travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731318"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-06",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Fiji": {
+      "risk_level": "medium",
+      "reason": "Recent reports indicate a strain on healthcare infrastructure, specifically ICU bed shortages in Suva, alongside a fatal case of leptospirosis. While the reported diseases like HIV/AIDS and scabies pose low direct risk to typical travelers in public spaces, the reduced medical capacity and the presence of leptospirosis in recreational water sources justify a medium risk level.",
+      "supporting_alert_ids": [
+        "8731202",
+        "8731054",
+        "8730706"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-05",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Kiribati": {
+      "risk_level": "medium",
+      "reason": "A recent alert from March 2026 indicates a Rotavirus outbreak in Kiribati. While this represents a current infectious disease signal for travelers using shared public infrastructure, the evidence is limited to a single report without additional metadata regarding the scale or severity of the situation.",
+      "supporting_alert_ids": [
+        "8731255"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-04",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Kazakhstan": {
+      "risk_level": "high",
+      "reason": "Kazakhstan has reported multiple recent alerts for Measles across several regions, including the major hub of Almaty, as of March 2026. Measles is highly contagious via respiratory droplets in crowded public environments and is associated with high severity. The presence of other recent alerts for Anthrax and Brucellosis further indicates an elevated infectious disease risk for travelers using shared infrastructure.",
+      "supporting_alert_ids": [
+        "8731247",
+        "8730729",
+        "8730148",
+        "8731252"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-04",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Bolivia": {
+      "risk_level": "medium",
+      "reason": "Bolivia has several recent alerts from early 2026 involving a variety of infectious diseases including Influenza, Chikungunya, Hantavirus, Zika virus, and Rabies across multiple regions. While these indicate active transmission of vector-borne and zoonotic risks, the reports describe localized or individual cases rather than a singular high-severity epidemic, justifying a medium risk level for travelers.",
+      "supporting_alert_ids": [
+        "8731212",
+        "8731055",
+        "8730942",
+        "8730418",
+        "8730346"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-02",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Belize": {
+      "risk_level": "low",
+      "reason": "Recent alerts for Belize indicate isolated incidents, including a household-specific tuberculosis cluster in Belize City and a malaria case in the Toledo district linked to cross-border travel. These reports do not provide evidence of widespread community transmission or significant risk to typical travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8731208",
+        "8731078"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-02",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Panama": {
+      "risk_level": "low",
+      "reason": "The risk is assessed as low because the provided evidence for human-relevant disease is sparse. A single alert from January 2026 mentioned Oropouche and Punta Toro viruses in Panama City, but no disease metadata was provided to assess severity, and no subsequent human-specific alerts have been issued. A more recent alert from March 2026 regarding an increase in canine distemper cases affects dogs and does not pose a direct risk to human travelers.",
+      "supporting_alert_ids": [
+        "8730269",
+        "8731190"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-03-01",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Philippines": {
+      "risk_level": "medium",
+      "reason": "The risk is assessed as medium due to a recent report of measles in Quezon City (Metro Manila), a disease characterized by high severity and high transmissibility in crowded public areas. While significant, the signal for measles is limited to a single recent alert. Other reports include food-related toxins such as tetrodotoxin poisoning from reef crabs and Bacillus cereus contamination in infant formula, which represent specific dietary hazards rather than broad infectious disease risks for the general traveler.",
+      "supporting_alert_ids": [
+        "8731133",
+        "8730876",
+        "8730350"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-26",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Mauritius": {
+      "risk_level": "medium",
+      "reason": "Recent reports from early 2026 indicate the presence of Leptospirosis, including fatalities, and Chikungunya in Mauritius. While the provided metadata suggests Leptospirosis has a low exposure risk for typical travelers, the occurrence of multiple infectious disease alerts within the last three months justifies a moderate risk assessment.",
+      "supporting_alert_ids": [
+        "8731116",
+        "8730102"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-26",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Israel": {
+      "risk_level": "high",
+      "reason": "Israel is experiencing a significant and ongoing measles outbreak with at least 16 pediatric fatalities reported through late February 2026. Measles is highly contagious via respiratory droplets, posing a high exposure risk in crowded public spaces like airports and public transport. Recent alerts indicate cases in major urban centers including Tel Aviv and Jerusalem, as well as potential exposure on international flights.",
+      "supporting_alert_ids": [
+        "8731103",
+        "8731051",
+        "8730955",
+        "8730849",
+        "8730586"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-25",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Ethiopia": {
+      "risk_level": "medium",
+      "reason": "A recent alert from February 2026 indicates measles transmission linked to travel from Ethiopia. Measles is highly contagious in crowded environments like airports and public transport. However, the Marburg virus epidemic was declared over in January 2026, and evidence for other active outbreaks is currently limited to a single report.",
+      "supporting_alert_ids": [
+        "8731103",
+        "8730385"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-25",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Thailand": {
+      "risk_level": "medium",
+      "reason": "Recent alerts from February 2026 indicate increased cases and fatalities of Streptococcus suis in Bangkok, alongside a fatal Mpox case in a specialized setting. While these signals are localized or often associated with specific exposures, their occurrence in a major travel hub suggests a moderate risk level for visitors.",
+      "supporting_alert_ids": [
+        "8731106",
+        "8730892"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-25",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Switzerland": {
+      "risk_level": "low",
+      "reason": "Recent reports are limited to a localized Legionellosis alert involving public showers and a suspected meningitis outbreak within a military recruit camp. These incidents are confined to specific settings or populations and do not represent a significant or widespread risk to typical short-term travelers.",
+      "supporting_alert_ids": [
+        "8731099",
+        "8730686"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-25",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Russia": {
+      "risk_level": "medium",
+      "reason": "Recent reports from early 2026 indicate multiple infectious disease incidents across Russia, including Mpox in Moscow, Measles in Khabarovsk, and a gastroenteritis outbreak at a ski resort. While several alerts involve localized settings like schools or specific food sources, the presence of highly contagious diseases like Measles and outbreaks in tourist-relevant areas suggests a moderate risk for travelers using public infrastructure and shared facilities.",
+      "supporting_alert_ids": [
+        "8731095",
+        "8730552",
+        "8730322",
+        "8729896"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-25",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Ukraine": {
+      "risk_level": "low",
+      "reason": "Recent reports indicate localized foodborne illness outbreaks in specific venues in Lviv and Kyiv. Additionally, a reported malaria case was imported from Tanzania and does not indicate local transmission. These signals are limited in scope and do not represent a significant risk to the general traveling public.",
+      "supporting_alert_ids": [
+        "8731098",
+        "8731069",
+        "8730812"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-25",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Tanzania": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single recent alert regarding one imported case of malaria (Falciparum) in a traveler returning from Tanzania. This represents sparse evidence and does not indicate a significant signal or high-exposure event for typical travelers.",
+      "supporting_alert_ids": [
+        "8731069"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-24",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Uzbekistan": {
+      "risk_level": "low",
+      "reason": "A single recent alert reported a foodborne illness outbreak specifically affecting multiple kindergartens in the Fergana region. This localized incident in a specific institutional setting does not indicate a broad or significant risk to typical travelers using public infrastructure, hotels, or tourist sites.",
+      "supporting_alert_ids": [
+        "8731066"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-23",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Sudan": {
+      "risk_level": "high",
+      "reason": "Recent reports from February 2026 indicate a sharp increase in suspected Measles cases, which is categorized as a high-severity disease with a high risk of exposure in crowded public settings like airports and public transport. Additionally, fatal cases of Hepatitis E have been reported recently. The presence of a highly contagious, high-severity disease with a reported sharp increase in cases justifies a high risk level for travelers.",
+      "supporting_alert_ids": [
+        "8731046",
+        "8730615"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-23",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Libya": {
+      "risk_level": "medium",
+      "reason": "A recent alert from February 2026 indicates locally acquired malaria cases in Benghazi, with a specific mention of suspected airport-related transmission. While this is highly relevant to travelers, the evidence is limited to a single report, which does not provide enough breadth or frequency to justify a high risk level.",
+      "supporting_alert_ids": [
+        "8731028"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-21",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Luxembourg": {
+      "risk_level": "low",
+      "reason": "Recent alerts for Luxembourg are limited to a specific food recall for infant formula and a report of Usutu virus in wild birds. Neither indicates a significant or widespread infectious disease risk for typical short- to medium-term travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8730950",
+        "8730454"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-19",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Italy": {
+      "risk_level": "medium",
+      "reason": "Recent alerts from early 2026 indicate multiple localized outbreaks across several Italian regions, including Norovirus and foodborne illnesses associated with international sports teams, as well as sporadic cases of Legionnaires' disease and Botulism. While these incidents appear contained or specific to certain environments like athletic events or specific food sources, the variety and geographic spread of these reports suggest a moderate risk for travelers using shared public infrastructure.",
+      "supporting_alert_ids": [
+        "8730930",
+        "8730850",
+        "8730676",
+        "8730631",
+        "8730605"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-17",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Yemen": {
+      "risk_level": "medium",
+      "reason": "A single recent alert from February 2026 provides 2025 statistics for malaria in Yemen. While this confirms the presence of the disease in the country, the evidence is limited to a summary of historical data and does not indicate a current acute outbreak or provide multiple recent signals necessary for a high risk assessment.",
+      "supporting_alert_ids": [
+        "8730915"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-16",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Singapore": {
+      "risk_level": "medium",
+      "reason": "Recent alerts indicate the presence of Measles, which is highly contagious and severe, alongside reports of Influenza and food-related toxins. While these signals are meaningful for travelers in public spaces, the evidence is not sufficiently repeated or widespread to justify a high risk level.",
+      "supporting_alert_ids": [
+        "8730893",
+        "8730350",
+        "8730023"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-16",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Seychelles": {
+      "risk_level": "medium",
+      "reason": "A recent CDC travel notice from February 2026 indicates the presence of Chikungunya in Seychelles. While this represents a meaningful signal for travelers, the evidence is limited to a single alert and lacks additional disease metadata or reports of widespread transmission to justify a high risk level.",
+      "supporting_alert_ids": [
+        "8730898"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-16",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Armenia": {
+      "risk_level": "medium",
+      "reason": "A recent alert from February 2026 highlights measles transmission in Armenia. Although the alert title references 2023 data, measles is characterized by high severity and high exposure risk in crowded public environments such as airports and public transport. The existence of a single recent report for a highly contagious disease justifies a medium risk level.",
+      "supporting_alert_ids": [
+        "8730846"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-14",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Czech Republic": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for the Czech Republic, indicating a low risk for travelers based on the available information.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-13",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Poland": {
+      "risk_level": "low",
+      "reason": "The only provided evidence is a single report of a specific clinical case of Hepatitis B occurring in an immunocompromised patient. There is no data indicating a community outbreak or an elevated risk for general travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8730815"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-12",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Bulgaria": {
+      "risk_level": "medium",
+      "reason": "Bulgaria has reported two recent infectious disease cases: Tularemia in February 2026 and Anthrax in January 2026. While these alerts are localized to specific regions (Kyustendil and Blagoevgrad) and the Anthrax case was associated with specific meat exposure, the presence of multiple distinct disease signals within the last three months indicates a moderate level of risk that warrants a medium assessment rather than low.",
+      "supporting_alert_ids": [
+        "8730794",
+        "8730207"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-12",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Tonga": {
+      "risk_level": "medium",
+      "reason": "A single recent alert from February 2026 indicates the presence of Typhoid Fever in Nuku'alofa, the capital and main travel hub of Tonga. While this represents a relevant signal for travelers, the evidence is limited to one report, which does not justify a high risk level.",
+      "supporting_alert_ids": [
+        "8730787"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-11",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Comoros": {
+      "risk_level": "medium",
+      "reason": "A single recent alert from February 2026 indicates the presence of Mpox (Clade 1) in Moroni, Comoros. While this represents a meaningful signal for travelers visiting the capital, the evidence is limited to one report and lacks broader context on the extent of the outbreak.",
+      "supporting_alert_ids": [
+        "8730783"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-11",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Norway": {
+      "risk_level": "low",
+      "reason": "Travel risk is assessed as low as the provided evidence is limited and not recent. Alerts from early February 2026 describe a localized listeriosis outbreak, a single diphtheria-like case (referencing 2024), and avian influenza (H5N1) in wildlife in Oslo, Norway. These signals do not indicate a significant or widespread current threat to typical travelers.",
+      "supporting_alert_ids": [
+        "8730756",
+        "8730725",
+        "8730601",
+        "8730502"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-10",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Paraguay": {
+      "risk_level": "low",
+      "reason": "The provided evidence is limited to a single alert from February 2026 reporting one confirmed case of local Dengue transmission in the Misiones region. This sparse and localized information is insufficient to establish a meaningful country-level risk signal for typical travelers as of April 2026.",
+      "supporting_alert_ids": [
+        "8730747"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-10",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Mongolia": {
+      "risk_level": "medium",
+      "reason": "Two recent alerts from early 2026 indicate a measles outbreak in Ulaanbaatar. Measles is highly contagious in crowded public spaces and carries high severity. While the signal is significant, the lack of more recent reports in the last seven weeks suggests a moderate rather than high current risk level for travelers.",
+      "supporting_alert_ids": [
+        "8730727",
+        "8730462"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-09",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Pakistan": {
+      "risk_level": "medium",
+      "reason": "A recent alert from February 2026 reports a measles outbreak with pediatric fatalities in the Khyber Pakhtunkhwa province. While measles is highly contagious and poses a high risk in crowded public settings, the current evidence is limited to a single regional report, justifying a medium risk level rather than high.",
+      "supporting_alert_ids": [
+        "8730714"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-09",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Bangladesh": {
+      "risk_level": "medium",
+      "reason": "A single alert from February 2026 reported a human case of Nipah virus in the Rajshahi region. While this represents a direct signal of the disease's presence, the evidence is limited to one case and lacks accompanying disease metadata or subsequent reports to indicate a broader outbreak or high risk to typical travelers.",
+      "supporting_alert_ids": [
+        "8730671"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-07",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Micronesia": {
+      "risk_level": "medium",
+      "reason": "A recent alert from February 2026 reported local cases of Pertussis (Whooping Cough) in Pohnpei. This indicates active community transmission in a specific region of the country, though the evidence is limited to a single report.",
+      "supporting_alert_ids": [
+        "8730633"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-06",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Cape Verde": {
+      "risk_level": "medium",
+      "reason": "A recent alert from February 2026 reported cases of Shigellosis and Salmonellosis in travelers returning from Cape Verde. This indicates a current risk of food and waterborne infections for visitors using public infrastructure and hotels, though the evidence is limited to a single report.",
+      "supporting_alert_ids": [
+        "8730623"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-05",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "South Sudan": {
+      "risk_level": "medium",
+      "reason": "A recent report from February 2026 indicates an outbreak of Hepatitis E with fatalities in the Abyei area. While the disease is characterized by a low risk of exposure for typical travelers through contaminated food or water, the presence of a fatal outbreak in a specific region warrants a medium risk assessment.",
+      "supporting_alert_ids": [
+        "8730615"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-05",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Finland": {
+      "risk_level": "low",
+      "reason": "The provided evidence indicates minimal risk for typical travelers in Finland. Recent alerts are limited to a soil-borne Legionellosis case in Helsinki, which poses little threat to those using public infrastructure, and a Norovirus incident involving a specific sports team returning from Italy, which does not suggest a widespread domestic outbreak.",
+      "supporting_alert_ids": [
+        "8730605",
+        "8730532"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-05",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Germany": {
+      "risk_level": "medium",
+      "reason": "Recent alerts indicate the presence of highly contagious diseases including Measles and Norovirus, alongside a rise in Lyme disease cases. While the Measles alert was localized to a specific center in Berlin, the disease's high severity and transmission risk in crowded public areas, combined with the emergence of a Norovirus variant, justify a moderate risk level for travelers using shared infrastructure.",
+      "supporting_alert_ids": [
+        "8730588",
+        "8730110",
+        "8729939"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-04",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Ghana": {
+      "risk_level": "low",
+      "reason": "A single localized alert for mumps in the Volta region from February 2026 provides limited evidence of a widespread threat. In the absence of additional reports or disease metadata, the current signal is considered sparse for a country-level assessment.",
+      "supporting_alert_ids": [
+        "8730522"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-02-01",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Guatemala": {
+      "risk_level": "high",
+      "reason": "Multiple recent alerts from January 2026 indicate an increasing trend of measles cases and clusters in Guatemala City and Sololá. Measles is highly contagious in crowded public spaces and carries a high risk of severe complications, posing a significant risk to travelers using shared infrastructure.",
+      "supporting_alert_ids": [
+        "8730477",
+        "8730413",
+        "8730167",
+        "8729991"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-30",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Romania": {
+      "risk_level": "low",
+      "reason": "The provided evidence consists of a single alert from January 2026 regarding a fatal case of Listeriosis. A single reported case of a foodborne illness without evidence of a broader outbreak or ongoing transmission does not constitute a significant risk for typical travelers.",
+      "supporting_alert_ids": [
+        "8730456"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-29",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Lithuania": {
+      "risk_level": "low",
+      "reason": "The risk level is assessed as low because the provided evidence is limited to a single alert from January 2026 regarding Tick-borne Encephalitis in Vilnius. Without additional alerts or disease metadata to indicate an ongoing outbreak or high severity for typical travelers using shared public infrastructure, the current signal is considered sparse.",
+      "supporting_alert_ids": [
+        "8730439"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-29",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "South Korea": {
+      "risk_level": "low",
+      "reason": "Recent alerts for South Korea include a localized salmonellosis outbreak in a senior center, a case of tetrodotoxin poisoning from puffer fish consumption, and avian influenza detected in wild birds. These incidents are either highly localized, related to specific food choices, or involve low human exposure risk, and do not indicate a significant threat to typical travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8730414",
+        "8730217",
+        "8730107"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-27",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Cuba": {
+      "risk_level": "medium",
+      "reason": "A recent report from January 2026 indicates an outbreak of Hepatitis A in Santiago de Cuba. While this represents a meaningful signal for travelers using shared public infrastructure and dining facilities, the evidence is limited to a single report in one specific region, which does not justify a high risk classification for the entire country.",
+      "supporting_alert_ids": [
+        "8730345"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-25",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Netherlands": {
+      "risk_level": "low",
+      "reason": "The only recent alert for the Netherlands concerns a specific contamination of infant formula with Bacillus cereus reported in January 2026. This represents a localized, product-specific risk rather than a broad infectious disease threat to typical travelers using public infrastructure.",
+      "supporting_alert_ids": [
+        "8730273"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-22",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Nigeria": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single alert regarding a Melioidosis serosurvey in Ebonyi State. A serosurvey indicates historical exposure or environmental presence rather than an active outbreak. With no additional alerts or disease metadata provided, the evidence is insufficient to establish a meaningful current risk for typical travelers.",
+      "supporting_alert_ids": [
+        "8730272"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-22",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Egypt": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single alert from January 2026 regarding a foodborne illness outbreak in Aswan. Due to the localized nature of the report, the lack of recent updates, and the absence of additional disease metadata, the provided evidence is considered sparse and does not indicate a significant current signal for travelers to Egypt as of April 2026.",
+      "supporting_alert_ids": [
+        "8730271"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-22",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Denmark": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single alert from January 2026 regarding a Salmonellosis outbreak with an unknown food source. Given that this is a single, older report and no further evidence of ongoing or widespread transmission has been provided, the current signal is considered sparse and insufficient to justify a higher risk level for typical travelers.",
+      "supporting_alert_ids": [
+        "8730258"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-22",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Kenya": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single, localized report of foodborne illness in Kericho from January 2026. This isolated request for information is insufficient to indicate a significant or widespread current risk to travelers across Kenya.",
+      "supporting_alert_ids": [
+        "8730181"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-19",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Haiti": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single alert from January 2026 regarding a fatal rabies case exported from Haiti. This evidence is considered sparse and does not indicate a widespread outbreak or a significant current risk to typical travelers using public infrastructure and shared facilities.",
+      "supporting_alert_ids": [
+        "8730115"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-16",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Estonia": {
+      "risk_level": "low",
+      "reason": "The only available evidence is a single alert from January 2026 mentioning influenza in Estonia. This report is nearly three months old and lacks specific details regarding severity or scale, which is insufficient to indicate a significant current risk for travelers.",
+      "supporting_alert_ids": [
+        "8730023"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-12",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Malta": {
+      "risk_level": "low",
+      "reason": "The assessment is based on a single alert from January 2026 regarding influenza. Given that this is a common respiratory disease and the report is nearly three months old with no subsequent updates or additional disease data provided, the current signal is considered weak and insufficient to justify a higher risk level.",
+      "supporting_alert_ids": [
+        "8730023"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-12",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Madagascar": {
+      "risk_level": "medium",
+      "reason": "Recent reports from January 2026 identified a fatal case of pneumonic plague and an outbreak of foodborne illness in Madagascar. Although these alerts are nearly three months old and limited in number, the severity of pneumonic plague and its potential for transmission in public settings justify a medium risk level for travelers.",
+      "supporting_alert_ids": [
+        "8730008",
+        "8729984"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-11",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "El Salvador": {
+      "risk_level": "low",
+      "reason": "The only available alert for El Salvador pertains to Feline Panleukopenia in cats, which does not pose a risk to human travelers. No human-relevant infectious disease alerts were provided.",
+      "supporting_alert_ids": [
+        "8729987"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-10",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Hungary": {
+      "risk_level": "low",
+      "reason": "A single alert for Hepatitis A in Budapest was reported in January 2026. Given that this is the only provided evidence and it is nearly three months old with no subsequent reports or disease metadata, the signal is considered sparse and insufficient to indicate a significant current risk to travelers.",
+      "supporting_alert_ids": [
+        "8729928"
+      ],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2026-01-07",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Cyprus": {
+      "risk_level": "low",
+      "reason": "No relevant outbreak alerts or disease metadata were provided for Cyprus, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-30",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Syria": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Syria, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-24",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Namibia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Namibia, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-19",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Croatia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or infectious disease metadata were provided for Croatia, indicating a lack of current evidence for elevated travel risk.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-18",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Algeria": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Algeria, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-15",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Iran": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Iran, resulting in insufficient evidence to justify a higher risk level for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-05",
+      "next_refresh_at": "2026-04-04",
+      "refresh_status": "success"
+    },
+    "Turkey": {
+      "risk_level": "low",
+      "reason": "No infectious disease outbreak alerts or relevant disease metadata were provided for Turkey as of April 2, 2026, resulting in a low risk assessment based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-12-01",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Latvia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Latvia, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-30",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Jamaica": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Jamaica, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-27",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "St. Vincent & the Grenadines": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for St. Vincent & the Grenadines, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-23",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Zimbabwe": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Zimbabwe. In the absence of evidence indicating current infectious disease threats, the risk level is assessed as low for short- and medium-term visitors.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-23",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Belgium": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Belgium, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-20",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Chad": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Chad, indicating a lack of evidence for significant infectious disease risks to travelers at this time.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-13",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "United Arab Emirates": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for the United Arab Emirates, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-11",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Bosnia and Herzegovina": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or infectious disease metadata were provided for Bosnia and Herzegovina, indicating a lack of evidence for elevated travel risk for visitors.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-05",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Somalia": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Somalia, indicating a lack of evidence for elevated infectious disease risk for travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-11-03",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Saudi Arabia": {
+      "risk_level": "low",
+      "reason": "No relevant outbreak alerts or disease metadata were provided for Saudi Arabia, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-29",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Venezuela": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Venezuela, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-29",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Iceland": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or infectious disease metadata were provided for Iceland, resulting in a lack of evidence for any elevated travel risk.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-23",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Cambodia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Cambodia, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-23",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Sweden": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Sweden, resulting in a lack of evidence for any current infectious disease risk for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-22",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Uganda": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Uganda, resulting in a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-22",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Moldova": {
+      "risk_level": "low",
+      "reason": "No relevant outbreak alerts or disease metadata were provided for Moldova, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-21",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Iraq": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Iraq, indicating a lack of evidence for significant infectious disease risk to travelers at this time.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-21",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Senegal": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Senegal, resulting in a lack of evidence for current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-05",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Mauritania": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Mauritania, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-03",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Solomon Islands": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for the Solomon Islands, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-10-01",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Angola": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Angola, indicating a lack of evidence for current infectious disease risks for travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-30",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Slovenia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Slovenia, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-25",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Jordan": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Jordan, indicating a lack of current evidence for infectious disease risk to travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-21",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Rwanda": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Rwanda, indicating a lack of evidence for current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-20",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Austria": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Austria, indicating a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-12",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Azerbaijan": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Azerbaijan, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-06",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Montenegro": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Montenegro, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-05",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Morocco": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Morocco, indicating a lack of current evidence for infectious disease risk to travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-09-02",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Portugal": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Portugal, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-08-26",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Guyana": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Guyana, indicating a lack of evidence for elevated infectious disease risk for travelers at this time.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-08-16",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Togo": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Togo, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-08-12",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "North Korea": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for North Korea, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-08-06",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Tajikistan": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Tajikistan, resulting in a lack of evidence for current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-08-04",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Palestine": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Palestine, indicating an absence of evidence for current infectious disease risks to travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-07-31",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Maldives": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for the Maldives, resulting in a low risk assessment based solely on the available information.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-07-21",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Malawi": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Malawi. In the absence of evidence indicating current infectious disease threats, the risk level is assessed as low for short- and medium-term visitors.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-07-14",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Belarus": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or infectious disease data were provided for Belarus, indicating a low risk level for travelers based on the available evidence.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-07-13",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Kosovo": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Kosovo, indicating a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-07-07",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Timor Leste": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Timor Leste, resulting in a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-07-07",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Albania": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Albania, resulting in a lack of evidence for any current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-06-21",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Tunisia": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Tunisia, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-05-20",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Afghanistan": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Afghanistan. Based strictly on the absence of evidence in the provided data, a low risk level is assigned.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-05-19",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Burkina Faso": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Burkina Faso, resulting in insufficient evidence to identify any current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-05-03",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Bahrain": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Bahrain. In the absence of evidence indicating active infectious disease threats, the travel risk is assessed as low.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-04-18",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Central African Republic": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for the Central African Republic, resulting in a lack of evidence for current infectious disease risks to travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-04-11",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Dominica": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Dominica, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-04-07",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Liberia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Liberia, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-04-04",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Dominican Republic": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for the Dominican Republic, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-03-22",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Lebanon": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Lebanon, resulting in a lack of evidence for current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-03-14",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "Cameroon": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Cameroon, indicating a lack of current evidence for infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-03-04",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Laos": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Laos, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-02-26",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Nicaragua": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Nicaragua, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-02-15",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Guinea": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Guinea, resulting in a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-02-06",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Sierra Leone": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Sierra Leone, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2025-01-18",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Barbados": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Barbados, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-12-27",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Burundi": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Burundi, resulting in an absence of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-12-26",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Myanmar": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Myanmar, indicating a lack of evidence for significant infectious disease risk to travelers at this time.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-12-26",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Bhutan": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Bhutan, resulting in a lack of evidence for current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-11-30",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Trinidad & Tobago": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Trinidad & Tobago, resulting in a lack of evidence for any current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-11-26",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Suriname": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Suriname, indicating a lack of evidence for current infectious disease risks for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-11-06",
+      "next_refresh_at": "2026-04-11",
+      "refresh_status": "success"
+    },
+    "Turkmenistan": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Turkmenistan, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-10-02",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Niger": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Niger, resulting in a lack of evidence for any current infectious disease risk for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-09-12",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Gabon": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Gabon, resulting in a low risk assessment based strictly on the available information.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-08-27",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Benin": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Benin, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-08-04",
+      "next_refresh_at": "2026-04-06",
+      "refresh_status": "success"
+    },
+    "Republic of Congo": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for the Republic of Congo, indicating an absence of current documented infectious disease signals for travelers based on the available data.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-08-04",
+      "next_refresh_at": "2026-04-09",
+      "refresh_status": "success"
+    },
+    "Mali": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Mali, resulting in a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-05-15",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "North Macedonia": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for North Macedonia, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-05-15",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Georgia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Georgia, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-04-23",
+      "next_refresh_at": "2026-04-12",
+      "refresh_status": "success"
+    },
+    "Samoa": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Samoa, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-04-23",
+      "next_refresh_at": "2026-04-13",
+      "refresh_status": "success"
+    },
+    "Zambia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Zambia, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2024-01-22",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Serbia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Serbia, indicating a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-11-30",
+      "next_refresh_at": "2026-04-03",
+      "refresh_status": "success"
+    },
+    "Botswana": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Botswana, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-11-21",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Oman": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Oman, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-08-21",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Saint Lucia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Saint Lucia, indicating a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-07-16",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Equatorial Guinea": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Equatorial Guinea, indicating a lack of current evidence for infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-06-08",
+      "next_refresh_at": "2026-04-05",
+      "refresh_status": "success"
+    },
+    "Eswatini": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Eswatini, resulting in a low risk assessment due to the absence of evidence for current infectious disease threats.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-05-17",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Lesotho": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Lesotho, resulting in a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-05-16",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Gambia": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Gambia, indicating a lack of current evidence for infectious disease risk for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2023-04-19",
+      "next_refresh_at": "2026-04-07",
+      "refresh_status": "success"
+    },
+    "The Bahamas": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for The Bahamas, indicating a lack of documented infectious disease risk for travelers at this time.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2022-10-19",
+      "next_refresh_at": "2026-04-16",
+      "refresh_status": "success"
+    },
+    "Qatar": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Qatar, indicating a lack of evidence for any current infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2022-05-14",
+      "next_refresh_at": "2026-04-15",
+      "refresh_status": "success"
+    },
+    "Papua New Guinea": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Papua New Guinea, indicating a lack of current evidence for infectious disease risk to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2022-04-17",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    },
+    "Guinea-Bissau": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Guinea-Bissau, resulting in a lack of evidence for current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2022-02-18",
+      "next_refresh_at": "2026-04-08",
+      "refresh_status": "success"
+    },
+    "Djibouti": {
+      "risk_level": "low",
+      "reason": "No recent outbreak alerts or disease metadata were provided for Djibouti, indicating a lack of evidence for elevated infectious disease risk for travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2022-02-18",
+      "next_refresh_at": "2026-04-10",
+      "refresh_status": "success"
+    },
+    "Kuwait": {
+      "risk_level": "low",
+      "reason": "No outbreak alerts or disease metadata were provided for Kuwait, resulting in a lack of evidence for any current infectious disease risks to travelers.",
+      "supporting_alert_ids": [],
+      "last_update": "2026-04-02",
+      "last_alert_at": "2021-12-09",
+      "next_refresh_at": "2026-04-14",
+      "refresh_status": "success"
+    }
+  }
+}

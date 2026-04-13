@@ -45,8 +45,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.data["to"], "2026-03-12")
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         self.assertEqual(
@@ -64,8 +63,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         self.assertEqual(
@@ -89,8 +87,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         self.assertEqual(
@@ -116,8 +113,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         self.assertEqual(
@@ -144,8 +140,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         # includes New Mexico because location filtering uses icontains
@@ -205,8 +200,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         self.assertEqual(
@@ -233,8 +227,7 @@ class TestsStatsRegions(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         region_counts = {
-            item["region"]: item["count"]
-            for item in response.data["by_region"]
+            item["region"]: item["count"] for item in response.data["by_region"]
         }
 
         self.assertEqual(region_counts, {"Europe": 8})

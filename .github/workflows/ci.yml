@@ -34,5 +34,19 @@ jobs:
       - name: Django check
         run: python manage.py check
 
-      - name: Run tests with coverage
-        run: python manage.py test
+      - name: Run tests with coverage and reports
+        run: |
+          mkdir -p reports
+          pytest -v \
+            --cov=. \
+            --cov-report=term \
+            --cov-report=xml:reports/coverage.xml \
+            --junitxml=reports/test-report.xml \
+            2>&1 | tee reports/test-report.txt
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: reports/

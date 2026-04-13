@@ -5,6 +5,7 @@ from pathlib import Path
 import os
 
 # import region_summary_api
+
 from . import region_summary_api
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -61,15 +62,10 @@ def find_by_every_location(database: list, location_str: str | None) -> list:
         location = alert["fields"]["locations"]
 
         for L in location:
-            matched = False
-
-            for part in L:
+            for index, part in enumerate(L):
                 if part.lower() == location_str.lower():
-                    matched = True
+                    chains.append(L[: index + 1])
                     break
-
-            if matched:
-                chains.append(L)
 
     unique = set()
     result = []
@@ -191,7 +187,7 @@ def filter_entry(
     if location_chain is None:
         chains = find_by_every_location(database, location_str)
         if not chains:
-            return [], None
+            return ["no location chain found"], None
         location_chain = chains[0]
 
     exact_match = find_by_exact_location(database, location_chain)
@@ -218,8 +214,8 @@ def extract_disease_name_from_result(result: list):
 
 
 def search_disease_info_from_JSON(result: list):
-    disease_info_json = "disease_info.json"
-    with open(disease_info_json, "r", encoding="utf-8") as f:
+    # disease_info_json = "disease_info.json"
+    with open(DISEASE_INFO_JSON, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     disease_names = extract_disease_name_from_result(result)
@@ -249,17 +245,45 @@ def generate_summary_entry(
         location_str=location_str,
         database=database,
     )
-    diseases = extract_disease_name_from_result(result)
+
+    if not location_chain:
+        return {"error": "relevant location chain not found in dataset"}
+
+    diseases = search_disease_info_from_JSON(result)
 
     API_KEY = os.getenv("GEMINI_API_KEY")
     if API_KEY is None:
         return {"error": "API KEY is Missing"}
 
     AI = region_summary_api.GeminiSummary(API_KEY, model_id="gemini-3-flash-preview")
-    if not location_chain:
-        return {"error": "Location not found"}
+    # if not location_chain:
+    #     return {"error": "Location not found"}
+
     response = AI.region_summary(result, location_chain, diseases)
     return {"summary": response, "location_chain": location_chain}
+
+
+def find_by_location_prefix(database: list, prefix_chain: list) -> list:
+    results = []
+    unique = set()
+
+    for alert in database:
+        external_id = alert["fields"]["external_id"]
+        if external_id in unique:
+            continue
+
+        locations = alert.get("fields", {}).get("locations", [])
+        for chain in locations:
+            if (
+                isinstance(chain, list)
+                and len(chain) >= len(prefix_chain)
+                and chain[: len(prefix_chain)] == prefix_chain
+            ):
+                results.append(alert)
+                unique.add(external_id)
+                break
+
+    return results
 
 
 if __name__ == "__main__":

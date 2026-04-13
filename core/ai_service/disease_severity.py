@@ -117,8 +117,8 @@ def validate_response(data, new_disease: set):
 
             if normalized_key in {"severity_reason", "exposure_reason"}:
                 if not isinstance(value, str) or not value.strip():
-                    err_response.append(f"{disease_name}.{key} has invalid value: {
-                        value!r}")
+                    err_response.append(
+                        f"{disease_name}.{key} has invalid value: {value!r}")
                     clean_values = False
                     break
 
@@ -130,8 +130,8 @@ def validate_response(data, new_disease: set):
                     or value.strip().lower() not in ALLOWED_LEVELS.keys()
                 ):
                     if not isinstance(value, int) or value < 0 or value >= 4:
-                        err_response.append(f"{disease_name}.{key} has invalid value: {
-                            value!r}")
+                        err_response.append(
+                            f"{disease_name}.{key} has invalid value: {value!r}")
                         clean_values = False
                         break
 

@@ -160,8 +160,7 @@ class TestsStatsTimeseries(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         period_counts = {
-            item["period"]: item["count"]
-            for item in response.data["results"]
+            item["period"]: item["count"] for item in response.data["results"]
         }
 
         self.assertEqual(
@@ -187,8 +186,7 @@ class TestsStatsTimeseries(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         period_counts = {
-            item["period"]: item["count"]
-            for item in response.data["results"]
+            item["period"]: item["count"] for item in response.data["results"]
         }
 
         self.assertEqual(
