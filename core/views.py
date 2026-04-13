@@ -64,8 +64,8 @@ common_filter_parameters = [
 
 def filter_alerts(params, default_days=365):
     alert_id = params.get("id")
-    from_date = params.get("from")
-    to_date = params.get("to")
+    from_date_raw = params.get("from")
+    to_date_raw = params.get("to")
     diseases = params.getlist("disease")
     species = params.getlist("species")
     regions = params.getlist("region")
@@ -73,15 +73,14 @@ def filter_alerts(params, default_days=365):
 
     today = date.today()
 
-    if to_date:
-        to_date = parse_date(to_date)
-    else:
-        to_date = today
+    from_date = parse_date(from_date_raw) if from_date_raw else None
+    to_date = parse_date(to_date_raw) if to_date_raw else None
 
-    if from_date:
-        from_date = parse_date(from_date)
-    else:
-        from_date = to_date - timedelta(days=default_days)
+    if not alert_id:
+        if to_date is None:
+            to_date = today
+        if from_date is None:
+            from_date = to_date - timedelta(days=default_days)
 
     query_set = Alert.objects.all().order_by("-date")
 
