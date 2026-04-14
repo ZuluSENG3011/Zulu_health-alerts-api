@@ -7,6 +7,15 @@ import {
   fetchFinancialData,
   normaliseFinancialEvents,
 } from "../../api/financial";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 import styles from "./OutbreakFinancialAnalysis.module.css";
 
 function addTickerToRows(rows, stockRows, ticker) {
@@ -106,6 +115,16 @@ export default function OutbreakFinancialAnalysis() {
     } finally {
       setLoadingTicker(false);
     }
+  };
+
+  const formatPeriodLabel = (value) => {
+    if (!value) return "";
+
+    if (filters.interval === "month") {
+      return value.slice(0, 7);
+    }
+
+    return value;
   };
 
   return (
@@ -210,6 +229,29 @@ export default function OutbreakFinancialAnalysis() {
         </div>
 
         {error ? <p className={styles.error}>{error}</p> : null}
+
+        <section className={styles.panel}>
+          <h2>Outbreak timeseries</h2>
+
+          {baseRows.length ? (
+            <div className={styles.chartWrap}>
+              <ResponsiveContainer width="100%" height={320}>
+                <BarChart data={baseRows}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="period"
+                    tickFormatter={formatPeriodLabel}
+                  />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip labelFormatter={formatPeriodLabel} />
+                  <Bar dataKey="cases" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          ) : (
+            <p>No outbreak data loaded yet.</p>
+          )}
+        </section>
 
         <section className={styles.panel}>
           <h2>Selected tickers</h2>
