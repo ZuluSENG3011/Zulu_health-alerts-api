@@ -15,8 +15,18 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ComposedChart,
+  Line,
+  Legend,
 } from "recharts";
 import styles from "./OutbreakFinancialAnalysis.module.css";
+
+function parseMultiValueInput(input) {
+  return input
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
 
 function addTickerToRows(rows, stockRows, ticker) {
   const stockLookup = new Map(stockRows.map((row) => [row.date, row.close]));
@@ -38,9 +48,9 @@ function addTickerToRows(rows, stockRows, ticker) {
 
 export default function OutbreakFinancialAnalysis() {
   const [filters, setFilters] = useState({
-    from: "2025-01-01",
-    to: "2025-01-10",
-    interval: "day",
+    from: "2020-01-01",
+    to: "2026-01-01",
+    interval: "month",
     disease: "measles",
     species: "",
     region: "",
@@ -72,12 +82,21 @@ export default function OutbreakFinancialAnalysis() {
       setLoadingCases(true);
       setError("");
 
-      const raw = await getTimeseriesStats(filters);
+      const formattedFilters = {
+        ...filters,
+        disease: parseMultiValueInput(filters.disease),
+        species: parseMultiValueInput(filters.species),
+        region: parseMultiValueInput(filters.region),
+        location: parseMultiValueInput(filters.location),
+      };
+
+      const raw = await getTimeseriesStats(formattedFilters);
       const rows = normaliseAlertTimeseries(raw);
 
       setBaseRows(rows);
       setComparisonRows(rows);
       setSelectedTickers([]);
+      setTickerInput("");
     } catch (err) {
       setError(err.message || "Failed to load outbreak data");
     } finally {
@@ -90,8 +109,9 @@ export default function OutbreakFinancialAnalysis() {
 
     if (!ticker) return;
     if (selectedTickers.includes(ticker)) return;
+
     if (!baseRows.length) {
-      setError("Load outbreak timeseries first.");
+      setError("Load outbreak data first.");
       return;
     }
 
@@ -107,7 +127,9 @@ export default function OutbreakFinancialAnalysis() {
 
       const stockRows = normaliseFinancialEvents(raw);
 
-      setComparisonRows((prev) => addTickerToRows(prev, stockRows, ticker));
+      setComparisonRows((prevRows) =>
+        addTickerToRows(prevRows, stockRows, ticker)
+      );
       setSelectedTickers((prev) => [...prev, ticker]);
       setTickerInput("");
     } catch (err) {
@@ -172,7 +194,7 @@ export default function OutbreakFinancialAnalysis() {
             name="disease"
             value={filters.disease}
             onChange={handleFilterChange}
-            placeholder="e.g. measles"
+            placeholder="e.g. measles, covid-19"
           />
         </label>
 
@@ -183,6 +205,7 @@ export default function OutbreakFinancialAnalysis() {
             name="species"
             value={filters.species}
             onChange={handleFilterChange}
+            placeholder="comma-separated"
           />
         </label>
 
@@ -193,6 +216,7 @@ export default function OutbreakFinancialAnalysis() {
             name="region"
             value={filters.region}
             onChange={handleFilterChange}
+            placeholder="comma-separated"
           />
         </label>
 
@@ -203,6 +227,7 @@ export default function OutbreakFinancialAnalysis() {
             name="location"
             value={filters.location}
             onChange={handleFilterChange}
+            placeholder="comma-separated"
           />
         </label>
 
@@ -241,10 +266,30 @@ export default function OutbreakFinancialAnalysis() {
                   <XAxis
                     dataKey="period"
                     tickFormatter={formatPeriodLabel}
+                    interval={Math.max(0, Math.floor(baseRows.length / 10))}
+                    angle={-30}
+                    textAnchor="end"
+                    height={60}
                   />
-                  <YAxis allowDecimals={false} />
-                  <Tooltip labelFormatter={formatPeriodLabel} />
-                  <Bar dataKey="cases" />
+                  <YAxis
+                    allowDecimals={false}
+                    label={{
+                      value: "Number of cases",
+                      angle: -90,
+                      position: "insideLeft",
+                    }}
+                  />
+                  <Tooltip
+                    labelFormatter={(label) =>
+                      `Date: ${formatPeriodLabel(label)}`
+                    }
+                    formatter={(value) => [`${value} cases`, "Cases"]}
+                  />
+                  <Bar
+                    dataKey="cases"
+                    fill="#3b82f6"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -290,6 +335,92 @@ export default function OutbreakFinancialAnalysis() {
             </table>
           </div>
         </section>
+
+        {selectedTickers.map((ticker) => (
+          <section key={ticker} className={styles.panel}>
+            <h2>{ticker} vs outbreak cases</h2>
+
+            <div className={styles.chartWrap}>
+              <ResponsiveContainer width="100%" height={360}>
+                <ComposedChart data={comparisonRows}>
+                  <CartesianGrid strokeDasharray="3 3" />
+
+                  <XAxis
+                    dataKey="period"
+                    tickFormatter={formatPeriodLabel}
+                    interval={Math.max(
+                      0,
+                      Math.floor(comparisonRows.length / 10)
+                    )}
+                    angle={-30}
+                    textAnchor="end"
+                    height={60}
+                  />
+
+                  <YAxis
+                    yAxisId="left"
+                    allowDecimals={false}
+                    label={{
+                      value: "Cases",
+                      angle: -90,
+                      position: "insideLeft",
+                    }}
+                  />
+
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    domain={["auto", "auto"]}
+                    label={{
+                      value: `${ticker} Close`,
+                      angle: 90,
+                      position: "insideRight",
+                    }}
+                  />
+
+                  <Tooltip
+                    labelFormatter={(label) =>
+                      `Date: ${formatPeriodLabel(label)}`
+                    }
+                    formatter={(value, name) => {
+                      if (name === "Cases") {
+                        return [`${value}`, name];
+                      }
+
+                      return [
+                        value != null && typeof value === "number"
+                          ? value.toFixed(2)
+                          : "-",
+                        name,
+                      ];
+                    }}
+                  />
+
+                  <Legend />
+
+                  <Bar
+                    yAxisId="left"
+                    dataKey="cases"
+                    name="Cases"
+                    fill="#3b82f6"
+                    radius={[4, 4, 0, 0]}
+                  />
+
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey={ticker}
+                    name={`${ticker} Close`}
+                    stroke="#16a34a"
+                    strokeWidth={2}
+                    dot={false}
+                    connectNulls
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
+        ))}
       </main>
     </div>
   );
