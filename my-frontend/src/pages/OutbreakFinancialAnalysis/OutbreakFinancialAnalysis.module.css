@@ -70,6 +70,31 @@ td {
   color: #444;
 }
 
+.tickerChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  margin-right: 8px;
+  background: #e5e7eb;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+}
+
+.correlation {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #374151;
+}
+
 .chartWrap {
   width: 100%;
   height: 320px;

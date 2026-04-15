@@ -47,6 +47,8 @@ function addTickerToRows(rows, stockRows, ticker) {
 }
 
 export default function OutbreakFinancialAnalysis() {
+  const [lag, setLag] = useState(0);
+
   const [filters, setFilters] = useState({
     from: "2020-01-01",
     to: "2026-01-01",
@@ -76,6 +78,58 @@ export default function OutbreakFinancialAnalysis() {
       [name]: value,
     }));
   };
+
+  function calculateLagCorrelation(rows, ticker, lag = 0) {
+    const pairs = [];
+
+    for (let i = 0; i < rows.length; i++) {
+      const j = i + lag;
+
+      if (j >= rows.length) break;
+
+      const x = rows[i].cases;
+      const y = rows[j][ticker];
+
+      if (x != null && y != null) {
+        pairs.push({ x, y });
+      }
+    }
+
+    if (pairs.length < 2) return null;
+
+    const n = pairs.length;
+
+    const meanX = pairs.reduce((a, p) => a + p.x, 0) / n;
+    const meanY = pairs.reduce((a, p) => a + p.y, 0) / n;
+
+    let num = 0, dx = 0, dy = 0;
+
+    for (const p of pairs) {
+      const vx = p.x - meanX;
+      const vy = p.y - meanY;
+
+      num += vx * vy;
+      dx += vx * vx;
+      dy += vy * vy;
+    }
+
+    const denom = Math.sqrt(dx * dy);
+    if (denom === 0) return null;
+
+    return num / denom;
+  }
+
+  function getCorrelationLabel(value) {
+    if (value == null) return "Insufficient data";
+
+    const abs = Math.abs(value);
+
+    if (abs > 0.7) return "Strong";
+    if (abs > 0.4) return "Moderate";
+    if (abs > 0.2) return "Weak";
+
+    return "Very weak";
+  }
 
   const handleLoadCases = async () => {
     try {
@@ -137,6 +191,20 @@ export default function OutbreakFinancialAnalysis() {
     } finally {
       setLoadingTicker(false);
     }
+  };
+
+  const handleRemoveTicker = (tickerToRemove) => {
+    setSelectedTickers((prev) =>
+      prev.filter((t) => t !== tickerToRemove)
+    );
+
+    setComparisonRows((prevRows) =>
+      prevRows.map((row) => {
+        const newRow = { ...row };
+        delete newRow[tickerToRemove];
+        return newRow;
+      })
+    );
   };
 
   const formatPeriodLabel = (value) => {
@@ -231,6 +299,16 @@ export default function OutbreakFinancialAnalysis() {
           />
         </label>
 
+        <label>
+          Lag
+          <select value={lag} onChange={(e) => setLag(Number(e.target.value))}>
+            <option value={0}>0 (same day)</option>
+            <option value={1}>1 interval</option>
+            <option value={3}>3 intervals</option>
+            <option value={7}>7 intervals</option>
+          </select>
+        </label>
+
         <button onClick={handleLoadCases} disabled={loadingCases}>
           {loadingCases ? "Loading..." : "Load outbreak data"}
         </button>
@@ -301,7 +379,21 @@ export default function OutbreakFinancialAnalysis() {
         <section className={styles.panel}>
           <h2>Selected tickers</h2>
           <div className={styles.tickerList}>
-            {selectedTickers.length ? selectedTickers.join(", ") : "None yet"}
+            {selectedTickers.length ? (
+              selectedTickers.map((ticker) => (
+                <span key={ticker} className={styles.tickerChip}>
+                  {ticker}
+                  <button
+                    onClick={() => handleRemoveTicker(ticker)}
+                    className={styles.removeBtn}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))
+            ) : (
+              "None yet"
+            )}
           </div>
         </section>
 
@@ -336,91 +428,101 @@ export default function OutbreakFinancialAnalysis() {
           </div>
         </section>
 
-        {selectedTickers.map((ticker) => (
-          <section key={ticker} className={styles.panel}>
-            <h2>{ticker} vs outbreak cases</h2>
+        {selectedTickers.map((ticker) => {
+          const corr = calculateLagCorrelation(comparisonRows, ticker, lag);
 
-            <div className={styles.chartWrap}>
-              <ResponsiveContainer width="100%" height={360}>
-                <ComposedChart data={comparisonRows}>
-                  <CartesianGrid strokeDasharray="3 3" />
+          return (
+            <section key={ticker} className={styles.panel}>
+              <h2>{ticker} vs outbreak cases</h2>
 
-                  <XAxis
-                    dataKey="period"
-                    tickFormatter={formatPeriodLabel}
-                    interval={Math.max(
-                      0,
-                      Math.floor(comparisonRows.length / 10)
-                    )}
-                    angle={-30}
-                    textAnchor="end"
-                    height={60}
-                  />
+              <p className={styles.correlation}>
+                Correlation (lag = {lag}):{" "}
+                {corr != null ? corr.toFixed(2) : "N/A"} (
+                {getCorrelationLabel(corr)})
+              </p>
 
-                  <YAxis
-                    yAxisId="left"
-                    allowDecimals={false}
-                    label={{
-                      value: "Cases",
-                      angle: -90,
-                      position: "insideLeft",
-                    }}
-                  />
+              <div className={styles.chartWrap}>
+                <ResponsiveContainer width="100%" height={360}>
+                  <ComposedChart data={comparisonRows}>
+                    <CartesianGrid strokeDasharray="3 3" />
 
-                  <YAxis
-                    yAxisId="right"
-                    orientation="right"
-                    domain={["auto", "auto"]}
-                    label={{
-                      value: `${ticker} Close`,
-                      angle: 90,
-                      position: "insideRight",
-                    }}
-                  />
+                    <XAxis
+                      dataKey="period"
+                      tickFormatter={formatPeriodLabel}
+                      interval={Math.max(
+                        0,
+                        Math.floor(comparisonRows.length / 10)
+                      )}
+                      angle={-30}
+                      textAnchor="end"
+                      height={60}
+                    />
 
-                  <Tooltip
-                    labelFormatter={(label) =>
-                      `Date: ${formatPeriodLabel(label)}`
-                    }
-                    formatter={(value, name) => {
-                      if (name === "Cases") {
-                        return [`${value}`, name];
+                    <YAxis
+                      yAxisId="left"
+                      allowDecimals={false}
+                      label={{
+                        value: "Cases",
+                        angle: -90,
+                        position: "insideLeft",
+                      }}
+                    />
+
+                    <YAxis
+                      yAxisId="right"
+                      orientation="right"
+                      domain={["auto", "auto"]}
+                      label={{
+                        value: `${ticker} Close`,
+                        angle: 90,
+                        position: "insideRight",
+                      }}
+                    />
+
+                    <Tooltip
+                      labelFormatter={(label) =>
+                        `Date: ${formatPeriodLabel(label)}`
                       }
+                      formatter={(value, name) => {
+                        if (name === "Cases") {
+                          return [`${value}`, name];
+                        }
 
-                      return [
-                        value != null && typeof value === "number"
-                          ? value.toFixed(2)
-                          : "-",
-                        name,
-                      ];
-                    }}
-                  />
+                        return [
+                          value != null && typeof value === "number"
+                            ? value.toFixed(2)
+                            : "-",
+                          name,
+                        ];
+                      }}
+                    />
 
-                  <Legend />
+                    <Legend />
 
-                  <Bar
-                    yAxisId="left"
-                    dataKey="cases"
-                    name="Cases"
-                    fill="#3b82f6"
-                    radius={[4, 4, 0, 0]}
-                  />
+                    <Bar
+                      yAxisId="left"
+                      dataKey="cases"
+                      name="Cases"
+                      fill="#3b82f6"
+                      radius={[4, 4, 0, 0]}
+                    />
 
-                  <Line
-                    yAxisId="right"
-                    type="monotone"
-                    dataKey={ticker}
-                    name={`${ticker} Close`}
-                    stroke="#16a34a"
-                    strokeWidth={2}
-                    dot={false}
-                    connectNulls
-                  />
-                </ComposedChart>
-              </ResponsiveContainer>
-            </div>
-          </section>
-        ))}
+                    <Line
+                      yAxisId="right"
+                      type="monotone"
+                      dataKey={ticker}
+                      name={`${ticker} Close`}
+                      stroke="#16a34a"
+                      strokeWidth={2}
+                      dot={false}
+                      connectNulls
+                    />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </section>
+          );
+        })}
       </main>
     </div>
   );
