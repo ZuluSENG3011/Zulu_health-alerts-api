@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import styles from "./Navigation.module.css";
 import SearchBar from "./SearchBar";
+import { getStoredUser, logoutUser } from "../api/auth";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState(getStoredUser());
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -24,6 +26,36 @@ const Navigation = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownOpen]);
+
+  useEffect(() => {
+    const syncUser = () => {
+      setUser(getStoredUser());
+    };
+
+    window.addEventListener("auth-changed", syncUser);
+    window.addEventListener("storage", syncUser);
+
+    syncUser();
+
+    return () => {
+      window.removeEventListener("auth-changed", syncUser);
+      window.removeEventListener("storage", syncUser);
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      setUser(null);
+      setDropdownOpen(false);
+      window.dispatchEvent(new Event("auth-changed"));
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
+  const loggedIn = !!user;
 
   return (
     <nav className={styles.nav}>
@@ -50,6 +82,12 @@ const Navigation = () => {
             Home
           </button>
 
+          {user && (
+            <span className={styles.username}>
+              Welcome, {user.username}
+            </span>
+          )}
+
           <div className={styles.dropdownContainer} ref={dropdownRef}>
             <button
               type="button"
@@ -61,25 +99,36 @@ const Navigation = () => {
 
             {dropdownOpen && (
               <div className={styles.dropdownMenu}>
-                <button
-                  onClick={() => {
-                    navigate("/login");
-                    setDropdownOpen(false);
-                  }}
-                  className={styles.dropdownItem}
-                >
-                  Log in
-                </button>
+                {!loggedIn ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        navigate("/login");
+                        setDropdownOpen(false);
+                      }}
+                      className={styles.dropdownItem}
+                    >
+                      Log in
+                    </button>
 
-                <button
-                  onClick={() => {
-                    navigate("/signup");
-                    setDropdownOpen(false);
-                  }}
-                  className={styles.dropdownItem}
-                >
-                  Sign up
-                </button>
+                    <button
+                      onClick={() => {
+                        navigate("/signup");
+                        setDropdownOpen(false);
+                      }}
+                      className={styles.dropdownItem}
+                    >
+                      Sign up
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={handleLogout}
+                    className={styles.dropdownItem}
+                  >
+                    Log out
+                  </button>
+                )}
               </div>
             )}
           </div>
