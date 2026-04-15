@@ -89,6 +89,7 @@ export async function logoutUser() {
 export function saveAuth(data) {
   localStorage.setItem("token", data.token);
   localStorage.setItem("user", JSON.stringify(data.user));
+  window.dispatchEvent(new Event("auth-changed"));
 }
 
 export function getStoredUser() {
