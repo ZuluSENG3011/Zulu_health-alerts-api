@@ -46,40 +46,7 @@ function addTickerToRows(rows, stockRows, ticker) {
   });
 }
 
-export default function OutbreakFinancialAnalysis() {
-  const [lag, setLag] = useState(0);
-
-  const [filters, setFilters] = useState({
-    from: "2020-01-01",
-    to: "2026-01-01",
-    interval: "month",
-    disease: "measles",
-    species: "",
-    region: "",
-    location: "",
-  });
-
-  const [tickerInput, setTickerInput] = useState("");
-  const [selectedTickers, setSelectedTickers] = useState([]);
-  const [baseRows, setBaseRows] = useState([]);
-  const [comparisonRows, setComparisonRows] = useState([]);
-  const [loadingCases, setLoadingCases] = useState(false);
-  const [loadingTicker, setLoadingTicker] = useState(false);
-  const [error, setError] = useState("");
-
-  const tableRows = useMemo(() => {
-    return comparisonRows.length ? comparisonRows : baseRows;
-  }, [comparisonRows, baseRows]);
-
-  const handleFilterChange = (event) => {
-    const { name, value } = event.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  function calculateLagCorrelation(rows, ticker, lag = 0) {
+function calculateLagCorrelation(rows, ticker, lag = 0) {
     const pairs = [];
 
     for (let i = 0; i < rows.length; i++) {
@@ -130,6 +97,103 @@ export default function OutbreakFinancialAnalysis() {
 
     return "Very weak";
   }
+
+function findBestLag(rows, ticker, maxLag = 8) {
+  let bestLag = null;
+  let bestCorr = null;
+
+  for (let lag = 0; lag <= maxLag; lag++) {
+    const corr = calculateLagCorrelation(rows, ticker, lag);
+
+    if (corr == null) continue;
+
+    if (bestCorr == null || Math.abs(corr) > Math.abs(bestCorr)) {
+      bestCorr = corr;
+      bestLag = lag;
+    }
+  }
+
+  return {
+    bestLag,
+    bestCorr,
+  };
+}
+
+function getLatestCasesTrend(rows) {
+  const validRows = rows.filter((row) => row.cases != null);
+
+  if (validRows.length < 2) {
+    return null;
+  }
+
+  const last = validRows[validRows.length - 1];
+  const prev = validRows[validRows.length - 2];
+
+  if (last.cases > prev.cases) return "increasing";
+  if (last.cases < prev.cases) return "decreasing";
+  return "flat";
+}
+
+function getPredictionDirection(trend, correlation) {
+  if (trend == null || correlation == null) return null;
+  if (trend === "flat") return "stable";
+
+  const isPositive = correlation > 0;
+
+  if (trend === "increasing") {
+    return isPositive ? "increase" : "decrease";
+  }
+
+  if (trend === "decreasing") {
+    return isPositive ? "decrease" : "increase";
+  }
+
+  return null;
+}
+
+function getConfidenceLabel(corr) {
+  if (corr == null) return "Insufficient data";
+
+  const abs = Math.abs(corr);
+
+  if (abs >= 0.7) return "High";
+  if (abs >= 0.4) return "Moderate";
+  if (abs >= 0.2) return "Low";
+  return "Very low";
+}
+
+export default function OutbreakFinancialAnalysis() {
+  const [lag, setLag] = useState(0);
+
+  const [filters, setFilters] = useState({
+    from: "2020-01-01",
+    to: "2026-01-01",
+    interval: "month",
+    disease: "measles",
+    species: "",
+    region: "",
+    location: "",
+  });
+
+  const [tickerInput, setTickerInput] = useState("");
+  const [selectedTickers, setSelectedTickers] = useState([]);
+  const [baseRows, setBaseRows] = useState([]);
+  const [comparisonRows, setComparisonRows] = useState([]);
+  const [loadingCases, setLoadingCases] = useState(false);
+  const [loadingTicker, setLoadingTicker] = useState(false);
+  const [error, setError] = useState("");
+
+  const tableRows = useMemo(() => {
+    return comparisonRows.length ? comparisonRows : baseRows;
+  }, [comparisonRows, baseRows]);
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleLoadCases = async () => {
     try {
@@ -430,6 +494,10 @@ export default function OutbreakFinancialAnalysis() {
 
         {selectedTickers.map((ticker) => {
           const corr = calculateLagCorrelation(comparisonRows, ticker, lag);
+          const { bestLag, bestCorr } = findBestLag(comparisonRows, ticker, 8);
+          const currentTrend = getLatestCasesTrend(comparisonRows);
+          const predictedDirection = getPredictionDirection(currentTrend, bestCorr);
+          const confidence = getConfidenceLabel(bestCorr);
 
           return (
             <section key={ticker} className={styles.panel}>
@@ -440,6 +508,40 @@ export default function OutbreakFinancialAnalysis() {
                 {corr != null ? corr.toFixed(2) : "N/A"} (
                 {getCorrelationLabel(corr)})
               </p>
+
+              <div className={styles.predictionBox}>
+                <h3>Prediction Insights</h3>
+
+                <p>
+                  <strong>Best lag:</strong>{" "}
+                  {bestLag != null
+                    ? `${bestLag} ${bestLag === 1 ? "interval" : "intervals"}`
+                    : "N/A"}
+                </p>
+
+                <p>
+                  <strong>Correlation:</strong>{" "}
+                  {bestCorr != null ? bestCorr.toFixed(2) : "N/A"}
+                </p>
+
+                <p>
+                  <strong>Current trend:</strong>{" "}
+                  {currentTrend ?? "N/A"} cases
+                </p>
+
+                <p>
+                  <strong>Confidence:</strong> {confidence}
+                </p>
+
+                <p>
+                  <strong>Prediction:</strong>{" "}
+                  {predictedDirection && bestLag != null
+                    ? `${ticker} stock is likely to ${predictedDirection} in ~${bestLag} ${
+                        bestLag === 1 ? "interval" : "intervals"
+                      }`
+                    : "Not enough data to generate a prediction"}
+                </p>
+              </div>
 
               <div className={styles.chartWrap}>
                 <ResponsiveContainer width="100%" height={360}>
