@@ -42,7 +42,6 @@ function WorldMapComponent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   useEffect(() => {
     async function fetchRiskLevels() {
       try {
@@ -97,16 +96,36 @@ function WorldMapComponent() {
 
   return (
     <div className={styles.worldmapWrapper}>
-      <h1 className={styles.title}>Disease risk level</h1>
+      <div className={styles.mapHeader}>
+        <h2 className={styles.title}>Disease Risk by Country</h2>
+        <span className={styles.mapHint}>Click any country to explore its alerts</span>
+      </div>
       <WorldMap
         data={data}
-        color="red"
+        color="#c0392b"
+        backgroundColor="#dce8f5"
+        defaultFill="#c8d6e5"
         size={1070}
         onClickFunction={handleClick}
         tooltipTextFunction={({ countryName, countryValue }) =>
           `${countryName}: ${mapValueToRiskLabel(countryValue)}`
         }
       />
+      <div className={styles.legend}>
+        <span className={styles.legendLabel}>Risk level:</span>
+        <span className={styles.legendItem}>
+          <span className={styles.legendSwatch} style={{ background: "#c8d6e5" }} /> No data
+        </span>
+        <span className={styles.legendItem}>
+          <span className={styles.legendSwatch} style={{ background: "#e8a0a0" }} /> Low
+        </span>
+        <span className={styles.legendItem}>
+          <span className={styles.legendSwatch} style={{ background: "#cd6155" }} /> Medium
+        </span>
+        <span className={styles.legendItem}>
+          <span className={styles.legendSwatch} style={{ background: "#c0392b" }} /> High
+        </span>
+      </div>
     </div>
   );
 }

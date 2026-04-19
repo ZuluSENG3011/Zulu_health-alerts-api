@@ -1,15 +1,74 @@
 .worldmapWrapper {
-  padding: 0;
+  width: 100%;
+  padding: 24px 24px 16px;
+  box-sizing: border-box;
+  background: #dce8f5;
+  overflow: hidden;
+}
+
+.worldmapWrapper svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.worldmapWrapper svg:focus,
+.worldmapWrapper svg *:focus,
+.worldmapWrapper div:focus {
+  outline: none;
+}
+
+.mapHeader {
+  max-width: 1200px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title {
+  margin: 0;
   font-size: 18px;
-  font-weight: 700;
-  color: #111;
-  letter-spacing: 1px;
+  font-weight: 600;
+  color: var(--color-text, #1a202c);
+}
 
+.mapHint {
+  font-size: 13px;
+  color: var(--color-text-muted, #718096);
+  background: var(--color-bg, #f7f9fc);
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
 
-  margin-bottom: 0px;
-  margin-top: 20px;
+.legend {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--color-border, #e2e8f0);
+}
 
+.legendLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted, #718096);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text, #1a202c);
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
 }
