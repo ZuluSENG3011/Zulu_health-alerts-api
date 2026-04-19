@@ -144,7 +144,7 @@ function WorldMapComponent() {
       <WorldMap
         data={data}
         color="#c0392b"
-        backgroundColor="#dce8f5"
+        backgroundColor="#ffffff"
         defaultFill="#c8d6e5"
         size={1070}
         onClickFunction={handleClick}
