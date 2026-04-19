@@ -42,6 +42,9 @@ function WorldMapComponent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [countryNames, setCountryNames] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
   useEffect(() => {
     async function fetchRiskLevels() {
       try {
@@ -68,6 +71,7 @@ function WorldMapComponent() {
           .filter(Boolean);
 
         setData(mapData);
+        setCountryNames(Object.keys(countriesObject).map(mapCountryToSearchName));
       } catch (err) {
         setError(err.message || "Failed to fetch risk levels");
       } finally {
@@ -77,6 +81,21 @@ function WorldMapComponent() {
 
     fetchRiskLevels();
   }, []);
+
+  const filteredCountries = searchQuery.length >= 2
+    ? countryNames.filter(n => n.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 8)
+    : [];
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setShowDropdown(true);
+  };
+
+  const handleCountrySelect = (name) => {
+    navigate(`/search?location=${encodeURIComponent(name)}`);
+    setSearchQuery("");
+    setShowDropdown(false);
+  };
 
   const handleClick = (country) => {
     const countryName = country.countryName;
@@ -98,7 +117,29 @@ function WorldMapComponent() {
     <div className={styles.worldmapWrapper}>
       <div className={styles.mapHeader}>
         <h2 className={styles.title}>Disease Risk by Country</h2>
-        <span className={styles.mapHint}>Click any country to explore its alerts</span>
+        <div className={styles.countrySearch}>
+          <input
+            type="text"
+            placeholder="Search country..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+            className={styles.countrySearchInput}
+          />
+          {showDropdown && filteredCountries.length > 0 && (
+            <div className={styles.countryDropdown}>
+              {filteredCountries.map(name => (
+                <button
+                  key={name}
+                  className={styles.countryDropdownItem}
+                  onMouseDown={() => handleCountrySelect(name)}
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       <WorldMap
         data={data}

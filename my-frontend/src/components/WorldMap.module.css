@@ -11,6 +11,56 @@
   margin: 0 auto;
 }
 
+.countrySearch {
+  position: relative;
+}
+
+.countrySearchInput {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  background: white;
+  width: 200px;
+  outline: none;
+}
+
+.countrySearchInput:focus {
+  border-color: var(--color-primary, #255ad4);
+}
+
+.countryDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: white;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  z-index: 50;
+  min-width: 200px;
+  overflow: hidden;
+}
+
+.countryDropdownItem {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  color: var(--color-text, #1a202c);
+  cursor: pointer;
+}
+
+.countryDropdownItem:hover {
+  background: var(--color-bg, #f7f9fc);
+  color: var(--color-primary, #255ad4);
+}
+
 .worldmapWrapper svg:focus,
 .worldmapWrapper svg *:focus,
 .worldmapWrapper div:focus {
