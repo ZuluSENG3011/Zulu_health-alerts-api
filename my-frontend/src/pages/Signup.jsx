@@ -42,15 +42,15 @@ function Signup() {
       <main className={styles.page}>
         <div className={styles.card}>
           <div className={styles.header}>
-            <h1 className={styles.title}>Sign up</h1>
+            <h1 className={styles.title}>Sign Ups</h1>
             <p className={styles.subtitle}>
-              Create your account to start tracking health alerts.
+              Join Health Alert to start tracking personalized disease alerts worldwide.
             </p>
           </div>
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.field}>
-              <label className={styles.label}>Username</label>
+              <label className={styles.label}>Username <span className={styles.required}>*</span></label>
               <input
                 type="text"
                 name="username"
@@ -63,7 +63,7 @@ function Signup() {
             </div>
 
             <div className={styles.field}>
-              <label className={styles.label}>Email</label>
+              <label className={styles.label}>Email <span className={styles.required}>*</span></label>
               <input
                 type="email"
                 name="email"
@@ -75,30 +75,33 @@ function Signup() {
               />
             </div>
 
-            <div className={styles.field}>
-              <label className={styles.label}>Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                className={styles.input}
-                required
-              />
-            </div>
+            <div className={styles.passwordGroup}>
+              <div className={styles.field}>
+                <label className={styles.label}>Password <span className={styles.required}>*</span></label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  className={styles.input}
+                  required
+                />
+              </div>
 
-            <div className={styles.field}>
-              <label className={styles.label}>Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder="Re-enter your password"
-                className={styles.input}
-                required
-              />
+              <div className={styles.field}>
+                <label className={styles.label}>Confirm Password <span className={styles.required}>*</span></label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Re-enter your password"
+                  className={styles.input}
+                  required
+                />
+              <span className={styles.fieldHint}>Must match the password entered above.</span>
+              </div>
             </div>
 
             <button type="submit" className={styles.primaryButton}>

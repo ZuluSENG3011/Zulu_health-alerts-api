@@ -28,9 +28,6 @@ function Home() {
             <button className={styles.heroBrowseBtn} onClick={() => navigate("/search")}>
               Browse All Alerts
             </button>
-            <button className={styles.heroNotifyBtn} onClick={() => navigate("/signup")}>
-              Get Notified
-            </button>
           </div>
         </div>
       </div>
