@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { getRiskLevelSummary } from "../api/alerts";
-import { useNavigate } from "react-router-dom";
 import WorldMap from "react-svg-worldmap";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import styles from "./WorldMap.module.css";
+import MapAIDetailCard from "./MapAIDetailCard";
 
 countries.registerLocale(enLocale);
 
@@ -26,7 +26,6 @@ const mapRiskLevelToValue = (riskLevel) => {
   if (normalized === "low") return 1;
   if (normalized === "medium") return 2;
   if (normalized === "high") return 3;
-
   return 0;
 };
 
@@ -38,13 +37,14 @@ const mapValueToRiskLabel = (value) => {
 };
 
 function WorldMapComponent() {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [countryNames, setCountryNames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
   useEffect(() => {
     async function fetchRiskLevels() {
       try {
@@ -52,8 +52,6 @@ function WorldMapComponent() {
         setError("");
 
         const riskData = await getRiskLevelSummary();
-
-        // your API output is like: { countries: { "United States": {...}, ... } }
         const countriesObject = riskData?.countries || {};
 
         const mapData = Object.entries(countriesObject)
@@ -66,12 +64,15 @@ function WorldMapComponent() {
             return {
               country: alpha2.toLowerCase(),
               value: mapRiskLevelToValue(info?.risk_level),
+              countryName: normalizedCountryName,
+              riskLevel: info?.risk_level || "Unknown",
+              aiSummary: info?.reason || "",
             };
           })
           .filter(Boolean);
 
         setData(mapData);
-        setCountryNames(Object.keys(countriesObject).map(mapCountryToSearchName));
+        setCountryNames(mapData.map((item) => item.countryName));
       } catch (err) {
         setError(err.message || "Failed to fetch risk levels");
       } finally {
@@ -82,9 +83,12 @@ function WorldMapComponent() {
     fetchRiskLevels();
   }, []);
 
-  const filteredCountries = searchQuery.length >= 2
-    ? countryNames.filter(n => n.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 8)
-    : [];
+  const filteredCountries =
+    searchQuery.length >= 2
+      ? countryNames
+          .filter((n) => n.toLowerCase().includes(searchQuery.toLowerCase()))
+          .slice(0, 8)
+      : [];
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -92,8 +96,12 @@ function WorldMapComponent() {
   };
 
   const handleCountrySelect = (name) => {
-    navigate(`/search?location=${encodeURIComponent(name)}`);
-    setSearchQuery("");
+    const selected = data.find(
+      (item) => item.countryName?.toLowerCase() === name.toLowerCase(),
+    );
+
+    setSelectedCountry(selected || null);
+    setSearchQuery(name);
     setShowDropdown(false);
   };
 
@@ -102,7 +110,12 @@ function WorldMapComponent() {
     if (!countryName) return;
 
     const searchName = mapCountryToSearchName(countryName);
-    navigate(`/search?location=${encodeURIComponent(searchName)}`);
+
+    const selected = data.find(
+      (item) => item.countryName?.toLowerCase() === searchName.toLowerCase(),
+    );
+
+    setSelectedCountry(selected || null);
   };
 
   if (loading) {
@@ -117,6 +130,7 @@ function WorldMapComponent() {
     <div className={styles.worldmapWrapper}>
       <div className={styles.mapHeader}>
         <h2 className={styles.title}>Disease Risk by Country</h2>
+
         <div className={styles.countrySearch}>
           <input
             type="text"
@@ -126,9 +140,10 @@ function WorldMapComponent() {
             onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
             className={styles.countrySearchInput}
           />
+
           {showDropdown && filteredCountries.length > 0 && (
             <div className={styles.countryDropdown}>
-              {filteredCountries.map(name => (
+              {filteredCountries.map((name) => (
                 <button
                   key={name}
                   className={styles.countryDropdownItem}
@@ -141,6 +156,12 @@ function WorldMapComponent() {
           )}
         </div>
       </div>
+
+      <MapAIDetailCard
+        detail={selectedCountry}
+        onClose={() => setSelectedCountry(null)}
+      />
+
       <WorldMap
         data={data}
         color="#c0392b"
@@ -152,19 +173,40 @@ function WorldMapComponent() {
           `${countryName}: ${mapValueToRiskLabel(countryValue)}`
         }
       />
+
       <div className={styles.legend}>
         <span className={styles.legendLabel}>Risk level:</span>
+
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} style={{ background: "#c8d6e5" }} /> No data
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#c8d6e5" }}
+          />
+          No data
         </span>
+
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} style={{ background: "#e8a0a0" }} /> Low
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#e8a0a0" }}
+          />
+          Low
         </span>
+
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} style={{ background: "#cd6155" }} /> Medium
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#cd6155" }}
+          />
+          Medium
         </span>
+
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} style={{ background: "#c0392b" }} /> High
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#c0392b" }}
+          />
+          High
         </span>
       </div>
     </div>

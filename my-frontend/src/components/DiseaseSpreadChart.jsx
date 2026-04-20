@@ -99,7 +99,7 @@ function DiseaseSpreadChart() {
       </p>
 
       <div className={styles.chartWrapper}>
-        <ResponsiveContainer width="100%" height={420}>
+        <ResponsiveContainer width="100%" height={400}>
           <PieChart>
             <Pie
               data={data}
