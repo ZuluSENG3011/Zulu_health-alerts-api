@@ -1,3 +1,98 @@
+/* ── Hero banner ── */
+.heroBanner {
+  background: var(--color-navy, #0d1b2a);
+  padding: 36px 24px;
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e0;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.heroDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-alert, #e53e3e);
+  flex-shrink: 0;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  margin: 0;
+  font-size: 15px;
+  color: #90a0b4;
+  line-height: 1.5;
+}
+
+.heroRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.heroBrowseBtn {
+  padding: 11px 22px;
+  background: var(--color-primary, #255ad4);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s ease;
+}
+
+.heroBrowseBtn:hover {
+  background: #1a42a0;
+}
+
+
+@media (max-width: 768px) {
+  .heroContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .heroTitle {
+    font-size: 24px;
+  }
+}
+
+/* ── Page layout ── */
 .pageContainer {
   width: 100%;
   margin: 0;
@@ -15,20 +110,42 @@
   align-items: flex-start;
 }
 
-.graphSection {
-  max-width: 1200px;
+.chartsRow {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+  gap: 20px;
+
+}
+
+.graphSection {
+  min-width: 0;
+  background-color: white;
+  border: 0.1px solid #cbd5e0;
+  border-top: 5px solid #0d1b2a;
+  margin: 20px 0px;
+  
 }
 
 .pieChartSection {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+  margin: 20px 0px;
+  background-color: white;
+  border: 0.1px solid #cbd5e0;
+  border-top: 5px solid #0d1b2a;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .chartsRow {
+    grid-template-columns: 1fr;
+  }
+
+  .graphSection {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border, #e2e8f0);
+  }
 }
 
 

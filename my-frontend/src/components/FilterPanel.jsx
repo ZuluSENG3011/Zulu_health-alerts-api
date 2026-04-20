@@ -87,17 +87,9 @@ function FilterPanel() {
 
   if (isPanelCollapsed) {
     return (
-      <aside className={styles.collapsedPanel}>
+      <aside className={styles.collapsedPanel} onClick={() => setIsPanelCollapsed(false)}>
         <div className={styles.collapsedInner}>
           <img src={filterIcon} className={styles.headerIcon} alt="Filter" />
-          <button
-            type="button"
-            className={styles.panelToggleButton}
-            onClick={() => setIsPanelCollapsed(false)}
-            aria-label="Expand filter panel"
-          >
-            ›
-          </button>
         </div>
       </aside>
     );
@@ -134,22 +126,28 @@ function FilterPanel() {
         {sections.dateRange && (
           <div className={styles.sectionBody}>
             <div className={styles.dateRow}>
-              <input
-                type="date"
-                name="from"
-                value={filters.from}
-                onChange={handleChange}
-                className={styles.dateInput}
-              />
-              <input
-                ref={toDateRef}
-                type="date"
-                name="to"
-                value={filters.to}
-                onChange={handleChange}
-                min={filters.from || undefined}
-                className={styles.dateInput}
-              />
+              <div className={styles.dateField}>
+                <label className={styles.dateLabel}>Start date</label>
+                <input
+                  type="date"
+                  name="from"
+                  value={filters.from}
+                  onChange={handleChange}
+                  className={styles.dateInput}
+                />
+              </div>
+              <div className={styles.dateField}>
+                <label className={styles.dateLabel}>End date</label>
+                <input
+                  ref={toDateRef}
+                  type="date"
+                  name="to"
+                  value={filters.to}
+                  onChange={handleChange}
+                  min={filters.from || undefined}
+                  className={styles.dateInput}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -172,7 +170,7 @@ function FilterPanel() {
               name="disease"
               value={filters.disease}
               onChange={handleChange}
-              placeholder="Search name..."
+              placeholder="e.g. Cholera"
               className={styles.textInput}
             />
           </div>
@@ -196,7 +194,7 @@ function FilterPanel() {
               name="species"
               value={filters.species}
               onChange={handleChange}
-              placeholder="Search name..."
+              placeholder="e.g. Human"
               className={styles.textInput}
             />
           </div>
@@ -221,47 +219,42 @@ function FilterPanel() {
               name="continent"
               value={filters.continent}
               onChange={handleChange}
-              placeholder="Search continent..."
+              placeholder="e.g. Africa"
               className={styles.textInput}
             />
-
-            <div className={styles.checkboxList}>
-              <label className={styles.checkboxItem}>
-                <input type="checkbox" />
-                <span>Asia</span>
-              </label>
-              <label className={styles.checkboxItem}>
-                <input type="checkbox" />
-                <span>Africa</span>
-              </label>
-              <label className={styles.checkboxItem}>
-                <input type="checkbox" />
-                <span>North America</span>
-              </label>
-              <label className={styles.checkboxItem}>
-                <input type="checkbox" />
-                <span>Europe</span>
-              </label>
-              <label className={styles.checkboxItem}>
-                <input type="checkbox" />
-                <span>South America</span>
-              </label>
-            </div>
-
-            <label className={styles.subLabel} style={{ marginTop: "16px" }}>
-              Location
-            </label>
-
+            <label className={styles.subLabel} style={{ marginTop: "12px" }}>Location</label>
             <input
               type="text"
               name="location"
               value={filters.location}
               onChange={handleChange}
-              placeholder="Search location..."
+              placeholder="e.g. Kenya"
               className={styles.textInput}
             />
           </div>
         )}
+      </div>
+      <div className={styles.resetRow}>
+        <button
+          type="button"
+          className={styles.resetButton}
+          onClick={() => {
+            const today = new Date();
+            const from = new Date(today);
+            from.setMonth(today.getMonth() - 6);
+            navigate(`/search?from=${from.toISOString().split("T")[0]}`);
+          }}
+        >
+          Reset Filters
+        </button>
+        <span className={styles.resetHint}>defaults to last 6 months</span>
+        <button
+          type="button"
+          className={styles.fullResetButton}
+          onClick={() => navigate("/search")}
+        >
+          full reset — loads all time data
+        </button>
       </div>
     </aside>
   );

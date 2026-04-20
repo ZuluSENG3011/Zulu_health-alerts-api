@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Label,
+} from "recharts";
 import { getTimeseriesStats } from "../api/alerts";
 import styles from "./DiseaseGraph.module.css";
 
@@ -13,6 +21,7 @@ function DiseaseGraph() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activeInterval, setActiveInterval] = useState(null);
 
   // so that the graph doesnt look incomplete
   const fillMissingPeriods = (results, from, to, interval) => {
@@ -58,7 +67,16 @@ function DiseaseGraph() {
 
     try {
       const interval = getInterval();
-      const result = await getTimeseriesStats({ from, to, disease, species, region, location, interval });
+      setActiveInterval(interval);
+      const result = await getTimeseriesStats({
+        from,
+        to,
+        disease,
+        species,
+        region,
+        location,
+        interval,
+      });
       setData(fillMissingPeriods(result.results || [], from, to, interval));
     } catch (err) {
       console.error(err);
@@ -125,9 +143,19 @@ function DiseaseGraph() {
       {error && <p className={styles.error}>{error}</p>}
 
       {data.length > 0 && (
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data}>
-            <XAxis dataKey="period" tick={{ fontSize: 12 }} />
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={data} margin={{ top: 20, bottom: 20, right: 30 }}>
+            <XAxis dataKey="period" tick={{ fontSize: 12 }}>
+              {activeInterval && (
+                <Label
+                  value={`per ${activeInterval}`}
+                  position="insideBottomRight"
+                  offset={-5}
+                  fontSize={11}
+                  fill="#718096"
+                />
+              )}
+            </XAxis>
             <YAxis />
             <Tooltip />
             <Bar dataKey="count" fill="#255ad4" maxBarSize={40} />

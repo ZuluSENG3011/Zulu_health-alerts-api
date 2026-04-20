@@ -1,15 +1,128 @@
 .worldmapWrapper {
-  padding: 0;
+  width: 100%;
+  padding: 24px 24px 16px;
+  box-sizing: border-box;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.worldmapWrapper svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.countrySearch {
+  position: relative;
+}
+
+.countrySearchInput {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  background: white;
+  width: 200px;
+  outline: none;
+}
+
+.countrySearchInput:focus {
+  border-color: var(--color-primary, #255ad4);
+}
+
+.countryDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: white;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  z-index: 50;
+  min-width: 200px;
+  overflow: hidden;
+}
+
+.countryDropdownItem {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  color: var(--color-text, #1a202c);
+  cursor: pointer;
+}
+
+.countryDropdownItem:hover {
+  background: var(--color-bg, #f7f9fc);
+  color: var(--color-primary, #255ad4);
+}
+
+.worldmapWrapper svg:focus,
+.worldmapWrapper svg *:focus,
+.worldmapWrapper div:focus {
+  outline: none;
+}
+
+.mapHeader {
+  max-width: 1200px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title {
+  margin: 0;
   font-size: 18px;
-  font-weight: 700;
-  color: #111;
-  letter-spacing: 1px;
+  font-weight: 600;
+  color: var(--color-text, #1a202c);
+}
 
+.mapHint {
+  font-size: 13px;
+  color: var(--color-text-muted, #718096);
+  background: var(--color-bg, #f7f9fc);
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
 
-  margin-bottom: 0px;
-  margin-top: 20px;
+.legend {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--color-border, #e2e8f0);
+}
 
+.legendLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted, #718096);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text, #1a202c);
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.worldmapWrapper {
+  position: relative;
 }

@@ -66,7 +66,11 @@ const ResultDisplay = ({ title, data }) => {
                         key={i}
                         className={`${styles.diseaseTag} ${styles.clickable}`}
                         onClick={() =>
-                          navigate(`/disease/${encodeURIComponent(d)}`)
+                          navigate(
+                            `/search?disease=${encodeURIComponent(
+                              d.toLowerCase(),
+                            )}`,
+                          )
                         }
                       >
                         {d}
@@ -79,7 +83,17 @@ const ResultDisplay = ({ title, data }) => {
                   <span className={styles.fieldLabel}>Species:</span>
                   <div className={styles.tagRow}>
                     {selectedAlert.species.map((s, i) => (
-                      <span key={i} className={styles.speciesTag}>
+                      <span
+                        key={i}
+                        className={`${styles.speciesTag} ${styles.clickable}`}
+                        onClick={() =>
+                          navigate(
+                            `/search?species=${encodeURIComponent(
+                              s.toLowerCase(),
+                            )}`,
+                          )
+                        }
+                      >
                         {s}
                       </span>
                     ))}
@@ -90,7 +104,17 @@ const ResultDisplay = ({ title, data }) => {
                   <span className={styles.fieldLabel}>Regions:</span>
                   <div className={styles.tagRow}>
                     {selectedAlert.region.map((r, i) => (
-                      <span key={i} className={styles.regionTag}>
+                      <span
+                        key={i}
+                        className={`${styles.regionTag} ${styles.clickable}`}
+                        onClick={() =>
+                          navigate(
+                            `/search?region=${encodeURIComponent(
+                              r.toLowerCase(),
+                            )}`,
+                          )
+                        }
+                      >
                         {r}
                       </span>
                     ))}
@@ -101,7 +125,17 @@ const ResultDisplay = ({ title, data }) => {
                   <span className={styles.fieldLabel}>Locations:</span>
                   <div className={styles.tagRow}>
                     {selectedAlert.location.map((loc, i) => (
-                      <span key={i} className={styles.locationTag}>
+                      <span
+                        key={i}
+                        className={`${styles.locationTag} ${styles.clickable}`}
+                        onClick={() =>
+                          navigate(
+                            `/search?location=${encodeURIComponent(
+                              loc[0].toLowerCase(),
+                            )}`,
+                          )
+                        }
+                      >
                         {loc.join(", ")}
                       </span>
                     ))}
