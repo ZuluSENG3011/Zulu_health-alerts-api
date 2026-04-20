@@ -25,8 +25,13 @@ function Home() {
             </p>
           </div>
           <div className={styles.heroRight}>
-            <button className={styles.heroBrowseBtn} onClick={() => navigate("/search")}>
-              Browse All Alerts
+            <button className={styles.heroBrowseBtn} onClick={() => {
+              const today = new Date();
+              const from = new Date(today);
+              from.setMonth(today.getMonth() - 6);
+              navigate(`/search?from=${from.toISOString().split("T")[0]}`);
+            }}>
+              Browse Alerts
             </button>
           </div>
         </div>
