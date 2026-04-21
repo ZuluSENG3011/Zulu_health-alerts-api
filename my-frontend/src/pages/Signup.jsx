@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import { signupUser, saveAuth } from "../api/auth";
 import styles from "./Auth.module.css";
 
 function Signup() {
@@ -13,6 +14,9 @@ function Signup() {
     confirmPassword: "",
   });
 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -21,18 +25,34 @@ function Signup() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
+      setError("Passwords do not match.");
       return;
     }
 
-    console.log("Signup form:", formData);
+    try {
+      setLoading(true);
 
-    // replace with actual signup logic
-    navigate("/login");
+      const data = await signupUser({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // save token + user
+      saveAuth(data);
+
+      // redirect to home (already logged in)
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Signup failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -104,8 +124,14 @@ function Signup() {
               </div>
             </div>
 
-            <button type="submit" className={styles.primaryButton}>
-              Sign up
+            {error && <p className={styles.error}>{error}</p>}
+
+            <button
+              type="submit"
+              className={styles.primaryButton}
+              disabled={loading}
+            >
+              {loading ? "Creating account..." : "Sign up"}
             </button>
           </form>
 

@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import { loginUser, saveAuth } from "../api/auth";
 import styles from "./Auth.module.css";
 
 function Login() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,13 +23,24 @@ function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    console.log("Login form:", formData);
+    try {
+      const data = await loginUser({
+        username: formData.username,
+        password: formData.password,
+      });
 
-    // replace with actual login logic
-    navigate("/");
+      saveAuth(data);
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,13 +58,13 @@ function Login() {
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.field}>
-              <label className={styles.label}>Email</label>
+              <label className={styles.label}>Username</label>
               <input
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Enter your email"
+                placeholder="Enter your username"
                 className={styles.input}
                 required
               />
@@ -68,8 +83,14 @@ function Login() {
               />
             </div>
 
-            <button type="submit" className={styles.primaryButton}>
-              Log in
+            {error && <p className={styles.error}>{error}</p>}
+
+            <button
+              type="submit"
+              className={styles.primaryButton}
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Log in"}
             </button>
           </form>
 
