@@ -96,7 +96,7 @@ class GeminiRiskLevel:
             a stronger signal, but do not overstate certainty
             beyond the provided evidence.
 
-            create a concise, objective, evidence-grounded country-level 
+            create a concise, objective, evidence-grounded country-level
             travel health signal summary for typical travellers
             travel-risk assessment by using:
             1. outbreak evidence from the provided filtered alerts
