@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import SearchResults from "./pages/SearchResults/SearchResults";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import OutbreakFinancialAnalysis from "./pages/OutbreakFinancialAnalysis/OutbreakFinancialAnalysis";
 
 export default function AppRoutes() {
   return (
@@ -12,6 +13,10 @@ export default function AppRoutes() {
         <Route path="/search" element={<SearchResults />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/analysis/outbreak-financial"
+          element={<OutbreakFinancialAnalysis />}
+        />
       </Routes>
     </BrowserRouter>
   );
