@@ -154,3 +154,105 @@ td {
   color: #374151;
   line-height: 1.8;
 }
+
+.modeToggle {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.modeButton {
+  padding: 8px 14px;
+  border: 1px solid #d0d7e2;
+  background: white;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.modeButtonActive {
+  border-color: #2f6fed;
+  color: #2f6fed;
+  font-weight: 600;
+}
+
+.insightCard {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* COLORS BY LEVEL */
+.low {
+  border-left: 4px solid #10b981;
+}
+
+.moderate {
+  border-left: 4px solid #f59e0b;
+}
+
+.high {
+  border-left: 4px solid #ef4444;
+}
+
+/* SUMMARY */
+.summary {
+  margin: 10px 0;
+  color: #374151;
+}
+
+/* META GRID */
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.metaLabel {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* GUIDANCE */
+.guidance {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.message {
+  margin: 6px 0 10px;
+  font-weight: 500;
+}
+
+.guidance ul {
+  padding-left: 18px;
+}
+
+.guidance li {
+  margin-bottom: 4px;
+}

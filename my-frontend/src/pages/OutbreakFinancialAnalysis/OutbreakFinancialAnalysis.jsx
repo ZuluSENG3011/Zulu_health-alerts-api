@@ -26,21 +26,8 @@ import {
 } from "recharts";
 import Navigation from "../../components/Navigation";
 import styles from "./OutbreakFinancialAnalysis.module.css";
-
-function parseMultiValueInput(input) {
-  if (Array.isArray(input)) {
-    return input.map((item) => String(item).trim()).filter(Boolean);
-  }
-
-  if (typeof input !== "string") {
-    return [];
-  }
-
-  return input
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
+import { MODE_CONFIG } from "./analysisMode";
+import { generateTravelInsightCard } from "../../utils/travelInsights";
 
 function findLatestCloseOnOrBefore(stockLookup, targetDate, maxLookbackDays = 31) {
   const date = new Date(`${targetDate}T00:00:00`);
@@ -62,9 +49,7 @@ function findLatestCloseOnOrBefore(stockLookup, targetDate, maxLookbackDays = 31
 }
 
 function addTickerToRows(rows, stockRows, ticker) {
-  const stockLookup = new Map(
-    stockRows.map((row) => [row.date, row.close])
-  );
+  const stockLookup = new Map(stockRows.map((row) => [row.date, row.close]));
 
   return rows.map((row) => ({
     ...row,
@@ -73,61 +58,58 @@ function addTickerToRows(rows, stockRows, ticker) {
 }
 
 function calculateLagCorrelation(rows, ticker, lag = 0) {
-    const pairs = [];
+  const pairs = [];
 
-    for (let i = 0; i < rows.length; i++) {
-      const j = i + lag;
+  for (let i = 0; i < rows.length; i++) {
+    const j = i + lag;
+    if (j >= rows.length) break;
 
-      if (j >= rows.length) break;
+    const x = rows[i].cases;
+    const y = rows[j][ticker];
 
-      const x = rows[i].cases;
-      const y = rows[j][ticker];
-
-      if (x != null && y != null) {
-        pairs.push({ x, y });
-      }
+    if (x != null && y != null) {
+      pairs.push({ x, y });
     }
-
-    if (pairs.length < 2) return null;
-
-    const n = pairs.length;
-
-    const meanX = pairs.reduce((a, p) => a + p.x, 0) / n;
-    const meanY = pairs.reduce((a, p) => a + p.y, 0) / n;
-
-    let num = 0, dx = 0, dy = 0;
-
-    for (const p of pairs) {
-      const vx = p.x - meanX;
-      const vy = p.y - meanY;
-
-      num += vx * vy;
-      dx += vx * vx;
-      dy += vy * vy;
-    }
-
-    const denom = Math.sqrt(dx * dy);
-    if (denom === 0) return null;
-
-    return num / denom;
   }
+
+  if (pairs.length < 2) return null;
+
+  const n = pairs.length;
+  const meanX = pairs.reduce((a, p) => a + p.x, 0) / n;
+  const meanY = pairs.reduce((a, p) => a + p.y, 0) / n;
+
+  let num = 0;
+  let dx = 0;
+  let dy = 0;
+
+  for (const p of pairs) {
+    const vx = p.x - meanX;
+    const vy = p.y - meanY;
+    num += vx * vy;
+    dx += vx * vx;
+    dy += vy * vy;
+  }
+
+  const denom = Math.sqrt(dx * dy);
+  if (denom === 0) return null;
+
+  return num / denom;
+}
 
 function getCorrelationLabel(value) {
   if (value == null) return "Insufficient data";
 
   const abs = Math.abs(value);
-
   if (abs > 0.7) return "Strong";
   if (abs > 0.4) return "Moderate";
   if (abs > 0.2) return "Weak";
-
   return "Very weak";
 }
 
 function getMaxLag(interval) {
-  if (interval === "month") return 3;
-  if (interval === "week") return 8;
-  return 14; // day
+  if (interval === "month") return 0;
+  if (interval === "week") return 2;
+  return 14;
 }
 
 function findBestLag(rows, ticker, maxLag = 8) {
@@ -145,18 +127,13 @@ function findBestLag(rows, ticker, maxLag = 8) {
     }
   }
 
-  return {
-    bestLag,
-    bestCorr,
-  };
+  return { bestLag, bestCorr };
 }
 
 function getLatestCasesTrend(rows) {
   const validRows = rows.filter((row) => row.cases != null);
 
-  if (validRows.length < 2) {
-    return null;
-  }
+  if (validRows.length < 2) return null;
 
   const last = validRows[validRows.length - 1];
   const prev = validRows[validRows.length - 2];
@@ -166,48 +143,69 @@ function getLatestCasesTrend(rows) {
   return "flat";
 }
 
-function getPredictionDirection(trend, correlation) {
-  if (trend == null || correlation == null) return null;
-  if (trend === "flat") return "stable";
-
-  const isPositive = correlation > 0;
-
-  if (trend === "increasing") {
-    return isPositive ? "increase" : "decrease";
-  }
-
-  if (trend === "decreasing") {
-    return isPositive ? "decrease" : "increase";
-  }
-
-  return null;
+function getImpactStrength(correlation) {
+  const abs = Math.abs(correlation ?? 0);
+  if (abs >= 0.6) return "High";
+  if (abs >= 0.3) return "Moderate";
+  return "Low";
 }
 
-function getConfidenceLabel(corr) {
-  if (corr == null) return "Insufficient data";
-
-  const abs = Math.abs(corr);
-
-  if (abs >= 0.7) return "High";
-  if (abs >= 0.4) return "Moderate";
-  if (abs >= 0.2) return "Low";
-  return "Very low";
+function formatLagForTravel(lag, interval) {
+  if (lag == null) return "No clear delay";
+  if (lag === 0) {
+    if (interval === "month") return "within the same month";
+    if (interval === "week") return "within the same week";
+    return "within the same day";
+  }
+  return `about ${lag} ${interval}${lag > 1 ? "s" : ""} later`;
 }
 
-function formatLag(lag, interval) {
-  if (lag === 0) return "no delay (same time)";
+function generateFinanceInsightCard({
+  ticker,
+  trend,
+  correlation,
+  lag,
+  interval,
+}) {
+  if (correlation == null || lag == null) {
+    return {
+      title: "Market Insight",
+      level: "Low",
+      summary: "There is not enough data to identify a clear market relationship yet.",
+      implications: ["Try a wider date range or a different ticker."],
+      signal: "Insufficient data",
+      timing: "Unknown",
+    };
+  }
 
-  const unit =
-    interval === "month"
-      ? "month"
-      : interval === "week"
-      ? "week"
-      : "day";
+  const strength = getImpactStrength(correlation);
+  const timing = lag === 0
+    ? `within the same ${interval}`
+    : `about ${lag} ${interval}${lag > 1 ? "s" : ""} later`;
 
-  return `${lag} ${unit}${lag > 1 ? "s" : ""} delay`;
+  return {
+    title: "Market Insight",
+    level: strength,
+    summary:
+      correlation > 0
+        ? `This ticker tends to move in the same direction as outbreak cases ${timing}.`
+        : `This ticker tends to move in the opposite direction to outbreak cases ${timing}.`,
+    implications: [
+      "Use this as an exploratory relationship, not a prediction.",
+      "Compare with additional companies for stronger interpretation.",
+    ],
+    signal:
+      correlation > 0
+        ? `${ticker} shows a positive relationship`
+        : `${ticker} shows a negative relationship`,
+    timing,
+  };
 }
 
 export default function OutbreakFinancialAnalysis() {
+  const [mode, setMode] = useState("finance");
+  const modeConfig = MODE_CONFIG[mode];
+
   const [lag, setLag] = useState(0);
 
   const [filters, setFilters] = useState({
@@ -236,14 +234,6 @@ export default function OutbreakFinancialAnalysis() {
     return comparisonRows.length ? comparisonRows : baseRows;
   }, [comparisonRows, baseRows]);
 
-  const handleFilterChange = (event) => {
-    const { name, value } = event.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleLoadCases = async () => {
     try {
       setLoadingCases(true);
@@ -259,9 +249,6 @@ export default function OutbreakFinancialAnalysis() {
         location: filters.location.country,
       };
 
-      console.log("filters", filters);
-console.log("formattedFilters", formattedFilters);
-
       const raw = await getTimeseriesStats(formattedFilters);
       const rows = normaliseAlertTimeseries(raw);
 
@@ -276,50 +263,48 @@ console.log("formattedFilters", formattedFilters);
     }
   };
 
-const handleAddTicker = async (tickerOverride = "") => {
-  const sourceTicker =
-    typeof tickerOverride === "string" && tickerOverride
-      ? tickerOverride
-      : tickerInput;
+  const handleAddTicker = async (tickerOverride = "") => {
+    const sourceTicker =
+      typeof tickerOverride === "string" && tickerOverride
+        ? tickerOverride
+        : tickerInput;
 
-  const ticker = sourceTicker.trim().toUpperCase();
+    const ticker = sourceTicker.trim().toUpperCase();
 
-  if (!ticker) return;
-  if (selectedTickers.includes(ticker)) return;
+    if (!ticker) return;
+    if (selectedTickers.includes(ticker)) return;
 
-  if (!baseRows.length) {
-    setError("Load outbreak data first.");
-    return;
-  }
+    if (!baseRows.length) {
+      setError("Load outbreak data first.");
+      return;
+    }
 
-  try {
-    setLoadingTicker(true);
-    setError("");
+    try {
+      setLoadingTicker(true);
+      setError("");
 
-    const raw = await fetchFinancialData({
-      ticker,
-      from: filters.from,
-      to: filters.to,
-    });
+      const raw = await fetchFinancialData({
+        ticker,
+        from: filters.from,
+        to: filters.to,
+      });
 
-    const stockRows = normaliseFinancialEvents(raw);
+      const stockRows = normaliseFinancialEvents(raw);
 
-    setComparisonRows((prevRows) =>
-      addTickerToRows(prevRows, stockRows, ticker)
-    );
-    setSelectedTickers((prev) => [...prev, ticker]);
-    setTickerInput("");
-  } catch (err) {
-    setError(err.message || "Failed to add ticker");
-  } finally {
-    setLoadingTicker(false);
-  }
-};
+      setComparisonRows((prevRows) =>
+        addTickerToRows(prevRows, stockRows, ticker)
+      );
+      setSelectedTickers((prev) => [...prev, ticker]);
+      setTickerInput("");
+    } catch (err) {
+      setError(err.message || "Failed to add ticker");
+    } finally {
+      setLoadingTicker(false);
+    }
+  };
 
   const handleRemoveTicker = (tickerToRemove) => {
-    setSelectedTickers((prev) =>
-      prev.filter((t) => t !== tickerToRemove)
-    );
+    setSelectedTickers((prev) => prev.filter((t) => t !== tickerToRemove));
 
     setComparisonRows((prevRows) =>
       prevRows.map((row) => {
@@ -332,17 +317,25 @@ const handleAddTicker = async (tickerOverride = "") => {
 
   const formatPeriodLabel = (value) => {
     if (!value) return "";
-
-    if (filters.interval === "month") {
-      return value.slice(0, 7);
-    }
-
+    if (filters.interval === "month") return value.slice(0, 7);
     return value;
+  };
+
+  const tickerCategoryMap = {
+    DAL: "Airlines",
+    AAL: "Airlines",
+    UAL: "Airlines",
+    ABNB: "Tourism",
+    BKNG: "Tourism",
+    EXPE: "Tourism",
+    PFE: "Health Impact",
+    MRNA: "Health Impact",
   };
 
   return (
     <>
       <Navigation />
+
       <div className={styles.page}>
         <aside className={styles.sidebar}>
           <h2>Filters</h2>
@@ -437,7 +430,32 @@ const handleAddTicker = async (tickerOverride = "") => {
 
         <main className={styles.main}>
           <div className={styles.header}>
-            <h1>Outbreak Impact on Markets</h1>
+            <div>
+              <h1>{modeConfig.pageTitle}</h1>
+              <p className={styles.subtitle}>{modeConfig.subtitle}</p>
+
+              <div className={styles.modeToggle}>
+                <button
+                  type="button"
+                  className={`${styles.modeButton} ${
+                    mode === "finance" ? styles.modeButtonActive : ""
+                  }`}
+                  onClick={() => setMode("finance")}
+                >
+                  Finance mode
+                </button>
+
+                <button
+                  type="button"
+                  className={`${styles.modeButton} ${
+                    mode === "travel" ? styles.modeButtonActive : ""
+                  }`}
+                  onClick={() => setMode("travel")}
+                >
+                  Travel advisory mode
+                </button>
+              </div>
+            </div>
 
             <div className={styles.addTicker}>
               <input
@@ -454,25 +472,16 @@ const handleAddTicker = async (tickerOverride = "") => {
 
           <section className={styles.hero}>
             <div className={styles.heroLeft}>
-              <h2>Compare companies</h2>
-              <p>
-                Explore how disease outbreak trends may relate to market behaviour across
-                sectors like travel, tourism, retail, and healthcare.
-              </p>
-              <p>
-                Use outbreak filters to load case data, then compare it with selected
-                company tickers to identify patterns, lagged relationships, and possible
-                business impacts.
-              </p>
+              <h2>{modeConfig.heroTitle}</h2>
+              <p>{modeConfig.heroDescription}</p>
             </div>
 
             <div className={styles.heroRight}>
               <h2>How to use</h2>
               <ol>
-                <li>Select outbreak filters on the left</li>
-                <li>Load outbreak data</li>
-                <li>Add a ticker or explore by sector</li>
-                <li>Compare the chart, table, and correlation results</li>
+                {modeConfig.heroSteps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
               </ol>
             </div>
           </section>
@@ -509,11 +518,7 @@ const handleAddTicker = async (tickerOverride = "") => {
                       }
                       formatter={(value) => [`${value} cases`, "Cases"]}
                     />
-                    <Bar
-                      dataKey="cases"
-                      fill="#3b82f6"
-                      radius={[4, 4, 0, 0]}
-                    />
+                    <Bar dataKey="cases" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -523,15 +528,22 @@ const handleAddTicker = async (tickerOverride = "") => {
           </section>
 
           <section className={styles.panel}>
-            <h2>Explore Impact by Industry</h2>
+            <h2>{modeConfig.categoryTitle}</h2>
+            <p className={styles.subtitle}>
+              {mode === "travel"
+                ? "Select a category to explore how different parts of travel respond to outbreaks."
+                : "Select a category to explore how different industries respond to outbreaks."}
+            </p>
+
             <SectorTickerPicker
+              modeConfig={modeConfig}
               selectedTickers={selectedTickers}
               onAddTicker={handleAddTicker}
             />
           </section>
 
           <section className={styles.panel}>
-            <h2>Selected Companies</h2>
+            <h2>{modeConfig.selectedTitle}</h2>
             <div className={styles.tickerList}>
               {selectedTickers.length ? (
                 selectedTickers.map((ticker) => (
@@ -552,7 +564,7 @@ const handleAddTicker = async (tickerOverride = "") => {
           </section>
 
           <section className={styles.panel}>
-            <h2>Outbreak vs Market Data</h2>
+            <h2>{modeConfig.comparisonTitle}</h2>
 
             <div className={styles.tableWrap}>
               <table>
@@ -584,53 +596,89 @@ const handleAddTicker = async (tickerOverride = "") => {
 
           {selectedTickers.map((ticker) => {
             const corr = calculateLagCorrelation(comparisonRows, ticker, lag);
-            const { bestLag, bestCorr } = findBestLag(comparisonRows, ticker, maxLag);
+            const { bestLag, bestCorr } = findBestLag(
+              comparisonRows,
+              ticker,
+              maxLag
+            );
             const currentTrend = getLatestCasesTrend(comparisonRows);
-            const predictedDirection = getPredictionDirection(currentTrend, bestCorr);
-            const confidence = getConfidenceLabel(bestCorr);
+
+            const insight =
+              mode === "travel"
+                ? generateTravelInsightCard({
+                    ticker,
+                    trend: currentTrend,
+                    correlation: bestCorr,
+                    lag: bestLag,
+                    interval: filters.interval,
+                    category: tickerCategoryMap[ticker] || "Airlines",
+                  })
+                : generateFinanceInsightCard({
+                    ticker,
+                    trend: currentTrend,
+                    correlation: bestCorr,
+                    lag: bestLag,
+                    interval: filters.interval,
+                  });
 
             return (
               <section key={ticker} className={styles.panel}>
                 <h2>{ticker} vs outbreak cases</h2>
 
                 <p className={styles.correlation}>
-                  Correlation (lag = {lag}):{" "}
-                  {corr != null ? corr.toFixed(2) : "N/A"} (
-                  {getCorrelationLabel(corr)})
+                  Current lag ({lag}): {corr?.toFixed(2) || "N/A"}
                 </p>
 
-                <div className={styles.predictionBox}>
-                  <h3>Prediction Insights</h3>
+                <p>
+                  Best lag: {bestLag ?? "N/A"} ({bestCorr?.toFixed(2) || "N/A"})
+                </p>
 
-                  <p>
-                    <strong>Best lag:</strong>{" "}
-                    {bestLag != null
-                      ? formatLag(bestLag, filters.interval)
-                      : "N/A"}
-                  </p>
+                <div
+                  className={`${styles.insightCard} ${
+                    styles[insight.level.toLowerCase()]
+                  }`}
+                >
+                  {/* Header */}
+                  <div className={styles.header}>
+                    <h3 className={styles.title}>✈️ {insight.title}</h3>
+                    <span className={styles.badge}>
+                      {insight.level} impact
+                    </span>
+                  </div>
 
-                  <p>
-                    <strong>Correlation:</strong>{" "}
-                    {bestCorr != null ? bestCorr.toFixed(2) : "N/A"}
-                  </p>
+                  {/* Summary */}
+                  <p className={styles.summary}>{insight.summary}</p>
 
-                  <p>
-                    <strong>Current trend:</strong>{" "}
-                    {currentTrend ?? "N/A"} cases
-                  </p>
+                  {/* Key info grid */}
+                  <div className={styles.metaGrid}>
+                    <div>
+                      <span className={styles.metaLabel}>📊 Indicator</span>
+                      <p>{insight.indicator}</p>
+                    </div>
 
-                  <p>
-                    <strong>Confidence:</strong> {confidence}
-                  </p>
+                    <div>
+                      <span className={styles.metaLabel}>⏱ Typical delay</span>
+                      <p>{insight.timing}</p>
+                    </div>
 
-                  <p>
-                    <strong>Prediction:</strong>{" "}
-                    {predictedDirection && bestLag != null
-                      ? `${ticker} stock is likely to ${predictedDirection} in ~${bestLag} ${
-                          filters.interval
-                        }`
-                      : "Not enough data to generate a prediction"}
-                  </p>
+                    <div>
+                      <span className={styles.metaLabel}>📉 Outbreak trend</span>
+                      <p>{insight.trendText}</p>
+                    </div>
+                  </div>
+
+                  {/* Traveller guidance */}
+                  <div className={styles.guidance}>
+                    <strong>🧳 What this means for travellers</strong>
+
+                    <p className={styles.message}>{insight.travellerMessage}</p>
+
+                    <ul>
+                      {insight.actions?.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
                 <div className={styles.chartWrap}>
@@ -676,10 +724,7 @@ const handleAddTicker = async (tickerOverride = "") => {
                           `Date: ${formatPeriodLabel(label)}`
                         }
                         formatter={(value, name) => {
-                          if (name === "Cases") {
-                            return [`${value}`, name];
-                          }
-
+                          if (name === "Cases") return [`${value}`, name];
                           return [
                             value != null && typeof value === "number"
                               ? value.toFixed(2)
