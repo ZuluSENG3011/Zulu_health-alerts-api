@@ -8,6 +8,7 @@ import {
   normaliseFinancialEvents,
 } from "../../api/financial";
 import DiseaseFilter from "../../components/filters/DiseaseFilter";
+import SpeciesFilter from "../../components/filters/SpeciesFilter";
 import {
   ResponsiveContainer,
   BarChart,
@@ -197,7 +198,7 @@ export default function OutbreakFinancialAnalysis() {
     to: "2026-01-01",
     interval: "month",
     disease: [],
-    species: "",
+    species: [],
     region: "",
     location: "",
   });
@@ -361,13 +362,11 @@ console.log("formattedFilters", formattedFilters);
         </label>
 
         <label>
-          Species
-          <input
-            type="text"
-            name="species"
+          <SpeciesFilter
             value={filters.species}
-            onChange={handleFilterChange}
-            placeholder="comma-separated"
+            onChange={(newSpecies) =>
+              setFilters((f) => ({ ...f, species: newSpecies }))
+            }
           />
         </label>
 
