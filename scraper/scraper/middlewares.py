@@ -117,7 +117,8 @@ class PromedprojectDownloaderMiddleware:
             new_request.meta["auth_retry_count"] = retry_count + 1
 
             spider.logger.info(
-                f"Retrying request with refreshed API key (attempt {retry_count + 1})")
+                f"Retrying request with refreshed API key (attempt {retry_count + 1})"
+            )
             return new_request
 
         return response

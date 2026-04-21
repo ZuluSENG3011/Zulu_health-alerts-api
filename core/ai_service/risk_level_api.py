@@ -13,7 +13,6 @@ class GeminiRiskLevel:
             "Structured country-level alert-based infectious disease signal "
             "summary for typical travellers, based only on the provided outbreak "
             "alerts and disease metadata."
-
         ),
         "additionalProperties": False,
         "properties": {
