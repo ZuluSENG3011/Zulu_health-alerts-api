@@ -24,6 +24,7 @@ import {
   Line,
   Legend,
 } from "recharts";
+import Navigation from "../../components/Navigation";
 import styles from "./OutbreakFinancialAnalysis.module.css";
 
 function parseMultiValueInput(input) {
@@ -340,379 +341,382 @@ const handleAddTicker = async (tickerOverride = "") => {
   };
 
   return (
-    <div className={styles.page}>
-      <aside className={styles.sidebar}>
-        <h2>Filters</h2>
+    <>
+      <Navigation />
+      <div className={styles.page}>
+        <aside className={styles.sidebar}>
+          <h2>Filters</h2>
 
-        <FilterSection title="Date Range">
-          <label>
-            From
-            <input
-              type="date"
-              value={filters.from}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, from: e.target.value }))
+          <FilterSection title="Date Range">
+            <label>
+              From
+              <input
+                type="date"
+                value={filters.from}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, from: e.target.value }))
+                }
+              />
+            </label>
+
+            <label>
+              To
+              <input
+                type="date"
+                value={filters.to}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, to: e.target.value }))
+                }
+              />
+            </label>
+          </FilterSection>
+
+          <FilterSection title="Interval">
+            <label>
+              Interval
+              <select
+                value={filters.interval}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, interval: e.target.value }))
+                }
+              >
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+              </select>
+            </label>
+          </FilterSection>
+
+          <FilterSection title="Diseases">
+            <DiseaseFilter
+              value={filters.disease}
+              onChange={(newDiseases) =>
+                setFilters((f) => ({ ...f, disease: newDiseases }))
               }
             />
-          </label>
+          </FilterSection>
 
-          <label>
-            To
-            <input
-              type="date"
-              value={filters.to}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, to: e.target.value }))
+          <FilterSection title="Species">
+            <SpeciesFilter
+              value={filters.species}
+              onChange={(newSpecies) =>
+                setFilters((f) => ({ ...f, species: newSpecies }))
               }
             />
-          </label>
-        </FilterSection>
+          </FilterSection>
 
-        <FilterSection title="Interval">
-          <label>
-            Interval
-            <select
-              value={filters.interval}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, interval: e.target.value }))
+          <FilterSection title="Location">
+            <LocationFilter
+              value={filters.location}
+              onChange={(newLocation) =>
+                setFilters((f) => ({
+                  ...f,
+                  location: newLocation,
+                }))
               }
-            >
-              <option value="day">Day</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
+            />
+          </FilterSection>
+
+          <label>
+            Lag
+            <select value={lag} onChange={(e) => setLag(Number(e.target.value))}>
+              {Array.from({ length: maxLag + 1 }).map((_, i) => (
+                <option key={i} value={i}>
+                  {i === 0
+                    ? "0 (same interval)"
+                    : `${i} ${filters.interval}${i > 1 ? "s" : ""}`}
+                </option>
+              ))}
             </select>
           </label>
-        </FilterSection>
 
-        <FilterSection title="Diseases">
-          <DiseaseFilter
-            value={filters.disease}
-            onChange={(newDiseases) =>
-              setFilters((f) => ({ ...f, disease: newDiseases }))
-            }
-          />
-        </FilterSection>
+          <button onClick={handleLoadCases} disabled={loadingCases}>
+            {loadingCases ? "Loading..." : "Load outbreak data"}
+          </button>
+        </aside>
 
-        <FilterSection title="Species">
-          <SpeciesFilter
-            value={filters.species}
-            onChange={(newSpecies) =>
-              setFilters((f) => ({ ...f, species: newSpecies }))
-            }
-          />
-        </FilterSection>
+        <main className={styles.main}>
+          <div className={styles.header}>
+            <h1>Outbreak Impact on Markets</h1>
 
-        <FilterSection title="Location">
-          <LocationFilter
-            value={filters.location}
-            onChange={(newLocation) =>
-              setFilters((f) => ({
-                ...f,
-                location: newLocation,
-              }))
-            }
-          />
-        </FilterSection>
-
-        <label>
-          Lag
-          <select value={lag} onChange={(e) => setLag(Number(e.target.value))}>
-            {Array.from({ length: maxLag + 1 }).map((_, i) => (
-              <option key={i} value={i}>
-                {i === 0
-                  ? "0 (same interval)"
-                  : `${i} ${filters.interval}${i > 1 ? "s" : ""}`}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <button onClick={handleLoadCases} disabled={loadingCases}>
-          {loadingCases ? "Loading..." : "Load outbreak data"}
-        </button>
-      </aside>
-
-      <main className={styles.main}>
-        <div className={styles.header}>
-          <h1>Outbreak vs Market Analysis</h1>
-
-          <div className={styles.addTicker}>
-            <input
-              type="text"
-              value={tickerInput}
-              onChange={(e) => setTickerInput(e.target.value)}
-              placeholder="Add ticker e.g. DAL"
-            />
-            <button onClick={() => handleAddTicker()} disabled={loadingTicker}>
-              {loadingTicker ? "Adding..." : "Add"}
-            </button>
-          </div>
-        </div>
-
-        <section className={styles.hero}>
-          <div className={styles.heroLeft}>
-            <h2>Compare companies</h2>
-            <p>
-              Explore how disease outbreak trends may relate to market behaviour across
-              sectors like travel, tourism, retail, and healthcare.
-            </p>
-            <p>
-              Use outbreak filters to load case data, then compare it with selected
-              company tickers to identify patterns, lagged relationships, and possible
-              business impacts.
-            </p>
-          </div>
-
-          <div className={styles.heroRight}>
-            <h2>How to use</h2>
-            <ol>
-              <li>Select outbreak filters on the left</li>
-              <li>Load outbreak data</li>
-              <li>Add a ticker or explore by sector</li>
-              <li>Compare the chart, table, and correlation results</li>
-            </ol>
-          </div>
-        </section>
-
-        {error ? <p className={styles.error}>{error}</p> : null}
-
-        <section className={styles.panel}>
-          <h2>Outbreak timeseries</h2>
-
-          {baseRows.length ? (
-            <div className={styles.chartWrap}>
-              <ResponsiveContainer width="100%" height={320}>
-                <BarChart data={baseRows}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="period"
-                    tickFormatter={formatPeriodLabel}
-                    interval={Math.max(0, Math.floor(baseRows.length / 10))}
-                    angle={-30}
-                    textAnchor="end"
-                    height={60}
-                  />
-                  <YAxis
-                    allowDecimals={false}
-                    label={{
-                      value: "Number of cases",
-                      angle: -90,
-                      position: "insideLeft",
-                    }}
-                  />
-                  <Tooltip
-                    labelFormatter={(label) =>
-                      `Date: ${formatPeriodLabel(label)}`
-                    }
-                    formatter={(value) => [`${value} cases`, "Cases"]}
-                  />
-                  <Bar
-                    dataKey="cases"
-                    fill="#3b82f6"
-                    radius={[4, 4, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className={styles.addTicker}>
+              <input
+                type="text"
+                value={tickerInput}
+                onChange={(e) => setTickerInput(e.target.value)}
+                placeholder="Add ticker e.g. DAL"
+              />
+              <button onClick={() => handleAddTicker()} disabled={loadingTicker}>
+                {loadingTicker ? "Adding..." : "Add"}
+              </button>
             </div>
-          ) : (
-            <p>No outbreak data loaded yet.</p>
-          )}
-        </section>
-
-        <section className={styles.panel}>
-          <h2>Explore by sector</h2>
-          <SectorTickerPicker
-            selectedTickers={selectedTickers}
-            onAddTicker={handleAddTicker}
-          />
-        </section>
-
-        <section className={styles.panel}>
-          <h2>Selected tickers</h2>
-          <div className={styles.tickerList}>
-            {selectedTickers.length ? (
-              selectedTickers.map((ticker) => (
-                <span key={ticker} className={styles.tickerChip}>
-                  {ticker}
-                  <button
-                    onClick={() => handleRemoveTicker(ticker)}
-                    className={styles.removeBtn}
-                  >
-                    ×
-                  </button>
-                </span>
-              ))
-            ) : (
-              "None yet"
-            )}
           </div>
-        </section>
 
-        <section className={styles.panel}>
-          <h2>Comparison table</h2>
-
-          <div className={styles.tableWrap}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Period</th>
-                  <th>Cases</th>
-                  {selectedTickers.map((ticker) => (
-                    <th key={ticker}>{ticker} Close</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {tableRows.map((row) => (
-                  <tr key={row.period}>
-                    <td>{row.period}</td>
-                    <td>{row.cases}</td>
-                    {selectedTickers.map((ticker) => (
-                      <td key={ticker}>
-                        {row[ticker] != null ? row[ticker].toFixed(2) : "-"}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {selectedTickers.map((ticker) => {
-          const corr = calculateLagCorrelation(comparisonRows, ticker, lag);
-          const { bestLag, bestCorr } = findBestLag(comparisonRows, ticker, maxLag);
-          const currentTrend = getLatestCasesTrend(comparisonRows);
-          const predictedDirection = getPredictionDirection(currentTrend, bestCorr);
-          const confidence = getConfidenceLabel(bestCorr);
-
-          return (
-            <section key={ticker} className={styles.panel}>
-              <h2>{ticker} vs outbreak cases</h2>
-
-              <p className={styles.correlation}>
-                Correlation (lag = {lag}):{" "}
-                {corr != null ? corr.toFixed(2) : "N/A"} (
-                {getCorrelationLabel(corr)})
+          <section className={styles.hero}>
+            <div className={styles.heroLeft}>
+              <h2>Compare companies</h2>
+              <p>
+                Explore how disease outbreak trends may relate to market behaviour across
+                sectors like travel, tourism, retail, and healthcare.
               </p>
+              <p>
+                Use outbreak filters to load case data, then compare it with selected
+                company tickers to identify patterns, lagged relationships, and possible
+                business impacts.
+              </p>
+            </div>
 
-              <div className={styles.predictionBox}>
-                <h3>Prediction Insights</h3>
+            <div className={styles.heroRight}>
+              <h2>How to use</h2>
+              <ol>
+                <li>Select outbreak filters on the left</li>
+                <li>Load outbreak data</li>
+                <li>Add a ticker or explore by sector</li>
+                <li>Compare the chart, table, and correlation results</li>
+              </ol>
+            </div>
+          </section>
 
-                <p>
-                  <strong>Best lag:</strong>{" "}
-                  {bestLag != null
-                    ? formatLag(bestLag, filters.interval)
-                    : "N/A"}
-                </p>
+          {error ? <p className={styles.error}>{error}</p> : null}
 
-                <p>
-                  <strong>Correlation:</strong>{" "}
-                  {bestCorr != null ? bestCorr.toFixed(2) : "N/A"}
-                </p>
+          <section className={styles.panel}>
+            <h2>Outbreak Trend Over Time</h2>
 
-                <p>
-                  <strong>Current trend:</strong>{" "}
-                  {currentTrend ?? "N/A"} cases
-                </p>
-
-                <p>
-                  <strong>Confidence:</strong> {confidence}
-                </p>
-
-                <p>
-                  <strong>Prediction:</strong>{" "}
-                  {predictedDirection && bestLag != null
-                    ? `${ticker} stock is likely to ${predictedDirection} in ~${bestLag} ${
-                        filters.interval
-                      }`
-                    : "Not enough data to generate a prediction"}
-                </p>
-              </div>
-
+            {baseRows.length ? (
               <div className={styles.chartWrap}>
-                <ResponsiveContainer width="100%" height={360}>
-                  <ComposedChart data={comparisonRows}>
+                <ResponsiveContainer width="100%" height={320}>
+                  <BarChart data={baseRows}>
                     <CartesianGrid strokeDasharray="3 3" />
-
                     <XAxis
                       dataKey="period"
                       tickFormatter={formatPeriodLabel}
-                      interval={Math.max(
-                        0,
-                        Math.floor(comparisonRows.length / 10)
-                      )}
+                      interval={Math.max(0, Math.floor(baseRows.length / 10))}
                       angle={-30}
                       textAnchor="end"
                       height={60}
                     />
-
                     <YAxis
-                      yAxisId="left"
                       allowDecimals={false}
                       label={{
-                        value: "Cases",
+                        value: "Number of cases",
                         angle: -90,
                         position: "insideLeft",
                       }}
                     />
-
-                    <YAxis
-                      yAxisId="right"
-                      orientation="right"
-                      domain={["auto", "auto"]}
-                      label={{
-                        value: `${ticker} Close`,
-                        angle: 90,
-                        position: "insideRight",
-                      }}
-                    />
-
                     <Tooltip
                       labelFormatter={(label) =>
                         `Date: ${formatPeriodLabel(label)}`
                       }
-                      formatter={(value, name) => {
-                        if (name === "Cases") {
-                          return [`${value}`, name];
-                        }
-
-                        return [
-                          value != null && typeof value === "number"
-                            ? value.toFixed(2)
-                            : "-",
-                          name,
-                        ];
-                      }}
+                      formatter={(value) => [`${value} cases`, "Cases"]}
                     />
-
-                    <Legend />
-
                     <Bar
-                      yAxisId="left"
                       dataKey="cases"
-                      name="Cases"
                       fill="#3b82f6"
                       radius={[4, 4, 0, 0]}
                     />
-
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey={ticker}
-                      name={`${ticker} Close`}
-                      stroke="#16a34a"
-                      strokeWidth={2}
-                      dot={false}
-                      connectNulls
-                    />
-                  </ComposedChart>
+                  </BarChart>
                 </ResponsiveContainer>
               </div>
-            </section>
-          );
-        })}
-      </main>
-    </div>
+            ) : (
+              <p>No outbreak data loaded yet.</p>
+            )}
+          </section>
+
+          <section className={styles.panel}>
+            <h2>Explore Impact by Industry</h2>
+            <SectorTickerPicker
+              selectedTickers={selectedTickers}
+              onAddTicker={handleAddTicker}
+            />
+          </section>
+
+          <section className={styles.panel}>
+            <h2>Selected Companies</h2>
+            <div className={styles.tickerList}>
+              {selectedTickers.length ? (
+                selectedTickers.map((ticker) => (
+                  <span key={ticker} className={styles.tickerChip}>
+                    {ticker}
+                    <button
+                      onClick={() => handleRemoveTicker(ticker)}
+                      className={styles.removeBtn}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))
+              ) : (
+                "None yet"
+              )}
+            </div>
+          </section>
+
+          <section className={styles.panel}>
+            <h2>Outbreak vs Market Data</h2>
+
+            <div className={styles.tableWrap}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Period</th>
+                    <th>Cases</th>
+                    {selectedTickers.map((ticker) => (
+                      <th key={ticker}>{ticker} Close</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableRows.map((row) => (
+                    <tr key={row.period}>
+                      <td>{row.period}</td>
+                      <td>{row.cases}</td>
+                      {selectedTickers.map((ticker) => (
+                        <td key={ticker}>
+                          {row[ticker] != null ? row[ticker].toFixed(2) : "-"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {selectedTickers.map((ticker) => {
+            const corr = calculateLagCorrelation(comparisonRows, ticker, lag);
+            const { bestLag, bestCorr } = findBestLag(comparisonRows, ticker, maxLag);
+            const currentTrend = getLatestCasesTrend(comparisonRows);
+            const predictedDirection = getPredictionDirection(currentTrend, bestCorr);
+            const confidence = getConfidenceLabel(bestCorr);
+
+            return (
+              <section key={ticker} className={styles.panel}>
+                <h2>{ticker} vs outbreak cases</h2>
+
+                <p className={styles.correlation}>
+                  Correlation (lag = {lag}):{" "}
+                  {corr != null ? corr.toFixed(2) : "N/A"} (
+                  {getCorrelationLabel(corr)})
+                </p>
+
+                <div className={styles.predictionBox}>
+                  <h3>Prediction Insights</h3>
+
+                  <p>
+                    <strong>Best lag:</strong>{" "}
+                    {bestLag != null
+                      ? formatLag(bestLag, filters.interval)
+                      : "N/A"}
+                  </p>
+
+                  <p>
+                    <strong>Correlation:</strong>{" "}
+                    {bestCorr != null ? bestCorr.toFixed(2) : "N/A"}
+                  </p>
+
+                  <p>
+                    <strong>Current trend:</strong>{" "}
+                    {currentTrend ?? "N/A"} cases
+                  </p>
+
+                  <p>
+                    <strong>Confidence:</strong> {confidence}
+                  </p>
+
+                  <p>
+                    <strong>Prediction:</strong>{" "}
+                    {predictedDirection && bestLag != null
+                      ? `${ticker} stock is likely to ${predictedDirection} in ~${bestLag} ${
+                          filters.interval
+                        }`
+                      : "Not enough data to generate a prediction"}
+                  </p>
+                </div>
+
+                <div className={styles.chartWrap}>
+                  <ResponsiveContainer width="100%" height={360}>
+                    <ComposedChart data={comparisonRows}>
+                      <CartesianGrid strokeDasharray="3 3" />
+
+                      <XAxis
+                        dataKey="period"
+                        tickFormatter={formatPeriodLabel}
+                        interval={Math.max(
+                          0,
+                          Math.floor(comparisonRows.length / 10)
+                        )}
+                        angle={-30}
+                        textAnchor="end"
+                        height={60}
+                      />
+
+                      <YAxis
+                        yAxisId="left"
+                        allowDecimals={false}
+                        label={{
+                          value: "Cases",
+                          angle: -90,
+                          position: "insideLeft",
+                        }}
+                      />
+
+                      <YAxis
+                        yAxisId="right"
+                        orientation="right"
+                        domain={["auto", "auto"]}
+                        label={{
+                          value: `${ticker} Close`,
+                          angle: 90,
+                          position: "insideRight",
+                        }}
+                      />
+
+                      <Tooltip
+                        labelFormatter={(label) =>
+                          `Date: ${formatPeriodLabel(label)}`
+                        }
+                        formatter={(value, name) => {
+                          if (name === "Cases") {
+                            return [`${value}`, name];
+                          }
+
+                          return [
+                            value != null && typeof value === "number"
+                              ? value.toFixed(2)
+                              : "-",
+                            name,
+                          ];
+                        }}
+                      />
+
+                      <Legend />
+
+                      <Bar
+                        yAxisId="left"
+                        dataKey="cases"
+                        name="Cases"
+                        fill="#3b82f6"
+                        radius={[4, 4, 0, 0]}
+                      />
+
+                      <Line
+                        yAxisId="right"
+                        type="monotone"
+                        dataKey={ticker}
+                        name={`${ticker} Close`}
+                        stroke="#16a34a"
+                        strokeWidth={2}
+                        dot={false}
+                        connectNulls
+                      />
+                    </ComposedChart>
+                  </ResponsiveContainer>
+                </div>
+              </section>
+            );
+          })}
+        </main>
+      </div>
+    </>
   );
 }

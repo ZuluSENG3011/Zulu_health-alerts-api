@@ -78,6 +78,13 @@ const Navigation = () => {
             Search
           </button>
 
+          <button
+            className={styles.navButton}
+            onClick={() => navigate("/analysis/outbreak-financial")}
+          >
+            Analysis
+          </button>
+
           <button className={styles.navButton} onClick={() => navigate("/")}>
             Home
           </button>
