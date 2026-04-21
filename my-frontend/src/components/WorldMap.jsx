@@ -1,14 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
-import { getAlerts } from "../api/alerts";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getRiskLevelSummary } from "../api/alerts";
 import WorldMap from "react-svg-worldmap";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import styles from "./WorldMap.module.css";
+import MapAIDetailCard from "./MapAIDetailCard";
 
 countries.registerLocale(enLocale);
 
-// To correct some coutry name differences beteen data and library
 const mapCountryToSearchName = (name) => {
   const aliasMap = {
     "People's Republic of China": "China",
@@ -21,74 +20,102 @@ const mapCountryToSearchName = (name) => {
   return aliasMap[name] || name;
 };
 
+const mapRiskLevelToValue = (riskLevel) => {
+  const normalized = String(riskLevel || "").toLowerCase();
+
+  if (normalized === "low") return 1;
+  if (normalized === "medium") return 2;
+  if (normalized === "high") return 3;
+  return 0;
+};
+
+const mapValueToRiskLabel = (value) => {
+  if (Number(value) === 1) return "Low";
+  if (Number(value) === 2) return "Medium";
+  if (Number(value) === 3) return "High";
+  return "Unknown";
+};
+
 function WorldMapComponent() {
-  const navigate = useNavigate();
-  const [alerts, setAlerts] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [countryNames, setCountryNames] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
-  // to fetch aleart
   useEffect(() => {
-    async function fetchAlerts() {
+    async function fetchRiskLevels() {
       try {
         setLoading(true);
         setError("");
 
-        const data = await getAlerts();
+        const riskData = await getRiskLevelSummary();
+        const countriesObject = riskData?.countries || {};
 
-        const alertList = data.alerts || [];
-        setAlerts(alertList);
+        const mapData = Object.entries(countriesObject)
+          .map(([countryName, info]) => {
+            const normalizedCountryName = mapCountryToSearchName(countryName);
+            const alpha2 = countries.getAlpha2Code(normalizedCountryName, "en");
+
+            if (!alpha2) return null;
+
+            return {
+              country: alpha2.toLowerCase(),
+              value: mapRiskLevelToValue(info?.risk_level),
+              countryName: normalizedCountryName,
+              riskLevel: info?.risk_level || "Unknown",
+              aiSummary: info?.reason || "",
+            };
+          })
+          .filter(Boolean);
+
+        setData(mapData);
+        setCountryNames(mapData.map((item) => item.countryName));
       } catch (err) {
-        setError(err.message || "Failed to fetch alerts");
+        setError(err.message || "Failed to fetch risk levels");
       } finally {
         setLoading(false);
       }
     }
 
-    fetchAlerts();
+    fetchRiskLevels();
   }, []);
 
-  const data = useMemo(() => {
-    const countryCountMap = {};
+  const filteredCountries =
+    searchQuery.length >= 2
+      ? countryNames
+          .filter((n) => n.toLowerCase().includes(searchQuery.toLowerCase()))
+          .slice(0, 8)
+      : [];
 
-    alerts.forEach((alert) => {
-      const diseases = alert.disease || [];
-      const locations = alert.location || [];
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setShowDropdown(true);
+  };
 
-      const uniqueCountryNames = new Set(
-        locations.map((loc) => loc?.[0]).filter(Boolean),
-      );
+  const handleCountrySelect = (name) => {
+    const selected = data.find(
+      (item) => item.countryName?.toLowerCase() === name.toLowerCase(),
+    );
 
-      uniqueCountryNames.forEach((countryName) => {
-        const normalizedName = mapCountryToSearchName(countryName);
-        const alpha2 = countries.getAlpha2Code(normalizedName, "en");
+    setSelectedCountry(selected || null);
+    setSearchQuery(name);
+    setShowDropdown(false);
+  };
 
-        if (!alpha2) return;
-
-        const code = alpha2.toLowerCase();
-
-        if (!countryCountMap[code]) {
-          countryCountMap[code] = 0;
-        }
-
-        countryCountMap[code] += diseases.length;
-      });
-    });
-
-    return Object.entries(countryCountMap).map(([code, count]) => ({
-      country: code,
-      value: count,
-    }));
-  }, [alerts]);
-
-  // On click redirect to search page with location filter
   const handleClick = (country) => {
     const countryName = country.countryName;
     if (!countryName) return;
 
     const searchName = mapCountryToSearchName(countryName);
 
-    navigate(`/search?location=${encodeURIComponent(searchName)}`);
+    const selected = data.find(
+      (item) => item.countryName?.toLowerCase() === searchName.toLowerCase(),
+    );
+
+    setSelectedCountry(selected || null);
   };
 
   if (loading) {
@@ -101,12 +128,87 @@ function WorldMapComponent() {
 
   return (
     <div className={styles.worldmapWrapper}>
+      <div className={styles.mapHeader}>
+        <h2 className={styles.title}>Disease Risk by Country</h2>
+
+        <div className={styles.countrySearch}>
+          <input
+            type="text"
+            placeholder="Search country..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+            className={styles.countrySearchInput}
+          />
+
+          {showDropdown && filteredCountries.length > 0 && (
+            <div className={styles.countryDropdown}>
+              {filteredCountries.map((name) => (
+                <button
+                  key={name}
+                  className={styles.countryDropdownItem}
+                  onMouseDown={() => handleCountrySelect(name)}
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <MapAIDetailCard
+        detail={selectedCountry}
+        onClose={() => setSelectedCountry(null)}
+      />
+
       <WorldMap
         data={data}
-        color="red"
+        color="#c0392b"
+        backgroundColor="#ffffff"
+        defaultFill="#c8d6e5"
         size={1070}
         onClickFunction={handleClick}
+        tooltipTextFunction={({ countryName, countryValue }) =>
+          `${countryName}: ${mapValueToRiskLabel(countryValue)}`
+        }
       />
+
+      <div className={styles.legend}>
+        <span className={styles.legendLabel}>Risk level:</span>
+
+        <span className={styles.legendItem}>
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#c8d6e5" }}
+          />
+          No data
+        </span>
+
+        <span className={styles.legendItem}>
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#e8a0a0" }}
+          />
+          Low
+        </span>
+
+        <span className={styles.legendItem}>
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#cd6155" }}
+          />
+          Medium
+        </span>
+
+        <span className={styles.legendItem}>
+          <span
+            className={styles.legendSwatch}
+            style={{ background: "#c0392b" }}
+          />
+          High
+        </span>
+      </div>
     </div>
   );
 }

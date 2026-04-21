@@ -1,5 +1,6 @@
 .container {
-  padding: 24px 30px 60px 30px;
+  padding: 24px 30px;
+  margin: auto;
   border-top: 1px solid #d9d9d9;
   overflow: visible;
 }
@@ -15,4 +16,11 @@
   font-size: 13px;
   color: #8a93a3;
   margin-bottom: 16px;
+}
+
+.chartWrapper {
+  width: 100%;
+  height: 420px;
+  display: flex;
+  justify-content: center;
 }

@@ -1,0 +1,132 @@
+:root {
+  --blue-main: #255ad4;
+  --blue-light: #889aeb;
+  --blue-bg: #f0f5ff;
+  --blue-soft: #e6efff;
+  --blue-dark: #1e3a8a;
+  --white: #ffffff;
+}
+
+.wrapper {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+}
+
+.chatbox {
+  width: 320px;
+  height: 460px;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(37, 90, 212, 0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 12px;
+  margin-right: 20px;
+  border: 1px solid #dbe7ff;
+}
+
+.header {
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--blue-main);
+  color: var(--white);
+  border-bottom: none;
+}
+
+.messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.botMessage {
+  align-self: flex-start;
+  max-width: 85%;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  padding: 10px 14px;
+  border-radius: 16px 16px 16px 6px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.userMessage {
+  align-self: flex-end;
+  max-width: 85%;
+  background: var(--blue-main);
+  color: var(--white);
+  padding: 10px 14px;
+  border-radius: 16px 16px 6px 16px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.options {
+  padding: 12px;
+  border-top: 1px solid #dbe7ff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--white);
+}
+
+.optionButton {
+  border: 1px solid var(--blue-main);
+  background: var(--white);
+  color: var(--blue-main);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionButton:hover {
+  background: var(--blue-soft);
+  transform: translateY(-1px);
+}
+
+.floatingButton {
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-main) 100%);
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37, 90, 212, 0.35);
+  display: flex;
+  margin-right: 20px;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.floatingButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(37, 90, 212, 0.45);
+}
+
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: var(--blue-light);
+  border-radius: 10px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+

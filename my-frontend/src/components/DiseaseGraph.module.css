@@ -1,13 +1,30 @@
 .container {
-  padding: 24px 30px;
+  padding: 24px 30px 40px;
   border-top: 1px solid #d9d9d9;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .title {
   font-size: 18px;
   font-weight: 700;
   color: #111;
-  margin-bottom: 16px;
+  margin: 0;
+}
+
+.intervalBadge {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary, #255ad4);
+  background: #eef3fb;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
 }
 
 .form {
@@ -39,17 +56,19 @@
 .button {
   height: 42px;
   padding: 0 20px;
-  background: linear-gradient(135deg, #889aeb 0%, #255ad4 100%);
+  background: var(--color-primary, #255ad4);
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+  font-family: var(--font-sans);
+  transition: background 0.15s ease;
 }
 
 .button:hover {
-  background: #4a6be0;
+  background: #1a42a0;
 }
 
 .error {

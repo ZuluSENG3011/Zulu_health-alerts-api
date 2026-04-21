@@ -1,17 +1,20 @@
 .header {
   margin-bottom: 12px;
   flex-shrink: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: 700;
   margin: 0 0 2px 0;
+  color: var(--color-text, #1a202c);
 }
 
 .subtitle {
-  color: #666;
-  font-size: 0.85rem;
+  color: var(--color-text-muted, #718096);
+  font-size: 13px;
   margin: 0;
 }
 
@@ -24,15 +27,15 @@
 }
 
 .leftPanel {
-  width: 320px;
+  width: 300px;
   flex-shrink: 0;
   min-height: 0;
   background: #fff;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  border: 1px solid var(--color-border, #e2e8f0);
   overflow-y: auto;
-  overflow-x: hidden; 
-  padding: 16px;
+  overflow-x: hidden;
+  padding: 12px;
   box-sizing: border-box;
 }
 
@@ -41,33 +44,35 @@
   min-width: 0;
   min-height: 0;
   background: #fff;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 20px 24px;
   overflow-y: auto;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
 .panelTitle {
-  font-size: 0.85rem;
+  font-size: 11px;
   font-weight: 700;
-  color: #333;
-  margin: 0 0 12px 0;
+  color: var(--color-text-muted, #718096);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
 }
 
 .alertRow {
   display: flex;
-  gap: 12px;
-  padding: 10px;
+  gap: 10px;
+  padding: 10px 8px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.15s;
-  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--color-border-light, #edf2f7);
 }
 
 .alertRow:hover {
-  background: #f5f8ff;
+  background: #f0f5ff;
 }
 
 .alertRowSelected {
@@ -75,18 +80,18 @@
 }
 
 .rowDate {
-  font-size: 0.78rem;
-  color: #888;
+  font-size: 11px;
+  color: var(--color-text-muted, #718096);
   white-space: nowrap;
   padding-top: 2px;
-  min-width: 85px;
+  min-width: 78px;
   flex-shrink: 0;
 }
 
 .rowTitle {
-  font-size: 0.82rem;
+  font-size: 13px;
   font-weight: 500;
-  color: #222;
+  color: var(--color-text, #1a202c);
   line-height: 1.4;
   min-width: 0;
 }
@@ -97,10 +102,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #aaa;
-  font-size: 0.95rem;
+  color: var(--color-text-muted, #718096);
+  font-size: 14px;
 }
 
+/* ── Detail view ── */
 .detailView {
   display: flex;
   flex-direction: column;
@@ -109,17 +115,18 @@
 }
 
 .alertIdLabel {
-  font-size: 0.85rem;
-  color: #aaa;
+  font-size: 12px;
+  color: var(--color-text-muted, #718096);
   margin: 0;
 }
 
 .detailTitle {
-  font-size: 1.7rem;
+  font-size: 22px;
   font-weight: 700;
   margin: 0;
   line-height: 1.4;
   word-break: break-word;
+  color: var(--color-text, #1a202c);
 }
 
 .detailSection {
@@ -131,11 +138,14 @@
 }
 
 .sectionHeading {
-  font-size: 1.05rem;
+  font-size: 13px;
   font-weight: 700;
-  margin: 0 0 4px 0;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
+  color: var(--color-text-muted, #718096);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
 }
 
 .detailField {
@@ -146,23 +156,23 @@
 }
 
 .fieldLabel {
-  font-size: 1rem;
-  color: #888;
+  font-size: 13px;
+  color: var(--color-text-muted, #718096);
   font-weight: 500;
 }
 
 .tagRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .diseaseTag {
   background: #fff3e0;
-  color: #e65100;
-  font-size: 1rem;
-  padding: 6px 16px;
-  border-radius: 20px;
+  color: #c05000;
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 999px;
   font-weight: 600;
 }
 
@@ -176,27 +186,30 @@
 }
 
 .speciesTag {
-  background: #f5f5f5;
-  color: #555;
-  font-size: 1rem;
-  padding: 6px 16px;
-  border-radius: 20px;
+  background: var(--color-bg, #f7f9fc);
+  color: var(--color-text-muted, #718096);
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border, #e2e8f0);
 }
 
 .regionTag {
-  background: #e8f5e9;
-  color: #2e7d32;
-  font-size: 1rem;
-  padding: 6px 16px;
-  border-radius: 20px;
+  background: #f0fff4;
+  color: #276749;
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 500;
 }
 
 .locationTag {
-  background: #f0f4ff;
-  color: #4466cc;
-  font-size: 1rem;
-  padding: 6px 16px;
-  border-radius: 20px;
+  background: #ebf4ff;
+  color: #2b6cb0;
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 500;
 }
 
 @media (max-width: 1024px) {
@@ -208,7 +221,7 @@
   .leftPanel {
     width: 100%;
     min-height: 280px;
-    max-height: 400px;
+    max-height: 380px;
   }
 
   .rightPanel {

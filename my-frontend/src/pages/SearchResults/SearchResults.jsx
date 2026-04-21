@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import FilterPanel from "../../components/FilterPanel";
 import ResultDisplay from "../../components/ResultDisplay";
+import TravelInsightChatbot from "../../components/TravelInsightChatbot";
 import styles from "./SearchResults.module.css";
 import { getAlerts } from "../../api/alerts";
 
@@ -22,6 +23,9 @@ const SearchResults = () => {
   const [resultData, setResultData] = useState({ alerts: [] });
   const [loading, setLoading] = useState(true);
 
+  // current location for AI chatbot
+  const currentLocation = searchParams.get("location") || "";
+
   // filters from URL search params
   const filters = useMemo(
     () => ({
@@ -37,6 +41,7 @@ const SearchResults = () => {
     }),
     [searchParams],
   );
+
   // derive page title based on filters
   const pageTitle = useMemo(() => {
     if (filters.region.length > 0)
@@ -95,6 +100,8 @@ const SearchResults = () => {
             <div className={styles.notFound}>No results found.</div>
           )}
         </main>
+
+        {currentLocation && <TravelInsightChatbot location={currentLocation} />}
       </div>
     </div>
   );

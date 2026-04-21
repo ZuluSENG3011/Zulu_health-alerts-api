@@ -1,0 +1,56 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ocean" x1="150" y1="140" x2="360" y2="370">
+      <stop offset="0%" stop-color="#38B6FF"></stop>
+      <stop offset="100%" stop-color="#123C9B"></stop>
+    </linearGradient>
+
+    <linearGradient id="land" x1="170" y1="150" x2="330" y2="330">
+      <stop offset="0%" stop-color="#9BE15D"></stop>
+      <stop offset="100%" stop-color="#2E9E45"></stop>
+    </linearGradient>
+
+    <linearGradient id="notif" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6B6B"></stop>
+      <stop offset="100%" stop-color="#D62828"></stop>
+    </linearGradient>
+
+    <linearGradient id="bell" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF4A3"></stop>
+      <stop offset="100%" stop-color="#FFB703"></stop>
+    </linearGradient>
+
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#09101D" flood-opacity="0.28"></feDropShadow>
+    </filter>
+  </defs>
+
+  <!-- Globe -->
+  <g filter="url(#shadow)">
+    <circle cx="256" cy="256" r="124" fill="url(#ocean)" stroke="#DDF6FF" stroke-width="6"></circle>
+
+    <!-- Continents -->
+    <path d="M188 182C175 176 164 184 160 196C156 207 161 217 171 223C179 228 185 235 188 245C191 254 201 258 209 254C216 251 219 243 225 238C232 232 237 224 234 215C230 204 220 198 210 195C203 193 198 186 188 182Z" fill="url(#land)"></path>
+    <path d="M220 264C212 269 209 278 212 287C215 295 220 303 224 312C228 321 227 331 233 339C238 346 247 349 252 343C256 338 254 329 251 321C248 314 245 307 244 298C243 288 238 278 230 270C227 267 224 265 220 264Z" fill="url(#land)"></path>
+    <path d="M273 180C284 171 301 170 316 174C331 178 347 184 357 194C364 202 362 212 352 216C343 219 336 216 329 214C323 212 317 214 314 220C310 228 304 231 296 228C287 225 280 219 275 213C269 206 264 198 267 190C268 186 270 183 273 180Z" fill="url(#land)"></path>
+    <path d="M293 228C302 226 311 231 317 239C323 248 326 259 323 271C320 284 313 296 303 304C295 311 286 308 282 299C277 289 278 277 281 266C284 255 284 245 288 236C289 232 291 229 293 228Z" fill="url(#land)"></path>
+    <path d="M341 304C349 300 359 301 366 306C372 310 373 317 368 322C362 327 353 328 345 325C338 322 334 315 336 309C337 307 339 305 341 304Z" fill="url(#land)"></path>
+  </g>
+
+  <!-- Bell (moved MORE top-left) -->
+  <!-- OLD: translate(170,135) -->
+  <!-- NEW: translate(140,115) -->
+  <g transform="translate(140 115) rotate(-12)" filter="url(#shadow)">
+    <ellipse cx="18" cy="26" rx="28" ry="18" fill="#0B1630" fill-opacity="0.22"></ellipse>
+
+    <path d="M18 -20C49 -20 74 4 74 35C74 52 67 65 55 75L46 95L31 81C27 82 23 82 18 82C-13 82 -38 57 -38 27C-38 -1 -14 -20 18 -20Z" fill="url(#notif)" stroke="#FFB0B0" stroke-width="4"></path>
+
+    <path d="M17 -1C4 -1 -5 9 -5 22V35L-14 48C-16 51 -14 55 -10 55H44C48 55 50 51 48 48L39 35V22C39 9 30 -1 17 -1Z" fill="url(#bell)"></path>
+
+    <path d="M9 61C11 68 17 72 24 72C31 72 37 68 39 61H9Z" fill="#FFB703"></path>
+
+    <path d="M17 -18V-30" stroke="#FFD166" stroke-width="5" stroke-linecap="round"></path>
+    <path d="M47 -10L57 -18" stroke="#FFD166" stroke-width="5" stroke-linecap="round"></path>
+    <path d="M58 15H70" stroke="#FFD166" stroke-width="5" stroke-linecap="round"></path>
+  </g>
+</svg>

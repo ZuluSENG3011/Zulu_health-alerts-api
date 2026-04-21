@@ -1,13 +1,30 @@
 import { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { getDiseaseStats } from "../api/alerts";
 import styles from "./DiseaseSpreadChart.module.css";
 
-const COLORS = ["#255ad4", "#889aeb", "#e53e3e", "#f6ad55", "#48bb78", "#38b2ac", "#ed64a6", "#9f7aea", "#667eea"];
+const COLORS = [
+  "#255ad4",
+  "#889aeb",
+  "#e53e3e",
+  "#f6ad55",
+  "#48bb78",
+  "#38b2ac",
+  "#ed64a6",
+  "#9f7aea",
+  "#667eea",
+];
 const RADIAN = Math.PI / 180;
 
 // allowing us to make the labels with lines as we want
-const renderCustomLabel = ({ cx, cy, midAngle, outerRadius, name, percent }) => {
+const renderCustomLabel = ({
+  cx,
+  cy,
+  midAngle,
+  outerRadius,
+  name,
+  percent,
+}) => {
   if (percent <= 0.03) return null;
 
   const sin = Math.sin(-RADIAN * midAngle);
@@ -21,16 +38,28 @@ const renderCustomLabel = ({ cx, cy, midAngle, outerRadius, name, percent }) => 
   const mx = cx + (outerRadius + 24) * cos;
   const my = cy + (outerRadius + 24) * sin;
 
-  // end of line 
+  // end of line
   const ex = mx + (cos >= 0 ? 1 : -1) * 16;
   const ey = my;
   const textAnchor = cos >= 0 ? "start" : "end";
 
   return (
     <g>
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#999" fill="none" strokeWidth={1} />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke="#999"
+        fill="none"
+        strokeWidth={1}
+      />
       <circle cx={ex} cy={ey} r={2} fill="#999" />
-      <text x={ex + (cos >= 0 ? 4 : -4)} y={ey} textAnchor={textAnchor} dominantBaseline="central" fontSize={11} fill="#333">
+      <text
+        x={ex + (cos >= 0 ? 4 : -4)}
+        y={ey}
+        textAnchor={textAnchor}
+        dominantBaseline="central"
+        fontSize={11}
+        fill="#333"
+      >
         {name}
       </text>
     </g>
@@ -64,25 +93,32 @@ function DiseaseSpreadChart() {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Top Diseases in the Last 30 Days</h2>
-      <p className={styles.note}>Showing diseases that account for 2%+ of alerts. Many rarer diseases are not shown.</p>
+      <p className={styles.note}>
+        Showing diseases that account for 2%+ of alerts. Many rarer diseases are
+        not shown.
+      </p>
 
-      <PieChart width={700} height={450}>
-        <Pie
-          data={data}
-          dataKey="count"
-          nameKey="disease"
-          cx="50%"
-          cy="50%"
-          outerRadius={150}
-          labelLine={false}
-          label={renderCustomLabel}
-        >
-          {data.map((_, index) => (
-            <Cell key={index} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip formatter={(value, name) => [value, name]} />
-      </PieChart>
+      <div className={styles.chartWrapper}>
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey="count"
+              nameKey="disease"
+              cx="50%"
+              cy="50%"
+              outerRadius={150}
+              labelLine={false}
+              label={renderCustomLabel}
+            >
+              {data.map((_, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(value, name) => [value, name]} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

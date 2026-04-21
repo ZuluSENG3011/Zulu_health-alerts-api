@@ -22,9 +22,9 @@ function buildQuery(params = {}) {
   return searchParams.toString();
 }
 
-/**
- * request
- */
+/* =========================
+   request helper
+========================= */
 async function request(endpoint, params = {}) {
   const query = buildQuery(params);
   const url = query
@@ -77,15 +77,23 @@ export function normaliseAlertTimeseries(data) {
 /* =========================
    SUMMARY
 ========================= */
-export const getRegionSummary = ({ location, window, from, to }) => {
+export const getLocationSummary = ({ location, window, from, to }) => {
   if (!location) {
     throw new Error("location is required for summary API");
   }
 
-  return request("/summary/region/", {
+  return request("/summary/location/", {
     location,
     window,
     from,
     to,
   });
 };
+
+/* =========================
+   RiSK LEVEL SUMMARY
+========================= */
+export const getRiskLevelSummary = ({ country } = {}) =>
+  request("/summary/risklevel/", {
+    country,
+  });
