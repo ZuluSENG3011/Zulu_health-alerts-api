@@ -41,7 +41,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <main className={styles.pageContainer}>
+      <main id="main-content" className={styles.pageContainer}>
         <div className={styles.mapWrapper}>
           <WorldMapComponent />
         </div>

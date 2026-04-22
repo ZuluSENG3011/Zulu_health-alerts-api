@@ -91,7 +91,7 @@ const SearchResults = () => {
       <div className={styles.contentArea}>
         <FilterPanel filterTypes={filterTypes} />
 
-        <main className={styles.container}>
+        <main id="main-content" className={styles.container}>
           {loading ? (
             <div className={styles.notFound}>Loading results...</div>
           ) : resultData?.alerts?.length > 0 ? (
