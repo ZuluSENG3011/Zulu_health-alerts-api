@@ -12,7 +12,6 @@ from .serializers import SignupSerializer
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def signup_view(request):
-    print("hi")
     serializer = SignupSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
