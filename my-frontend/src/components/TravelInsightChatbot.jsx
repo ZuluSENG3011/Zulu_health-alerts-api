@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getLocationSummary } from "../api/alerts";
+import { isLoggedIn } from "../api/auth";
 import styles from "./TravelInsightChatbot.module.css";
 import chatbotIcon from "../assets/chat-bot.svg";
 
 function TravelInsightChatbot({ location, resetKey }) {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,6 +16,7 @@ function TravelInsightChatbot({ location, resetKey }) {
   const [options, setOptions] = useState([]);
   const [loadingDots, setLoadingDots] = useState(".");
   const [showNotification, setShowNotification] = useState(false);
+  const [loginRequired, setLoginRequired] = useState(false);
 
   useEffect(() => {
     setIsOpen(false);
@@ -22,10 +27,23 @@ function TravelInsightChatbot({ location, resetKey }) {
     setLoading(false);
     setLoadingDots(".");
     setShowNotification(!!location);
+    setLoginRequired(false);
   }, [resetKey, location]);
 
   useEffect(() => {
     if (!isOpen || !location || loading) return;
+
+    if (!isLoggedIn()) {
+      setLoginRequired(true);
+      setSummaryData(null);
+      setMessages([]);
+      setOptions([]);
+      setError("");
+      setLoading(false);
+      return;
+    }
+
+    setLoginRequired(false);
 
     async function fetchSummary() {
       try {
@@ -209,10 +227,29 @@ function TravelInsightChatbot({ location, resetKey }) {
               </div>
             )}
 
+            {loginRequired && (
+              <div className={styles.botMessage}>
+                You need to{" "}
+                <span
+                  onClick={() => navigate("/login")}
+                  style={{
+                    color: "#255ad4",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    textDecoration: "underline",
+                  }}
+                >
+                  login
+                </span>{" "}
+                to access the AI feature.
+              </div>
+            )}
+
             {error && <div className={styles.botMessage}>Error: {error}</div>}
 
             {!loading &&
               !error &&
+              !loginRequired &&
               messages.map((msg, index) => (
                 <div
                   key={index}
@@ -229,7 +266,7 @@ function TravelInsightChatbot({ location, resetKey }) {
               ))}
           </div>
 
-          {!loading && !error && options.length > 0 && (
+          {!loading && !error && !loginRequired && options.length > 0 && (
             <div className={styles.options}>
               {options.map((option) => (
                 <button
