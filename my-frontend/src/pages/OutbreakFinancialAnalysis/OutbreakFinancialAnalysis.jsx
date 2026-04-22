@@ -160,57 +160,14 @@ function formatLagForTravel(lag, interval) {
   return `about ${lag} ${interval}${lag > 1 ? "s" : ""} later`;
 }
 
-function generateFinanceInsightCard({
-  ticker,
-  trend,
-  correlation,
-  lag,
-  interval,
-}) {
-  if (correlation == null || lag == null) {
-    return {
-      title: "Market Insight",
-      level: "Low",
-      summary: "There is not enough data to identify a clear market relationship yet.",
-      implications: ["Try a wider date range or a different ticker."],
-      signal: "Insufficient data",
-      timing: "Unknown",
-    };
-  }
-
-  const strength = getImpactStrength(correlation);
-  const timing = lag === 0
-    ? `within the same ${interval}`
-    : `about ${lag} ${interval}${lag > 1 ? "s" : ""} later`;
-
-  return {
-    title: "Market Insight",
-    level: strength,
-    summary:
-      correlation > 0
-        ? `This ticker tends to move in the same direction as outbreak cases ${timing}.`
-        : `This ticker tends to move in the opposite direction to outbreak cases ${timing}.`,
-    implications: [
-      "Use this as an exploratory relationship, not a prediction.",
-      "Compare with additional companies for stronger interpretation.",
-    ],
-    signal:
-      correlation > 0
-        ? `${ticker} shows a positive relationship`
-        : `${ticker} shows a negative relationship`,
-    timing,
-  };
-}
-
 export default function OutbreakFinancialAnalysis() {
-  const [mode, setMode] = useState("finance");
-  const modeConfig = MODE_CONFIG[mode];
+  const modeConfig = MODE_CONFIG.travel;
 
   const [lag, setLag] = useState(0);
 
   const [filters, setFilters] = useState({
-    from: "2020-01-01",
-    to: "2026-01-01",
+    from: "2026-01-01",
+    to: new Date().toISOString().slice(0, 10),
     interval: "month",
     disease: [],
     species: [],
@@ -433,28 +390,6 @@ export default function OutbreakFinancialAnalysis() {
             <div>
               <h1>{modeConfig.pageTitle}</h1>
               <p className={styles.subtitle}>{modeConfig.subtitle}</p>
-
-              <div className={styles.modeToggle}>
-                <button
-                  type="button"
-                  className={`${styles.modeButton} ${
-                    mode === "finance" ? styles.modeButtonActive : ""
-                  }`}
-                  onClick={() => setMode("finance")}
-                >
-                  Finance mode
-                </button>
-
-                <button
-                  type="button"
-                  className={`${styles.modeButton} ${
-                    mode === "travel" ? styles.modeButtonActive : ""
-                  }`}
-                  onClick={() => setMode("travel")}
-                >
-                  Travel advisory mode
-                </button>
-              </div>
             </div>
 
             <div className={styles.addTicker}>
@@ -530,9 +465,7 @@ export default function OutbreakFinancialAnalysis() {
           <section className={styles.panel}>
             <h2>{modeConfig.categoryTitle}</h2>
             <p className={styles.subtitle}>
-              {mode === "travel"
-                ? "Select a category to explore how different parts of travel respond to outbreaks."
-                : "Select a category to explore how different industries respond to outbreaks."}
+              Select a category to explore how different parts of travel respond to outbreaks.
             </p>
 
             <SectorTickerPicker
@@ -603,23 +536,14 @@ export default function OutbreakFinancialAnalysis() {
             );
             const currentTrend = getLatestCasesTrend(comparisonRows);
 
-            const insight =
-              mode === "travel"
-                ? generateTravelInsightCard({
-                    ticker,
-                    trend: currentTrend,
-                    correlation: bestCorr,
-                    lag: bestLag,
-                    interval: filters.interval,
-                    category: tickerCategoryMap[ticker] || "Airlines",
-                  })
-                : generateFinanceInsightCard({
-                    ticker,
-                    trend: currentTrend,
-                    correlation: bestCorr,
-                    lag: bestLag,
-                    interval: filters.interval,
-                  });
+            const insight = generateTravelInsightCard({
+              ticker,
+              trend: currentTrend,
+              correlation: bestCorr,
+              lag: bestLag,
+              interval: filters.interval,
+              category: tickerCategoryMap[ticker] || "Airlines",
+            });
 
             return (
               <section key={ticker} className={styles.panel}>
