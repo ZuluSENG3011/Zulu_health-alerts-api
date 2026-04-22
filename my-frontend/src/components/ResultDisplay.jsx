@@ -29,6 +29,10 @@ const ResultDisplay = ({ title, data }) => {
                   isSelected ? styles.alertRowSelected : ""
                 }`}
                 onClick={() => setSelectedAlert(alert)}
+                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedAlert(alert)}
+                tabIndex="0"
+                role="button"
+                aria-pressed={isSelected}
               >
                 <span className={styles.rowDate}>{alert.date}</span>
                 <span className={styles.rowTitle}>{alert.title}</span>

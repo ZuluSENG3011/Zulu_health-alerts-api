@@ -428,7 +428,7 @@ export default function OutbreakFinancialAnalysis() {
           </button>
         </aside>
 
-        <main className={styles.main}>
+        <main id="main-content" className={styles.main}>
           <div className={styles.header}>
             <div>
               <h1>{modeConfig.pageTitle}</h1>

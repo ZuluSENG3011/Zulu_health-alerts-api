@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { getDiseaseStats } from "../api/alerts";
 import styles from "./DiseaseSpreadChart.module.css";
@@ -70,6 +70,13 @@ function DiseaseSpreadChart() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+    const all = chartRef.current.querySelectorAll("*");
+    all.forEach((el) => el.setAttribute("tabindex", "-1"));
+  }, [data]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,14 +98,14 @@ function DiseaseSpreadChart() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} role="region" aria-label="Pie chart showing disease distribution over the last 30 days" tabIndex="0">
       <h2 className={styles.title}>Top Diseases in the Last 30 Days</h2>
       <p className={styles.note}>
         Showing diseases that account for 2%+ of alerts. Many rarer diseases are
         not shown.
       </p>
 
-      <div className={styles.chartWrapper}>
+      <div className={styles.chartWrapper} ref={chartRef} aria-hidden="true" tabIndex="-1">
         <ResponsiveContainer width="100%" height={400}>
           <PieChart>
             <Pie

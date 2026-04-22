@@ -87,7 +87,7 @@ function DiseaseGraph() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} role="region" aria-label="Disease Outbreak Trends bar chart" tabIndex="0">
       <h2 className={styles.title}>Disease Outbreak Trends</h2>
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -97,6 +97,7 @@ function DiseaseGraph() {
             value={from}
             onChange={(e) => setFrom(e.target.value)}
             className={styles.input}
+            aria-label="Start date"
           />
           <input
             type="date"
@@ -104,6 +105,7 @@ function DiseaseGraph() {
             min={from || undefined}
             onChange={(e) => setTo(e.target.value)}
             className={styles.input}
+            aria-label="End date"
           />
           <input
             type="text"
@@ -111,6 +113,7 @@ function DiseaseGraph() {
             value={disease}
             onChange={(e) => setDisease(e.target.value)}
             className={styles.input}
+            aria-label="Filter by disease"
           />
           <input
             type="text"
@@ -118,6 +121,7 @@ function DiseaseGraph() {
             value={species}
             onChange={(e) => setSpecies(e.target.value)}
             className={styles.input}
+            aria-label="Filter by species"
           />
           <input
             type="text"
@@ -125,6 +129,7 @@ function DiseaseGraph() {
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             className={styles.input}
+            aria-label="Filter by region"
           />
           <input
             type="text"
@@ -132,6 +137,7 @@ function DiseaseGraph() {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             className={styles.input}
+            aria-label="Filter by location"
           />
           <button type="submit" className={styles.button}>
             Search
@@ -143,6 +149,7 @@ function DiseaseGraph() {
       {error && <p className={styles.error}>{error}</p>}
 
       {data.length > 0 && (
+        <div aria-hidden="true" tabIndex="-1">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={data} margin={{ top: 20, bottom: 20, right: 30 }}>
             <XAxis dataKey="period" tick={{ fontSize: 12 }}>
@@ -161,6 +168,7 @@ function DiseaseGraph() {
             <Bar dataKey="count" fill="#255ad4" maxBarSize={40} />
           </BarChart>
         </ResponsiveContainer>
+        </div>
       )}
     </div>
   );
