@@ -10,16 +10,19 @@ class GeminiRiskLevel:
     response_schema = {
         "type": "object",
         "description": (
-            "Structured country-level infectious disease travel-risk assessment "
-            "based only on the provided outbreak alerts and disease metadata."
+            "Structured country-level alert-based infectious disease signal "
+            "summary for typical travellers, based only on the provided outbreak "
+            "alerts and disease metadata."
         ),
         "additionalProperties": False,
         "properties": {
             "risk_level": {
                 "type": "string",
                 "description": (
-                    "Overall country-level travel-risk level based only on the "
-                    "provided recent alert evidence and disease metadata."
+                    "Overall level of recent, relevant outbreak signal for "
+                    "typical travellers in this country, based only on the "
+                    "provided alerts and disease metadata. This is not a "
+                    "standalone travel recommendation."
                 ),
                 "enum": ["low", "medium", "high"],
             },
@@ -92,7 +95,8 @@ class GeminiRiskLevel:
             a stronger signal, but do not overstate certainty
             beyond the provided evidence.
 
-            Your task is to create a concise, objective country-level
+            create a concise, objective, evidence-grounded country-level
+            travel health signal summary for typical travellers
             travel-risk assessment by using:
             1. outbreak evidence from the provided filtered alerts
             2. disease-level context from the provided disease metadata
