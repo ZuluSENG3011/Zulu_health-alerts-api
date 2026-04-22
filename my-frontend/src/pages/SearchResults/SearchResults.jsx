@@ -25,6 +25,7 @@ const SearchResults = () => {
 
   // current location for AI chatbot
   const currentLocation = searchParams.get("location") || "";
+  const chatbotResetKey = searchParams.toString();
 
   // filters from URL search params
   const filters = useMemo(
@@ -101,7 +102,12 @@ const SearchResults = () => {
           )}
         </main>
 
-        {currentLocation && <TravelInsightChatbot location={currentLocation} />}
+        {currentLocation && (
+          <TravelInsightChatbot
+            location={currentLocation}
+            resetKey={chatbotResetKey}
+          />
+        )}
       </div>
     </div>
   );

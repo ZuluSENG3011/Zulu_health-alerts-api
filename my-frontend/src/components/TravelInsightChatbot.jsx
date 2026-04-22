@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getLocationSummary } from "../api/alerts";
 import styles from "./TravelInsightChatbot.module.css";
+import chatbotIcon from "../assets/chat-bot.svg";
 
-function TravelInsightChatbot({ location }) {
+function TravelInsightChatbot({ location, resetKey }) {
   const [isOpen, setIsOpen] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,9 +11,21 @@ function TravelInsightChatbot({ location }) {
   const [messages, setMessages] = useState([]);
   const [options, setOptions] = useState([]);
   const [loadingDots, setLoadingDots] = useState(".");
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
-    if (!isOpen || !location || summaryData || loading) return;
+    setIsOpen(false);
+    setSummaryData(null);
+    setError("");
+    setMessages([]);
+    setOptions([]);
+    setLoading(false);
+    setLoadingDots(".");
+    setShowNotification(!!location);
+  }, [resetKey, location]);
+
+  useEffect(() => {
+    if (!isOpen || !location || loading) return;
 
     async function fetchSummary() {
       try {
@@ -46,7 +59,7 @@ function TravelInsightChatbot({ location }) {
     }
 
     fetchSummary();
-  }, [isOpen, location, summaryData, loading]);
+  }, [isOpen, location]);
 
   const resetMenu = () => {
     setMessages((prev) => [
@@ -172,8 +185,16 @@ function TravelInsightChatbot({ location }) {
   }, [loading]);
 
   const handleToggle = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        setShowNotification(false);
+      }
+      return next;
+    });
   };
+
+  if (!location) return null;
 
   return (
     <div className={styles.wrapper}>
@@ -224,8 +245,24 @@ function TravelInsightChatbot({ location }) {
         </div>
       )}
 
-      <button className={styles.floatingButton} onClick={handleToggle}>
-        {isOpen ? "⌄" : "AI"}
+      <button className={styles.floatingTab} onClick={handleToggle}>
+        {showNotification && <span className={styles.redDot}></span>}
+
+        {isOpen ? (
+          <>
+            <span className={styles.closeIcon}>⌄</span>
+            <span className={styles.tabLabel}>Close</span>
+          </>
+        ) : (
+          <>
+            <span className={styles.tabLabel}>AI Summary</span>
+            <img
+              src={chatbotIcon}
+              alt="AI chatbot"
+              className={styles.tabIcon}
+            />
+          </>
+        )}
       </button>
     </div>
   );
