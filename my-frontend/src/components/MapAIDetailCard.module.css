@@ -1,0 +1,130 @@
+.card {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 320px;
+  background: rgba(15, 23, 42, 0.92);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  z-index: 20;
+  backdrop-filter: blur(8px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.country {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.subTitle {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sectionBlock {
+  margin-top: 14px;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.68);
+  margin-bottom: 8px;
+}
+
+.value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.low {
+  background: rgba(72, 187, 120, 0.18);
+  color: #9ae6b4;
+}
+
+.medium {
+  background: rgba(246, 173, 85, 0.18);
+  color: #fbd38d;
+}
+
+.high {
+  background: rgba(245, 101, 101, 0.18);
+  color: #feb2b2;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.summary {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navigateBtn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #255ad4;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navigateBtn:hover {
+  background: #1a42a0;
+}

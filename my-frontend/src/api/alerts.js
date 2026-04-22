@@ -63,6 +63,17 @@ export const getRegionStats = (filters = {}) =>
 export const getTimeseriesStats = (filters = {}) =>
   request("/stats/timeseries/", filters);
 
+export function normaliseAlertTimeseries(data) {
+  if (!data?.results || !Array.isArray(data.results)) {
+    return [];
+  }
+
+  return data.results.map((item) => ({
+    period: item.period,
+    cases: item.count,
+  }));
+}
+
 /* =========================
    SUMMARY
 ========================= */

@@ -19,18 +19,23 @@ function Home() {
               <span className={styles.heroDot} />
               Live Health Intelligence · Updated daily
             </span>
-            <h1 className={styles.heroTitle}>Global Disease Outbreak Tracker</h1>
+            <h1 className={styles.heroTitle}>
+              Global Disease Outbreak Tracker
+            </h1>
             <p className={styles.heroSubtitle}>
               Real-time alerts from ProMED. Know the risks before you travel.
             </p>
           </div>
           <div className={styles.heroRight}>
-            <button className={styles.heroBrowseBtn} onClick={() => {
-              const today = new Date();
-              const from = new Date(today);
-              from.setMonth(today.getMonth() - 6);
-              navigate(`/search?from=${from.toISOString().split("T")[0]}`);
-            }}>
+            <button
+              className={styles.heroBrowseBtn}
+              onClick={() => {
+                const today = new Date();
+                const from = new Date(today);
+                from.setMonth(today.getMonth() - 6);
+                navigate(`/search?from=${from.toISOString().split("T")[0]}`);
+              }}
+            >
               Browse Alerts
             </button>
           </div>

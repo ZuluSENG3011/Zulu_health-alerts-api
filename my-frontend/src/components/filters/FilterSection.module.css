@@ -1,0 +1,30 @@
+.section {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 0;
+}
+
+.header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.icon {
+  font-size: 18px;
+  color: #64748b;
+}
+
+.content {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
