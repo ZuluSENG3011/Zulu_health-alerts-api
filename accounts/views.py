@@ -1,3 +1,7 @@
+import os
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
+
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -12,11 +16,35 @@ from .serializers import SignupSerializer
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def signup_view(request):
-    print("hi")
     serializer = SignupSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
         token, _ = Token.objects.get_or_create(user=user)
+
+        # Send welcome email via Brevo
+        if user.email:
+            configuration = sib_api_v3_sdk.Configuration()
+            configuration.api_key['api-key'] = os.environ.get('BREVO_API_KEY')
+
+            api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
+                sib_api_v3_sdk.ApiClient(configuration)
+            )
+
+            email = sib_api_v3_sdk.SendSmtpEmail(
+                to=[{"email": user.email, "name": user.username}],
+                sender={"email": "l4liem@gmail.com", "name": "Your App"},
+                subject="Welcome to Our App!",
+                html_content=f"""
+                    <h1>Welcome, {user.username}!</h1>
+                    <p>Thanks for signing up. Here's what you can do next...</p>
+                """
+            )
+
+            try:
+                api_instance.send_transac_email(email)
+            except ApiException as e:
+                print(f"Brevo email error: {e}")
+
         return Response(
             {
                 "message": "User created successfully.",
