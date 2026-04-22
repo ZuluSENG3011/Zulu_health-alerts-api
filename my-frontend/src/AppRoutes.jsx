@@ -14,7 +14,7 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-          path="/analysis/outbreak-financial"
+          path="/travel-insights"
           element={<OutbreakFinancialAnalysis />}
         />
       </Routes>

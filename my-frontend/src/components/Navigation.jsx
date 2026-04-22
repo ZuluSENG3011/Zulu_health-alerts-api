@@ -80,9 +80,9 @@ const Navigation = () => {
 
           <button
             className={styles.navButton}
-            onClick={() => navigate("/analysis/outbreak-financial")}
+            onClick={() => navigate("/travel-insights")}
           >
-            Analysis
+            Insights
           </button>
 
           <button className={styles.navButton} onClick={() => navigate("/")}>
