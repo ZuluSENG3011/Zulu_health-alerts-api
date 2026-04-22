@@ -134,6 +134,7 @@ function FilterPanel() {
                   value={filters.from}
                   onChange={handleChange}
                   className={styles.dateInput}
+                  aria-label="Start date"
                 />
               </div>
               <div className={styles.dateField}>
@@ -146,6 +147,7 @@ function FilterPanel() {
                   onChange={handleChange}
                   min={filters.from || undefined}
                   className={styles.dateInput}
+                  aria-label="End date"
                 />
               </div>
             </div>
@@ -172,6 +174,7 @@ function FilterPanel() {
               onChange={handleChange}
               placeholder="e.g. Cholera"
               className={styles.textInput}
+              aria-label="Filter by disease"
             />
           </div>
         )}
@@ -196,6 +199,7 @@ function FilterPanel() {
               onChange={handleChange}
               placeholder="e.g. Human"
               className={styles.textInput}
+              aria-label="Filter by species"
             />
           </div>
         )}
@@ -221,6 +225,7 @@ function FilterPanel() {
               onChange={handleChange}
               placeholder="e.g. Africa"
               className={styles.textInput}
+              aria-label="Filter by continent"
             />
             <label className={styles.subLabel} style={{ marginTop: "12px" }}>Location</label>
             <input
@@ -230,6 +235,7 @@ function FilterPanel() {
               onChange={handleChange}
               placeholder="e.g. Kenya"
               className={styles.textInput}
+              aria-label="Filter by location"
             />
           </div>
         )}

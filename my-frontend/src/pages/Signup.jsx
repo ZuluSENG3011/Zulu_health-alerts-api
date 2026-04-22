@@ -59,7 +59,7 @@ function Signup() {
     <>
       <Navigation />
 
-      <main className={styles.page}>
+      <main id="main-content" className={styles.page}>
         <div className={styles.card}>
           <div className={styles.header}>
             <h1 className={styles.title}>Sign Up</h1>
@@ -124,7 +124,7 @@ function Signup() {
               </div>
             </div>
 
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <p className={styles.error} role="alert">{error}</p>}
 
             <button
               type="submit"

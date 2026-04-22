@@ -73,6 +73,7 @@ function SearchBar() {
           type="button"
           className={styles.searchButton}
           onClick={handleSearch}
+          aria-label="Search"
         >
           🔍
         </button>

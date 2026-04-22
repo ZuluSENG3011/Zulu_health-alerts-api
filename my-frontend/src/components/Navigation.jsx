@@ -100,6 +100,8 @@ const Navigation = () => {
               type="button"
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className={styles.menuButton}
+              aria-label={dropdownOpen ? "Close menu" : "Open menu"}
+              aria-expanded={dropdownOpen}
             >
               ☰
             </button>

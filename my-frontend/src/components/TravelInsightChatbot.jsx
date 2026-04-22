@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getLocationSummary } from "../api/alerts";
+import { isLoggedIn } from "../api/auth";
 import styles from "./TravelInsightChatbot.module.css";
+import chatbotIcon from "../assets/chat-bot.svg";
 
-function TravelInsightChatbot({ location }) {
+function TravelInsightChatbot({ location, resetKey }) {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,9 +15,35 @@ function TravelInsightChatbot({ location }) {
   const [messages, setMessages] = useState([]);
   const [options, setOptions] = useState([]);
   const [loadingDots, setLoadingDots] = useState(".");
+  const [showNotification, setShowNotification] = useState(false);
+  const [loginRequired, setLoginRequired] = useState(false);
 
   useEffect(() => {
-    if (!isOpen || !location || summaryData || loading) return;
+    setIsOpen(false);
+    setSummaryData(null);
+    setError("");
+    setMessages([]);
+    setOptions([]);
+    setLoading(false);
+    setLoadingDots(".");
+    setShowNotification(!!location);
+    setLoginRequired(false);
+  }, [resetKey, location]);
+
+  useEffect(() => {
+    if (!isOpen || !location || loading) return;
+
+    if (!isLoggedIn()) {
+      setLoginRequired(true);
+      setSummaryData(null);
+      setMessages([]);
+      setOptions([]);
+      setError("");
+      setLoading(false);
+      return;
+    }
+
+    setLoginRequired(false);
 
     async function fetchSummary() {
       try {
@@ -46,7 +77,7 @@ function TravelInsightChatbot({ location }) {
     }
 
     fetchSummary();
-  }, [isOpen, location, summaryData, loading]);
+  }, [isOpen, location]);
 
   const resetMenu = () => {
     setMessages((prev) => [
@@ -172,8 +203,16 @@ function TravelInsightChatbot({ location }) {
   }, [loading]);
 
   const handleToggle = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        setShowNotification(false);
+      }
+      return next;
+    });
   };
+
+  if (!location) return null;
 
   return (
     <div className={styles.wrapper}>
@@ -188,10 +227,29 @@ function TravelInsightChatbot({ location }) {
               </div>
             )}
 
+            {loginRequired && (
+              <div className={styles.botMessage}>
+                You need to{" "}
+                <span
+                  onClick={() => navigate("/login")}
+                  style={{
+                    color: "#255ad4",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    textDecoration: "underline",
+                  }}
+                >
+                  login
+                </span>{" "}
+                to access the AI feature.
+              </div>
+            )}
+
             {error && <div className={styles.botMessage}>Error: {error}</div>}
 
             {!loading &&
               !error &&
+              !loginRequired &&
               messages.map((msg, index) => (
                 <div
                   key={index}
@@ -208,7 +266,7 @@ function TravelInsightChatbot({ location }) {
               ))}
           </div>
 
-          {!loading && !error && options.length > 0 && (
+          {!loading && !error && !loginRequired && options.length > 0 && (
             <div className={styles.options}>
               {options.map((option) => (
                 <button
@@ -224,8 +282,24 @@ function TravelInsightChatbot({ location }) {
         </div>
       )}
 
-      <button className={styles.floatingButton} onClick={handleToggle}>
-        {isOpen ? "⌄" : "AI"}
+      <button className={styles.floatingTab} onClick={handleToggle}>
+        {showNotification && <span className={styles.redDot}></span>}
+
+        {isOpen ? (
+          <>
+            <span className={styles.closeIcon}>⌄</span>
+            <span className={styles.tabLabel}>Close</span>
+          </>
+        ) : (
+          <>
+            <span className={styles.tabLabel}>AI Summary</span>
+            <img
+              src={chatbotIcon}
+              alt="AI chatbot"
+              className={styles.tabIcon}
+            />
+          </>
+        )}
       </button>
     </div>
   );

@@ -129,11 +129,11 @@
 .link {
   color: var(--color-primary, #255ad4);
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .link:hover {
-  text-decoration: underline;
+  opacity: 0.75;
 }
 
 @media (max-width: 520px) {

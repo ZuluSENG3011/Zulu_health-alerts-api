@@ -8,6 +8,7 @@ import OutbreakFinancialAnalysis from "./pages/OutbreakFinancialAnalysis/Outbrea
 export default function AppRoutes() {
   return (
     <BrowserRouter>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchResults />} />

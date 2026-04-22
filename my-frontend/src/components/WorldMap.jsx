@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRiskLevelSummary } from "../api/alerts";
 import WorldMap from "react-svg-worldmap";
 import countries from "i18n-iso-countries";
@@ -44,6 +44,13 @@ function WorldMapComponent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const all = mapRef.current.querySelectorAll("*");
+    all.forEach((el) => el.setAttribute("tabindex", "-1"));
+  }, [data]);
 
   useEffect(() => {
     async function fetchRiskLevels() {
@@ -139,6 +146,7 @@ function WorldMapComponent() {
             onChange={handleSearchChange}
             onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
             className={styles.countrySearchInput}
+            aria-label="Search for a country"
           />
 
           {showDropdown && filteredCountries.length > 0 && (
@@ -162,17 +170,19 @@ function WorldMapComponent() {
         onClose={() => setSelectedCountry(null)}
       />
 
-      <WorldMap
-        data={data}
-        color="#c0392b"
-        backgroundColor="#ffffff"
-        defaultFill="#c8d6e5"
-        size={1070}
-        onClickFunction={handleClick}
-        tooltipTextFunction={({ countryName, countryValue }) =>
-          `${countryName}: ${mapValueToRiskLabel(countryValue)}`
-        }
-      />
+      <div ref={mapRef} aria-hidden="true">
+        <WorldMap
+          data={data}
+          color="#c0392b"
+          backgroundColor="#ffffff"
+          defaultFill="#c8d6e5"
+          size={1070}
+          onClickFunction={handleClick}
+          tooltipTextFunction={({ countryName, countryValue }) =>
+            `${countryName}: ${mapValueToRiskLabel(countryValue)}`
+          }
+        />
+      </div>
 
       <div className={styles.legend}>
         <span className={styles.legendLabel}>Risk level:</span>

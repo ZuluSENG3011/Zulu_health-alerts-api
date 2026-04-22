@@ -9,22 +9,24 @@
 
 .wrapper {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: 30px;
+  bottom: 0;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .chatbox {
   width: 320px;
   height: 460px;
   background: var(--white);
-  border-radius: 20px;
+  border-radius: 20px ;
   box-shadow: 0 12px 32px rgba(37, 90, 212, 0.18);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 12px;
-  margin-right: 20px;
+  margin-bottom: 10px;
   border: 1px solid #dbe7ff;
 }
 
@@ -34,7 +36,6 @@
   font-weight: 600;
   background: var(--blue-main);
   color: var(--white);
-  border-bottom: none;
 }
 
 .messages {
@@ -94,27 +95,61 @@
   transform: translateY(-1px);
 }
 
-.floatingButton {
-  width: 54px;
-  height: 54px;
+.floatingTab {
+  position: relative;
+  min-width: 150px;
+  height: 45px;
+  padding: 0 16px;
   border: none;
-  border-radius: 50%;
+  border-radius: 16px 16px 0 0;
   background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-main) 100%);
   color: var(--white);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(37, 90, 212, 0.35);
+  box-shadow: 0 8px 24px rgba(37, 90, 212, 0.28);
   display: flex;
-  margin-right: 20px;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  cursor: pointer;
   transition: all 0.25s ease;
 }
 
-.floatingButton:hover {
+.floatingTab:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(37, 90, 212, 0.45);
+  box-shadow: 0 12px 28px rgba(37, 90, 212, 0.36);
+}
+
+.tabLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.tabIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.redDot {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.closeIcon {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--white);
 }
 
 .messages::-webkit-scrollbar {
@@ -129,4 +164,3 @@
 .messages::-webkit-scrollbar-track {
   background: transparent;
 }
-

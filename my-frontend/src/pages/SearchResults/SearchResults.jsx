@@ -25,6 +25,7 @@ const SearchResults = () => {
 
   // current location for AI chatbot
   const currentLocation = searchParams.get("location") || "";
+  const chatbotResetKey = searchParams.toString();
 
   // filters from URL search params
   const filters = useMemo(
@@ -88,10 +89,11 @@ const SearchResults = () => {
     <div className={styles.page}>
       <Navigation />
 
+      <a href="#main-content" className="skip-link">Skip to alerts</a>
       <div className={styles.contentArea}>
         <FilterPanel filterTypes={filterTypes} />
 
-        <main className={styles.container}>
+        <main id="main-content" className={styles.container}>
           {loading ? (
             <div className={styles.notFound}>Loading results...</div>
           ) : resultData?.alerts?.length > 0 ? (
@@ -101,7 +103,12 @@ const SearchResults = () => {
           )}
         </main>
 
-        {currentLocation && <TravelInsightChatbot location={currentLocation} />}
+        {currentLocation && (
+          <TravelInsightChatbot
+            location={currentLocation}
+            resetKey={chatbotResetKey}
+          />
+        )}
       </div>
     </div>
   );
