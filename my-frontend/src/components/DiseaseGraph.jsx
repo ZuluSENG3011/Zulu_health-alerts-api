@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -12,8 +12,16 @@ import { getTimeseriesStats } from "../api/alerts";
 import styles from "./DiseaseGraph.module.css";
 
 function DiseaseGraph() {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const formatDate = (date) => {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  };
+
+  const today = new Date();
+  const weekAgo = new Date();
+  weekAgo.setDate(today.getDate() - 7);
+
+  const [from, setFrom] = useState(formatDate(weekAgo));
+  const [to, setTo] = useState(formatDate(today));
   const [disease, setDisease] = useState("");
   const [species, setSpecies] = useState("");
   const [region, setRegion] = useState("");
@@ -23,7 +31,6 @@ function DiseaseGraph() {
   const [error, setError] = useState(null);
   const [activeInterval, setActiveInterval] = useState(null);
 
-  // so that the graph doesnt look incomplete
   const fillMissingPeriods = (results, from, to, interval) => {
     const map = {};
     results.forEach((r) => (map[r.period.slice(0, 10)] = r.count));
@@ -32,15 +39,13 @@ function DiseaseGraph() {
     const cursor = new Date(from);
     const end = new Date(to);
 
-    // snap to start of period so keys match what the API returns
     if (interval === "month") cursor.setDate(1);
     if (interval === "week") {
       const day = cursor.getDay();
-      cursor.setDate(cursor.getDate() + (day === 0 ? -6 : 1 - day)); // snap to Monday
+      cursor.setDate(cursor.getDate() + (day === 0 ? -6 : 1 - day));
     }
 
     while (cursor <= end) {
-      // timezone bug fix
       const key = `${cursor.getFullYear()}-${String(cursor.getMonth() + 1).padStart(2, "0")}-${String(cursor.getDate()).padStart(2, "0")}`;
       periods.push({ period: key, count: map[key] || 0 });
 
@@ -86,8 +91,49 @@ function DiseaseGraph() {
     }
   };
 
+  useEffect(() => {
+    const loadDefaultWeek = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const interval = "day";
+        setActiveInterval(interval);
+        const result = await getTimeseriesStats({
+          from: formatDate(weekAgo),
+          to: formatDate(today),
+          disease,
+          species,
+          region,
+          location,
+          interval,
+        });
+        setData(
+          fillMissingPeriods(
+            result.results || [],
+            formatDate(weekAgo),
+            formatDate(today),
+            interval,
+          ),
+        );
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDefaultWeek();
+  }, []);
+
   return (
-    <div className={styles.container} role="region" aria-label="Disease Outbreak Trends bar chart" tabIndex="0">
+    <div
+      className={styles.container}
+      role="region"
+      aria-label="Disease Outbreak Trends bar chart"
+      tabIndex="0"
+    >
       <h2 className={styles.title}>Disease Outbreak Trends</h2>
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -150,24 +196,24 @@ function DiseaseGraph() {
 
       {data.length > 0 && (
         <div aria-hidden="true" tabIndex="-1">
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={data} margin={{ top: 20, bottom: 20, right: 30 }}>
-            <XAxis dataKey="period" tick={{ fontSize: 12 }}>
-              {activeInterval && (
-                <Label
-                  value={`per ${activeInterval}`}
-                  position="insideBottomRight"
-                  offset={-5}
-                  fontSize={11}
-                  fill="#718096"
-                />
-              )}
-            </XAxis>
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#255ad4" maxBarSize={40} />
-          </BarChart>
-        </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={data} margin={{ top: 20, bottom: 20, right: 30 }}>
+              <XAxis dataKey="period" tick={{ fontSize: 12 }}>
+                {activeInterval && (
+                  <Label
+                    value={`per ${activeInterval}`}
+                    position="insideBottomRight"
+                    offset={-5}
+                    fontSize={11}
+                    fill="#718096"
+                  />
+                )}
+              </XAxis>
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#255ad4" maxBarSize={40} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       )}
     </div>
