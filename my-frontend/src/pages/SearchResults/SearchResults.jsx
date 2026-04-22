@@ -88,6 +88,7 @@ const SearchResults = () => {
     <div className={styles.page}>
       <Navigation />
 
+      <a href="#main-content" className="skip-link">Skip to alerts</a>
       <div className={styles.contentArea}>
         <FilterPanel filterTypes={filterTypes} />
 
