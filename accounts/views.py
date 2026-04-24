@@ -16,6 +16,25 @@ from .serializers import SignupSerializer
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def signup_view(request):
+    """
+    Register a new user account.
+
+    This endpoint:
+    - validates input using SignupSerializer
+    - creates a new Django User
+    - generates an authentication token for the user
+
+    Request Body:
+        {
+            "username": "...",
+            "email": "...",
+            "password": "..."
+        }
+
+    Returns:
+        201: User successfully created with token
+        400: Validation errors
+    """
     serializer = SignupSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
@@ -205,6 +224,23 @@ def signup_view(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def login_view(request):
+    """
+    Authenticate an existing user and return an auth token.
+
+    This endpoint:
+    - verifies username and password using Django authentication
+    - returns an existing or new token
+
+    Request Body:
+        {
+            "username": "...",
+            "password": "..."
+        }
+
+    Returns:
+        200: Login successful with token
+        401: Invalid credentials
+    """
     username = request.data.get("username")
     password = request.data.get("password")
 

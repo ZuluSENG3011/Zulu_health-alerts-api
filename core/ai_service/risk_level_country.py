@@ -38,6 +38,26 @@ def save_json(path: Path, data: dict) -> None:
 
 
 def extract_all_countries(database: list[dict]) -> dict:
+    """
+    Extract country names from alert location chains.
+
+    This function:
+    - reads the first element of each location chain as the country
+    - removes broad regions and non-country locations
+    - normalises selected country aliases
+    - stores the most recent alert date per country
+
+    Args:
+        database (list[dict]): List of serialised alert records.
+
+    Returns:
+        dict: Mapping of country name to metadata:
+            {
+                "Country": {
+                    "last_alert_at": "YYYY-MM-DD"
+                }
+            }
+    """
     countries: dict[str, dict] = {}
     # Exclude non-country entries and alternative names
     # that should be normalized to another country name.
@@ -137,6 +157,15 @@ def extract_all_countries(database: list[dict]) -> dict:
 
 
 def initialize_risk_level_json(database: list[dict]) -> None:
+    """
+    Create the initial risk_level.json cache file.
+
+    Each detected country is inserted with empty risk data and marked as pending,
+    so it can be processed by the AI risk-level updater later.
+
+    Args:
+        database (list[dict]): Full alert database.
+    """
     early_date = date(1000, 1, 1)
     initialize = {
         "meta": {
@@ -187,6 +216,30 @@ def filter_entry(country: str, database: list, window: str) -> list:
 
 
 def process_response(response_raw) -> dict:
+    """
+    Validate and normalise the AI risk-level response.
+
+    Accepts either:
+    - dictionary response
+    - JSON string response
+
+    Args:
+        response_raw: Raw response from Gemini.
+
+    Returns:
+        dict:
+            Valid response:
+            {
+                "risk_level": "low|medium|high",
+                "reason": "...",
+                "supporting_alert_ids": [...]
+            }
+
+            Or error:
+            {
+                "error_msg": "..."
+            }
+    """
     if isinstance(response_raw, dict):
         data = response_raw
     elif isinstance(response_raw, str):
@@ -357,6 +410,16 @@ def update_entry_risk_level(database: list[dict]) -> dict:
 
 
 def get_country_risk_level_info(country_names: list[str]) -> dict:
+    """
+    Retrieve country risk-level information from the local cache.
+
+    Args:
+        country_names (list[str]): Countries requested by the API user.
+            If empty, all country risk entries are returned.
+
+    Returns:
+        dict: Matching country risk entries, or error response.
+    """
     risk_level = load_json(RISK_LEVEL_JSON, None)
     if not risk_level:
         return {"error_msg": "error in reading RISK LEVEL JSON"}

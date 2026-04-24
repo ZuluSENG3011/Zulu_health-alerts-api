@@ -7,6 +7,15 @@ os.getenv("GEMINI_API_KEY")
 
 
 class GeminiRiskLevel:
+    """
+    Service for generating country-level travel risk assessments using Gemini.
+
+    This service evaluates:
+    - outbreak alert data
+    - disease metadata
+
+    and produces a structured risk level (low / medium / high) with justification.
+    """
     response_schema = {
         "type": "object",
         "description": (
@@ -62,7 +71,28 @@ class GeminiRiskLevel:
         self.model_id = model_id
 
     def risk_level(self, alerts: list, country: str, disease_info: dict = {}):
+        """
+        Generate a country-level travel risk assessment.
 
+        The model must:
+        - use ONLY provided alerts + disease metadata
+        - NOT use external knowledge
+        - assign a risk level based on strength of evidence
+
+        Args:
+            alerts (list): Filtered alert dataset relevant to the country
+            country (str): Country being assessed
+            disease_info (dict): Disease metadata (severity, exposure)
+
+        Returns:
+            dict: Structured response:
+                - risk_level (low / medium / high)
+                - reason
+                - supporting_alert_ids
+
+        Raises:
+            RuntimeError: If Gemini request fails
+        """
         prompt = f"""
             You are assessing infectious disease risk for an
             airport-oriented travel

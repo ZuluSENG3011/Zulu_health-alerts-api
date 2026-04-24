@@ -34,6 +34,29 @@ def generate_region_summary_entry(
     window: str | None = None,
     start_date: date | None = None,
 ):
+    """
+    Generate an AI-powered summary for a broad geographic region.
+
+    This function:
+    1. validates input
+    2. applies a date/window filter
+    3. finds alerts matching the requested region
+    4. loads disease metadata for those alerts
+    5. calls Gemini to generate a structured risk summary
+
+    Args:
+        region (str): Region to summarise, e.g. "Asia" or "Europe".
+        database (list): Full serialised alert database.
+        end_date (date | None): Latest date to include.
+        window (str | None): Named time window, e.g. "7day", "1month", "3month".
+        start_date (date | None): Earliest date to include.
+
+    Returns:
+        dict: AI-generated summary and region list, or an error response.
+
+    Raises:
+        ValueError: If database or region is missing.
+    """
     if not database:
         raise ValueError("database is required")
 

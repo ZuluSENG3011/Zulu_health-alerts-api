@@ -8,6 +8,13 @@ from google.genai import types
 
 
 class GeminiService:
+    """
+    Wrapper around the Google Gemini API for disease risk assessment.
+
+    This service sends a list of disease names to Gemini and expects a
+    structured JSON response containing severity, exposure risk, and confidence
+    scores for each disease.
+    """
     response_schema = {
         "type": "object",
         "minProperties": 1,
@@ -74,7 +81,28 @@ class GeminiService:
         self.model_id = model_id
 
     def disease_assessment(self, disease: set):
+        """
+        Generate disease severity and exposure-risk metadata using Gemini.
 
+        The assessment is designed for a travel-safety context. Gemini evaluates
+        each disease from the perspective of a typical short- to medium-term
+        traveller who may pass through airports, public transport, hotels,
+        tourist sites, and other shared public spaces.
+
+        Args:
+            disease (set): Set of disease names to assess.
+
+        Returns:
+            dict: A JSON-compatible dictionary where each disease maps to:
+                - severity
+                - severity_reason
+                - risk_of_exposure
+                - exposure_reason
+                - confidence
+
+        Raises:
+            RuntimeError: If the Gemini request fails.
+        """
         prompt = """
             You are assessing infectious disease risk for an airport-oriented
             travel safety service for short- and medium-term visitors,
