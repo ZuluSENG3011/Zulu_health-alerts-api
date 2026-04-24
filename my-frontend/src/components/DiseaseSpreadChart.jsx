@@ -3,6 +3,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { getDiseaseStats } from "../api/alerts";
 import styles from "./DiseaseSpreadChart.module.css";
 
+// Pie chart colour list.
 const COLORS = [
   "#255ad4",
   "#889aeb",
@@ -14,9 +15,9 @@ const COLORS = [
   "#9f7aea",
   "#667eea",
 ];
+
 const RADIAN = Math.PI / 180;
 
-// allowing us to make the labels with lines as we want
 const renderCustomLabel = ({
   cx,
   cy,
@@ -25,20 +26,21 @@ const renderCustomLabel = ({
   name,
   percent,
 }) => {
+  // Hide very small labels to keep the chart readable.
   if (percent <= 0.03) return null;
 
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
 
-  // start of line (on the edge of the slice)
+  // Start point of the connector line.
   const sx = cx + (outerRadius + 6) * cos;
   const sy = cy + (outerRadius + 6) * sin;
 
-  // bend point
+  // Middle bend point of the connector line.
   const mx = cx + (outerRadius + 30) * cos;
   const my = cy + (outerRadius + 30) * sin;
 
-  // end of line
+  // End point of the connector line and label position.
   const ex = mx + (cos >= 0 ? 1 : -1) * 24;
   const ey = my;
   const textAnchor = cos >= 0 ? "start" : "end";
@@ -66,18 +68,23 @@ const renderCustomLabel = ({
   );
 };
 
+/**
+ * Pie chart to show the distribution of diseases
+ */
 function DiseaseSpreadChart() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const chartRef = useRef(null);
 
+  // Disable focus on internal SVG elements to avoid keyboard focus issues.
   useEffect(() => {
     if (!chartRef.current) return;
     const all = chartRef.current.querySelectorAll("*");
     all.forEach((el) => el.setAttribute("tabindex", "-1"));
   }, [data]);
 
+  // Fetch disease statistics from the backend API.
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -94,6 +101,7 @@ function DiseaseSpreadChart() {
     fetchData();
   }, []);
 
+  // Show loading or error message before rendering the chart.
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -110,6 +118,7 @@ function DiseaseSpreadChart() {
         not shown.
       </p>
 
+      {/* Render the pie chart using disease count data. */}
       <div
         className={styles.chartWrapper}
         ref={chartRef}

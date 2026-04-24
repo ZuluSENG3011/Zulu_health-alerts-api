@@ -11,7 +11,11 @@ import {
 import { getTimeseriesStats } from "../api/alerts";
 import styles from "./DiseaseGraph.module.css";
 
+/**
+ * DiseaseGraph displays outbreak trends over time.
+ */
 function DiseaseGraph() {
+  // Format Date object into YYYY-MM-DD for date inputs and API requests.
   const formatDate = (date) => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
   };
@@ -31,6 +35,7 @@ function DiseaseGraph() {
   const [error, setError] = useState(null);
   const [activeInterval, setActiveInterval] = useState(null);
 
+  // Fill missing days/weeks/months with 0 so the chart timeline is continuous.
   const fillMissingPeriods = (results, from, to, interval) => {
     const map = {};
     results.forEach((r) => (map[r.period.slice(0, 10)] = r.count));
@@ -57,6 +62,7 @@ function DiseaseGraph() {
     return periods;
   };
 
+  // Choose day, week, or month interval based on the selected date range.
   const getInterval = () => {
     if (!from || !to) return "month";
     const days = (new Date(to) - new Date(from)) / (1000 * 60 * 60 * 24);
@@ -65,6 +71,7 @@ function DiseaseGraph() {
     return "month";
   };
 
+  // Fetch filtered timeseries data when the user submits the form.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -91,6 +98,7 @@ function DiseaseGraph() {
     }
   };
 
+  // Load the default chart data for the last 7 days when the page opens.
   useEffect(() => {
     const loadDefaultWeek = async () => {
       setLoading(true);
@@ -136,6 +144,7 @@ function DiseaseGraph() {
     >
       <h2 className={styles.title}>Disease Outbreak Trends</h2>
 
+      {/* Filter form for selecting date range and alert attributes. */}
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.inputs}>
           <input
@@ -194,6 +203,7 @@ function DiseaseGraph() {
       {loading && <p>Loading...</p>}
       {error && <p className={styles.error}>{error}</p>}
 
+      {/* Render the bar chart when timeseries data is available. */}
       {data.length > 0 && (
         <div aria-hidden="true" tabIndex="-1">
           <ResponsiveContainer width="100%" height={400}>

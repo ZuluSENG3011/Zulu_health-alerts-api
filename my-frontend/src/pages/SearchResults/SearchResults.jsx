@@ -17,17 +17,22 @@ const filterTypes = [
   "to",
 ];
 
+/**
+ * SearchResults displays the filtered alert results page.
+ *
+ */
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
 
+  // Store fetched alert results and loading state.
   const [resultData, setResultData] = useState({ alerts: [] });
   const [loading, setLoading] = useState(true);
 
-  // current location for AI chatbot
+  // Current location is used to show the AI chatbot only for location searches.
   const currentLocation = searchParams.get("location") || "";
   const chatbotResetKey = searchParams.toString();
 
-  // filters from URL search params
+  // Read filters from URL search params and convert them to lowercase.
   const filters = useMemo(
     () => ({
       id: searchParams.getAll("id").map((item) => item.toLowerCase()),
@@ -43,7 +48,7 @@ const SearchResults = () => {
     [searchParams],
   );
 
-  // derive page title based on filters
+  // Create the page title based on the active filter.
   const pageTitle = useMemo(() => {
     if (filters.region.length > 0)
       return `Region: ${filters.region.join(", ")}`;
@@ -56,6 +61,7 @@ const SearchResults = () => {
     return "All Results";
   }, [filters]);
 
+  // Fetch alert data whenever the URL filters change.
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -63,6 +69,7 @@ const SearchResults = () => {
       try {
         const today = new Date().toISOString().split("T")[0];
 
+        // If no date is selected, search from 1990 until today.
         const apiFilters = {
           ...filters,
           from: filters.from || "1990-01-01",
@@ -89,8 +96,13 @@ const SearchResults = () => {
     <div className={styles.page}>
       <Navigation />
 
-      <a href="#main-content" className="skip-link">Skip to alerts</a>
+      {/* Accessibility link for keyboard users to skip directly to results. */}
+      <a href="#main-content" className="skip-link">
+        Skip to alerts
+      </a>
+
       <div className={styles.contentArea}>
+        {/* Filter panel updates the URL query parameters. */}
         <FilterPanel filterTypes={filterTypes} />
 
         <main id="main-content" className={styles.container}>
@@ -103,6 +115,7 @@ const SearchResults = () => {
           )}
         </main>
 
+        {/* Show AI chatbot only when a location filter is selected. */}
         {currentLocation && (
           <TravelInsightChatbot
             location={currentLocation}

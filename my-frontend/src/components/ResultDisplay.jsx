@@ -2,10 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ResultDisplay.module.css";
 
+/**
+ * ResultDisplay shows the search result list and the selected alert details.
+ */
 const ResultDisplay = ({ title, data }) => {
   const [selectedAlert, setSelectedAlert] = useState(data.alerts[0] ?? null);
   const navigate = useNavigate();
 
+  // Store all alerts passed from the search result data.
   const alerts = data.alerts;
 
   return (
@@ -19,6 +23,7 @@ const ResultDisplay = ({ title, data }) => {
         <div className={styles.leftPanel}>
           <h3 className={styles.panelTitle}>Latest Posts on ProMED</h3>
 
+          {/* Render each alert as a selectable row in the left panel. */}
           {alerts.map((alert) => {
             const isSelected = selectedAlert?.id === alert.id;
 
@@ -29,7 +34,10 @@ const ResultDisplay = ({ title, data }) => {
                   isSelected ? styles.alertRowSelected : ""
                 }`}
                 onClick={() => setSelectedAlert(alert)}
-                onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedAlert(alert)}
+                onKeyDown={(e) =>
+                  (e.key === "Enter" || e.key === " ") &&
+                  setSelectedAlert(alert)
+                }
                 tabIndex="0"
                 role="button"
                 aria-pressed={isSelected}
@@ -62,6 +70,7 @@ const ResultDisplay = ({ title, data }) => {
                   {selectedAlert.date}
                 </p>
 
+                {/* Disease tags are clickable and navigate to disease search results. */}
                 <div className={styles.detailField}>
                   <span className={styles.fieldLabel}>Disease:</span>
                   <div className={styles.tagRow}>
@@ -83,6 +92,7 @@ const ResultDisplay = ({ title, data }) => {
                   </div>
                 </div>
 
+                {/* Species tags are clickable and navigate to species search results. */}
                 <div className={styles.detailField}>
                   <span className={styles.fieldLabel}>Species:</span>
                   <div className={styles.tagRow}>
@@ -104,6 +114,7 @@ const ResultDisplay = ({ title, data }) => {
                   </div>
                 </div>
 
+                {/* Region tags are clickable and navigate to region search results. */}
                 <div className={styles.detailField}>
                   <span className={styles.fieldLabel}>Regions:</span>
                   <div className={styles.tagRow}>
@@ -125,6 +136,7 @@ const ResultDisplay = ({ title, data }) => {
                   </div>
                 </div>
 
+                {/* Location tags are clickable and navigate to location search results. */}
                 <div className={styles.detailField}>
                   <span className={styles.fieldLabel}>Locations:</span>
                   <div className={styles.tagRow}>

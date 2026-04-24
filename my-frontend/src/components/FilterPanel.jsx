@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./FilterPanel.module.css";
 import filterIcon from "../assets/filter.png";
 
+// Default open or closed state for each filter section.
 const defaultSections = {
   dateRange: true,
   network: false,
@@ -12,6 +13,12 @@ const defaultSections = {
   region: false,
 };
 
+/**
+ * FilterPanel displays filters for the search result page.
+ *
+ * It reads current filter values from the URL query parameters
+ * and updates the URL when users change a filter.
+ */
 function FilterPanel() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -20,6 +27,7 @@ function FilterPanel() {
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
   const [sections, setSections] = useState(defaultSections);
 
+  // Read current filter values from URL query parameters.
   const filters = useMemo(
     () => ({
       from: searchParams.get("from") || "",
@@ -32,6 +40,7 @@ function FilterPanel() {
     [searchParams],
   );
 
+  // Open or close a filter section.
   const toggleSection = (sectionName) => {
     setSections((prev) => ({
       ...prev,
@@ -39,6 +48,7 @@ function FilterPanel() {
     }));
   };
 
+  // Update URL query parameters when a filter value changes.
   const handleChange = (e) => {
     const { name, value } = e.target;
     const trimmedValue = value.trim();
@@ -61,6 +71,7 @@ function FilterPanel() {
       params.delete(paramName);
     }
 
+    // If start date is after end date, remove the invalid end date.
     if (name === "from") {
       const currentTo = params.get("to");
       if (currentTo && trimmedValue && currentTo < trimmedValue) {
@@ -68,6 +79,7 @@ function FilterPanel() {
       }
     }
 
+    // Prevent the end date from being earlier than the start date.
     if (name === "to") {
       const currentFrom = params.get("from");
       if (currentFrom && trimmedValue && trimmedValue < currentFrom) {
@@ -77,6 +89,7 @@ function FilterPanel() {
 
     navigate(`/search?${params.toString()}`);
 
+    // After selecting start date, automatically focus the end date input.
     if (name === "from") {
       setTimeout(() => {
         toDateRef.current?.focus();
@@ -87,7 +100,10 @@ function FilterPanel() {
 
   if (isPanelCollapsed) {
     return (
-      <aside className={styles.collapsedPanel} onClick={() => setIsPanelCollapsed(false)}>
+      <aside
+        className={styles.collapsedPanel}
+        onClick={() => setIsPanelCollapsed(false)}
+      >
         <div className={styles.collapsedInner}>
           <img src={filterIcon} className={styles.headerIcon} alt="Filter" />
         </div>
@@ -103,6 +119,7 @@ function FilterPanel() {
           <span>Filters</span>
         </div>
 
+        {/* Collapse the filter panel. */}
         <button
           type="button"
           className={styles.panelToggleButton}
@@ -113,6 +130,7 @@ function FilterPanel() {
         </button>
       </div>
 
+      {/* Date range filter section. */}
       <div className={styles.section}>
         <button
           type="button"
@@ -155,6 +173,7 @@ function FilterPanel() {
         )}
       </div>
 
+      {/* Disease filter section. */}
       <div className={styles.section}>
         <button
           type="button"
@@ -180,6 +199,7 @@ function FilterPanel() {
         )}
       </div>
 
+      {/* Species filter section. */}
       <div className={styles.section}>
         <button
           type="button"
@@ -205,6 +225,7 @@ function FilterPanel() {
         )}
       </div>
 
+      {/* Location and continent filter section. */}
       <div className={styles.section}>
         <button
           type="button"
@@ -227,7 +248,9 @@ function FilterPanel() {
               className={styles.textInput}
               aria-label="Filter by continent"
             />
-            <label className={styles.subLabel} style={{ marginTop: "12px" }}>Location</label>
+            <label className={styles.subLabel} style={{ marginTop: "12px" }}>
+              Location
+            </label>
             <input
               type="text"
               name="location"
@@ -240,6 +263,8 @@ function FilterPanel() {
           </div>
         )}
       </div>
+
+      {/* Reset buttons for default and full reset behaviour. */}
       <div className={styles.resetRow}>
         <button
           type="button"
