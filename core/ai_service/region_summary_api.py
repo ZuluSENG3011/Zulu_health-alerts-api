@@ -11,6 +11,15 @@ os.getenv("GEMINI_API_KEY")
 
 
 class GeminiSummary:
+    """
+    Service for generating structured regional travel-risk summaries using Gemini.
+
+    This service takes:
+    - filtered outbreak alerts
+    - disease metadata (severity/exposure)
+
+    and produces a structured AI-generated summary that follows a strict schema.
+    """
     response_schema = {
         "type": "object",
         "description": (
@@ -174,6 +183,26 @@ class GeminiSummary:
     def region_summary(
         self, alerts: list, location_chain: list, disease_info: dict = {}
     ):
+        """
+        Generate an AI travel-risk summary for a region/location.
+
+        The summary is strictly based on:
+        - provided outbreak alerts
+        - provided disease metadata
+
+        No external knowledge or web search is allowed.
+
+        Args:
+            alerts (list): List of serialised alert objects
+            location_chain (list): Location hierarchy (e.g. ["China", "Hong Kong"])
+            disease_info (dict): Disease metadata (severity, exposure, etc.)
+
+        Returns:
+            dict: Structured summary matching response_schema
+
+        Raises:
+            RuntimeError: If Gemini request fails
+        """
 
         prompt = f"""
             You are assessing infectious disease risk for an

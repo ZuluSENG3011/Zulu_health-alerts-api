@@ -15,6 +15,20 @@ BASE_DIR2 = Path(__file__).resolve().parents[2]
 
 
 def filter_start_date(window: str, today: date | None = None) -> date:
+    """
+    Convert a named time window into a concrete start date.
+
+    Args:
+        window (str): Time window label. Supported values:
+            - "7day"
+            - "1month"
+            - "3month"
+            - "6month"
+        today (date | None): Reference end date. Defaults to today's date.
+
+    Returns:
+        date: Calculated start date.
+    """
     if today is None:
         today = date.today()
 
@@ -32,6 +46,19 @@ def filter_start_date(window: str, today: date | None = None) -> date:
 
 
 def filter_date(start_date: date | None, end_date: date | None, database: list) -> list:
+    """
+    Filter alerts by date range.
+
+    Assumes the database is sorted by date in descending order.
+
+    Args:
+        start_date (date | None): Earliest date to include.
+        end_date (date | None): Latest date to include.
+        database (list): List of serialised alert dictionaries.
+
+    Returns:
+        list: Alerts within the requested date range.
+    """
     beginning = str(start_date)
     ending = str(end_date)
     result = []
@@ -112,6 +139,22 @@ def find_by_upper_location(database: list, location_chain: list) -> list:
 def find_related_location(
     database: list, location_chain: list, exact_match: list | None = None
 ) -> list:
+    """
+    Find alerts related to a location but not exact matches.
+
+    An alert is considered related if:
+    - it is for a child location of the requested location, or
+    - the requested location keyword appears in the title and the alert is
+      within the same country.
+
+    Args:
+        database (list): List of serialised alerts.
+        location_chain (list): Requested location hierarchy.
+        exact_match (list | None): Exact matches to exclude from results.
+
+    Returns:
+        list: Related alerts without duplicates.
+    """
     keyword = location_chain[-1].lower()
     country = location_chain[0].lower()
 
@@ -237,6 +280,26 @@ def generate_summary_entry(
     location_chain: list | None = None,
     location_str: str | None = None,
 ):
+    """
+    Generate a complete AI summary response for a location.
+
+    This function:
+    1. filters alerts by date and location
+    2. extracts disease metadata from local JSON cache
+    3. calls Gemini to generate a structured regional summary
+    4. returns the summary with the resolved location chain
+
+    Args:
+        database (list): Full alert database.
+        end_date (date | None): Latest date to include.
+        window (str | None): Named time window.
+        start_date (date | None): Earliest date to include.
+        location_chain (list | None): Full location hierarchy.
+        location_str (str | None): Location string to resolve.
+
+    Returns:
+        dict: AI summary response and resolved location chain.
+    """
     result, location_chain = filter_entry(
         end_date=end_date,
         window=window,
@@ -264,6 +327,22 @@ def generate_summary_entry(
 
 
 def find_by_location_prefix(database: list, prefix_chain: list) -> list:
+    """
+    Find alerts whose location starts with a given location prefix.
+
+    Example:
+        prefix_chain = ["China"]
+        matches:
+        - ["China", "Hong Kong"]
+        - ["China", "Guangdong"]
+
+    Args:
+        database (list): List of serialised alerts.
+        prefix_chain (list): Location hierarchy prefix to match.
+
+    Returns:
+        list: Matching alerts without duplicates.
+    """
     results = []
     unique = set()
 

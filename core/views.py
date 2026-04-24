@@ -124,6 +124,17 @@ def filter_alerts(params, default_days=365):
 
 
 def serialise_alert(alert):
+    """
+    Convert an Alert model instance into a JSON-serialisable dictionary.
+
+    This is used for API responses.
+
+    Args:
+        alert (Alert): Alert model instance
+
+    Returns:
+        dict: Serialised alert object
+    """
     return {
         "id": alert.external_id,
         "date": alert.date.isoformat(),
@@ -149,6 +160,18 @@ def home(request):
 )
 @api_view(["GET"])
 def stats_regions(request):
+    """
+    Return outbreak alert counts grouped by region.
+
+    Uses the same filtering logic as the alerts endpoint.
+
+    Query Params:
+        region (optional, multiple)
+        from, to (date range)
+
+    Returns:
+        JSON response with region counts sorted by frequency.
+    """
     query_set, from_date, to_date = filter_alerts(
         request.query_params,
         default_days=30,
@@ -218,6 +241,19 @@ def stats_regions(request):
 )
 @api_view(["GET"])
 def stats_diseases(request):
+    """
+    Return most frequently reported diseases.
+
+    Optionally enriches results using AI-generated severity data.
+
+    Query Params:
+        disease (optional, multiple)
+        include_ai (true/false)
+        ai_limit (int, max 20)
+
+    Returns:
+        JSON response containing disease counts and optional AI metadata.
+    """
     query_set, from_date, to_date = filter_alerts(
         request.query_params,
         default_days=30,
@@ -308,6 +344,14 @@ def stats_diseases(request):
 )
 @api_view(["GET"])
 def get_alerts(request):
+    """
+    Retrieve outbreak alerts with optional filters.
+
+    Uses filter_alerts() to apply query parameters.
+
+    Returns:
+        JSON response containing list of alerts.
+    """
     query_set, from_date, to_date = filter_alerts(request.query_params)
 
     alerts_out = [serialise_alert(alert) for alert in query_set]
@@ -347,6 +391,21 @@ timeseries_parameters = [
 )
 @api_view(["GET"])
 def stats_timeseries(request):
+    """
+    Return alert counts aggregated over time.
+
+    Supports aggregation intervals:
+    - day
+    - week
+    - month
+
+    Query Params:
+        interval (default: day)
+        plus all standard filters
+
+    Returns:
+        JSON response with time-series data.
+    """
     interval = request.query_params.get("interval", "day")
 
     trunc_map = {
@@ -387,6 +446,18 @@ def stats_timeseries(request):
 
 
 def serialise_alert_for_ai(alert):
+    """
+    Serialise Alert object into a format expected by AI services.
+
+    This structure matches the input schema required by
+    the AI summary generation pipeline.
+
+    Args:
+        alert (Alert)
+
+    Returns:
+        dict: Structured alert data for AI processing
+    """
     return {
         "fields": {
             "external_id": alert.external_id,
@@ -436,7 +507,21 @@ def serialise_alert_for_ai(alert):
 )
 @api_view(["GET"])
 def region_summary_by_location_view(request):
+    """
+    Generate an AI-powered summary for a specific location.
 
+    Uses alert data and optional time filters to produce
+    a structured risk assessment via AI.
+
+    Query Params:
+        location (required)
+        window (optional)
+        from, to (optional date range)
+        limit (optional, default=200)
+
+    Returns:
+        JSON response with AI-generated summary.
+    """
     location = request.query_params.get("location")
     window = request.query_params.get("window")
     raw_from = request.query_params.get("from")
@@ -511,6 +596,17 @@ risk_level_parameters = [
 )
 @api_view(["GET"])
 def get_country_risk_levels(request):
+    """
+    Retrieve stored country risk level information.
+
+    Data is sourced from a precomputed JSON file.
+
+    Query Params:
+        country (optional, multiple)
+
+    Returns:
+        JSON response with risk levels per country.
+    """
     country_names = request.query_params.getlist("country")
 
     result = get_country_risk_level_info(country_names)
@@ -567,6 +663,20 @@ region_summary_region_parameters = [
 )
 @api_view(["GET"])
 def region_summary_by_region_view(request):
+    """
+    Generate an AI summary for a geographic region.
+
+    Similar to location-based summary but operates
+    at region level (e.g. Asia, Europe).
+
+    Query Params:
+        region (required)
+        window (optional)
+        from, to (optional date range)
+
+    Returns:
+        JSON response with AI-generated regional summary.
+    """
     region = request.query_params.get("region")
     window = request.query_params.get("window")
     raw_from = request.query_params.get("from")
