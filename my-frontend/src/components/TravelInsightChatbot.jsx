@@ -18,6 +18,7 @@ function TravelInsightChatbot({ location, resetKey }) {
   const [showNotification, setShowNotification] = useState(false);
   const [loginRequired, setLoginRequired] = useState(false);
 
+  // Reset chatbot when location change
   useEffect(() => {
     setIsOpen(false);
     setSummaryData(null);
@@ -30,9 +31,11 @@ function TravelInsightChatbot({ location, resetKey }) {
     setLoginRequired(false);
   }, [resetKey, location]);
 
+  // Fetch AI summary when chatbot is opened
   useEffect(() => {
     if (!isOpen || !location || loading) return;
 
+    // Require user login before using the AI feature.
     if (!isLoggedIn()) {
       setLoginRequired(true);
       setSummaryData(null);
@@ -45,6 +48,7 @@ function TravelInsightChatbot({ location, resetKey }) {
 
     setLoginRequired(false);
 
+    // Call backend API to fetch AI summary
     async function fetchSummary() {
       try {
         setLoading(true);
@@ -79,6 +83,7 @@ function TravelInsightChatbot({ location, resetKey }) {
     fetchSummary();
   }, [isOpen, location]);
 
+  // Reset chatbot menu to initial state
   const resetMenu = () => {
     setMessages((prev) => [
       ...prev,
@@ -97,6 +102,7 @@ function TravelInsightChatbot({ location, resetKey }) {
     ]);
   };
 
+  // Handle option and selection to display the AI summary
   const handleOptionClick = (option) => {
     if (!summaryData?.summary) return;
 
@@ -189,6 +195,7 @@ function TravelInsightChatbot({ location, resetKey }) {
     }
   };
 
+  // Loading animation effect
   useEffect(() => {
     if (!loading) return;
 
@@ -202,6 +209,7 @@ function TravelInsightChatbot({ location, resetKey }) {
     return () => clearInterval(interval);
   }, [loading]);
 
+  // Open/close chatbot
   const handleToggle = () => {
     setIsOpen((prev) => {
       const next = !prev;

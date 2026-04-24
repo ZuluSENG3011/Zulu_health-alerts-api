@@ -6,8 +6,10 @@ import enLocale from "i18n-iso-countries/langs/en.json";
 import styles from "./WorldMap.module.css";
 import MapAIDetailCard from "./MapAIDetailCard";
 
+// Convert contry names to ISO alpha-2 codes using i18n-iso-countries.
 countries.registerLocale(enLocale);
 
+// Map certain country names to their more common search names
 const mapCountryToSearchName = (name) => {
   const aliasMap = {
     "People's Republic of China": "China",
@@ -20,6 +22,7 @@ const mapCountryToSearchName = (name) => {
   return aliasMap[name] || name;
 };
 
+// Map risk levels to numeric values for the world map
 const mapRiskLevelToValue = (riskLevel) => {
   const normalized = String(riskLevel || "").toLowerCase();
 
@@ -29,6 +32,7 @@ const mapRiskLevelToValue = (riskLevel) => {
   return 0;
 };
 
+// Map numeric risk values back to labels for tooltips
 const mapValueToRiskLabel = (value) => {
   if (Number(value) === 1) return "Low";
   if (Number(value) === 2) return "Medium";
@@ -36,6 +40,10 @@ const mapValueToRiskLabel = (value) => {
   return "Unknown";
 };
 
+/**
+ * WorldMapComponent to display risk level of diseases by country on an interactive world map.
+ * Fetches risk level data from the backend and maps it to the world map using ISO country codes.
+ */
 function WorldMapComponent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,12 +54,15 @@ function WorldMapComponent() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const mapRef = useRef(null);
 
+  // Not allowed the keyboard focus for SVG elements in tab
   useEffect(() => {
     if (!mapRef.current) return;
     const all = mapRef.current.querySelectorAll("*");
     all.forEach((el) => el.setAttribute("tabindex", "-1"));
   }, [data]);
 
+  // Call backend API to fetch risk level
+  // Convert into the format required by the world map component
   useEffect(() => {
     async function fetchRiskLevels() {
       try {
@@ -102,6 +113,7 @@ function WorldMapComponent() {
     setShowDropdown(true);
   };
 
+  // Handle country selection from dropdown
   const handleCountrySelect = (name) => {
     const selected = data.find(
       (item) => item.countryName?.toLowerCase() === name.toLowerCase(),
@@ -112,6 +124,7 @@ function WorldMapComponent() {
     setShowDropdown(false);
   };
 
+  // Handle click on the world map
   const handleClick = (country) => {
     const countryName = country.countryName;
     if (!countryName) return;
@@ -125,10 +138,12 @@ function WorldMapComponent() {
     setSelectedCountry(selected || null);
   };
 
+  // when map is loading
   if (loading) {
     return <div className={styles.worldmapWrapper}>Loading map...</div>;
   }
 
+  // when there is an error fetching data
   if (error) {
     return <div className={styles.worldmapWrapper}>Error: {error}</div>;
   }
